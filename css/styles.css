@@ -410,7 +410,7 @@ a {
 
 /* Hero */
 .hero {
-  background: url('../threeladies.PNG') center/cover;
+  background: url('../threeladies.PNG') center 80% / cover;
   color: #F5EFE6;
   padding: 140px 0;
   text-align: center;
