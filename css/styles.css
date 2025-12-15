@@ -315,6 +315,7 @@ a {
 
   .nav-list.full.active {
     left: 0;
+    display: flex;
   }
 
   .nav-list.full li {
@@ -354,7 +355,11 @@ a {
   }
 
   .nav {
-    display: none; /* Hide regular nav on mobile */
+    display: block;
+  }
+
+  .nav-list.full {
+    display: none;
   }
 
   .hero-content h1 {
