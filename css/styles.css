@@ -449,6 +449,18 @@ a {
   animation: fadeInUp 1s ease-out 0.2s both;
 }
 
+.hero-image {
+  max-width: 500px;
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(59, 42, 35, 0.3);
+  margin: 20px 0;
+  background: rgba(245, 239, 230, 0.1);
+  padding: 10px;
+  animation: fadeInUp 1s ease-out 0.5s both;
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
