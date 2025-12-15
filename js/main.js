@@ -1,10 +1,10 @@
 "use strict";
 // Navigation toggle for mobile
 const hamburger = document.querySelector('.hamburger');
-const navList = document.querySelector('.nav-list');
-if (hamburger && navList) {
+const fullNavList = document.querySelector('.nav-list.full');
+if (hamburger && fullNavList) {
     hamburger.addEventListener('click', () => {
-        navList.classList.toggle('active');
+        fullNavList.classList.toggle('active');
     });
 }
 // Cart management
