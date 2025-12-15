@@ -439,10 +439,6 @@ a {
   margin-bottom: 20px;
   text-shadow: 0 6px 12px rgba(0,0,0,0.9);
   font-weight: 900;
-  background: rgba(0,0,0,0.6);
-  padding: 10px 20px;
-  border-radius: 10px;
-  display: inline-block;
   animation: fadeInUp 1s ease-out;
 }
 
