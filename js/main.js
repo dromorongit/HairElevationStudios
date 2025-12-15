@@ -5,6 +5,7 @@ const fullNavList = document.querySelector('.nav-list.full');
 if (hamburger && fullNavList) {
     hamburger.addEventListener('click', () => {
         fullNavList.classList.toggle('active');
+        hamburger.classList.toggle('active');
     });
 }
 // Cart management
@@ -28,15 +29,30 @@ function addToCart(productId) {
         }
     }
     saveCart(cart);
+    updateCartCount();
     alert('Product added to cart!');
 }
 function removeFromCart(productId) {
     const cart = getCart().filter(item => item.product.id !== productId);
     saveCart(cart);
+    updateCartCount();
     renderCart();
 }
 function getCartTotal() {
     return getCart().reduce((total, item) => total + item.product.price * item.quantity, 0);
+}
+
+function getCartCount() {
+    return getCart().reduce((total, item) => total + item.quantity, 0);
+}
+
+function updateCartCount() {
+    const count = getCartCount();
+    const countEl = document.getElementById('cart-count');
+    if (countEl) {
+        countEl.textContent = count.toString();
+        countEl.style.display = count > 0 ? 'block' : 'none';
+    }
 }
 // Product data
 const products = [
@@ -168,6 +184,8 @@ function renderProductDetail() {
     });
 }
 document.addEventListener('DOMContentLoaded', () => {
+    // Update cart count
+    updateCartCount();
     // Featured products on home page
     const featuredContainer = document.getElementById('featured-products');
     if (featuredContainer) {

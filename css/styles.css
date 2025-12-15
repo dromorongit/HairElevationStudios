@@ -131,6 +131,33 @@ a {
   display: none;
 }
 
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cart-icon-mobile a {
+  position: relative;
+}
+
+.cart-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #C8A97E;
+  color: #3B2A23;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  display: none;
+}
+
 .logo a {
   font-size: 1.8rem;
   font-weight: 700;
@@ -207,6 +234,18 @@ a {
   margin: 3px 0;
   transition: 0.3s;
   border-radius: 2px;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(45deg) translate(-5px, -6px);
 }
 
 /* Mobile Nav */
@@ -294,7 +333,6 @@ a {
 
   .cart-icon-mobile {
     display: block;
-    margin-left: 10px;
   }
 
   .cta {
