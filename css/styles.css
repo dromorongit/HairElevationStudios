@@ -575,6 +575,23 @@ textarea {
   box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
 }
 
+.whatsapp-channel-btn-footer {
+  background: linear-gradient(135deg, #25D366 0%, #20B954 100%);
+  color: white;
+  border: 2px solid #25D366;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+  transition: all 0.3s ease;
+  margin-top: 15px;
+}
+
+.whatsapp-channel-btn-footer:hover {
+  background: linear-gradient(135deg, #20B954 0%, #128C7E 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+}
+
 /* Footer */
 .footer {
   background: linear-gradient(135deg, #3B2A23 0%, #2A1F1A 100%);
