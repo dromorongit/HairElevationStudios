@@ -240,6 +240,7 @@ if (bookingForm && formMessage) {
         const service = document.getElementById('service').value;
         const date = document.getElementById('date').value;
         const time = document.getElementById('time').value;
+        const notes = document.getElementById('notes').value.trim();
         let isValid = true;
         let message = '';
         if (!fullName) {
@@ -267,13 +268,45 @@ if (bookingForm && formMessage) {
             message += 'Preferred Time is required.<br>';
         }
         if (isValid) {
-            message = 'Thank you! Your appointment request has been submitted. We will contact you soon.';
-            formMessage.style.color = 'green';
-            bookingForm.reset();
+            // Format service name for better readability
+            const serviceNames = {
+                'custom-wig': 'Custom Wig Making',
+                'revamp': 'Wig Revamp & Maintenance',
+                'installation': 'Wig Installation & Sew-in'
+            };
+            const formattedService = serviceNames[service] || service;
+            
+            // Format the booking message
+            const bookingMessage = `🏪 *BOOKING REQUEST - Hair Elevation Studio*%0A%0A` +
+                `👤 *Name:* ${fullName}%0A` +
+                `📱 *Phone:* ${phone}%0A` +
+                `✂️ *Service:* ${formattedService}%0A` +
+                `📅 *Preferred Date:* ${date}%0A` +
+                `⏰ *Preferred Time:* ${time}%0A` +
+                (notes ? `📝 *Additional Notes:* ${notes}%0A` : '') +
+                `%0A---\n` +
+                `Please confirm my appointment request. Thank you! 🙏`;
+            
+            // WhatsApp URL with pre-filled message
+            const whatsappUrl = `https://wa.me/233534057109?text=${bookingMessage}`;
+            
+            // Show loading message
+            formMessage.innerHTML = 'Opening WhatsApp to send your booking request...';
+            formMessage.style.color = '#C8A97E';
+            
+            // Reset form after a short delay
+            setTimeout(() => {
+                bookingForm.reset();
+                formMessage.innerHTML = 'WhatsApp opened! Your booking details have been sent. We will confirm your appointment shortly.';
+                formMessage.style.color = 'green';
+            }, 1000);
+            
+            // Open WhatsApp in new window/tab
+            window.open(whatsappUrl, '_blank');
         }
         else {
             formMessage.style.color = 'red';
+            formMessage.innerHTML = message;
         }
-        formMessage.innerHTML = message;
     });
 }

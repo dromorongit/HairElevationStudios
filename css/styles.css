@@ -174,30 +174,66 @@ a {
 /* Mobile Nav */
 @media (max-width: 768px) {
   .nav-list {
-    position: fixed;
-    top: 70px;
-    left: -100%;
-    width: 100%;
-    height: calc(100vh - 70px);
-    background: rgba(59, 42, 35, 0.98);
-    backdrop-filter: blur(10px);
-    flex-direction: column;
-    justify-content: center;
+    display: flex;
+    position: static;
+    width: auto;
+    height: auto;
+    background: none;
+    backdrop-filter: none;
+    flex-direction: row;
+    justify-content: flex-start;
     align-items: center;
-    transition: left 0.3s ease;
-    gap: 40px;
+    gap: 15px;
+    padding: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
-  .nav-list.active {
-    left: 0;
+  .nav-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-list li:nth-child(2), /* About */
+  .nav-list li:nth-child(6) { /* Contact */
+    display: none;
+  }
+
+  .nav-list a {
+    font-size: 0.85rem;
+    white-space: nowrap;
+    padding: 8px 4px;
+  }
+
+  .nav-list a[aria-label="Shopping Cart"] svg {
+    width: 18px;
+    height: 18px;
   }
 
   .hamburger {
-    display: flex;
+    display: none;
   }
 
   .cta {
     display: none;
+  }
+
+  .header .container {
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  .logo {
+    flex-shrink: 0;
+  }
+
+  .logo img {
+    max-height: 60px;
+    max-width: 200px;
+  }
+
+  .nav {
+    flex: 1;
+    justify-content: flex-end;
   }
 
   .hero-content h1 {
