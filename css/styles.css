@@ -103,11 +103,32 @@ a {
   gap: 15px;
 }
 
+/* Desktop Header Layout */
+@media (min-width: 769px) {
+  .header .container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .hamburger {
+    display: none;
+  }
+
+  .mobile-nav-container {
+    display: none;
+  }
+}
+
 /* Header Top - Logo and Hamburger */
 .header-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.cart-icon-mobile {
+  display: none;
 }
 
 .logo a {
@@ -271,6 +292,11 @@ a {
     margin-left: 10px;
   }
 
+  .cart-icon-mobile {
+    display: block;
+    margin-left: 10px;
+  }
+
   .cta {
     display: none;
   }
@@ -329,13 +355,13 @@ a {
   }
 
   .product-actions {
-    gap: 5px;
+    gap: 3px;
   }
 
   .product-actions .btn {
-    padding: 8px 10px;
-    font-size: 0.8rem;
-    min-width: 70px;
+    padding: 6px 8px;
+    font-size: 0.75rem;
+    min-width: 60px;
   }
 }
 
@@ -1015,6 +1041,25 @@ textarea {
 
   .contact-content {
     grid-template-columns: 1fr;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .whatsapp-channel-section {
+    margin-top: 30px;
+    padding: 20px;
+  }
+
+  .whatsapp-channel-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .whatsapp-channel-btn {
+    font-size: 0.9rem;
+    padding: 10px 20px;
   }
 
   .product-grid {
