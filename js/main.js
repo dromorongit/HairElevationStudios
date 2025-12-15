@@ -61,42 +61,71 @@ const products = [
         name: "Glueless Wig Model A",
         price: 500,
         image: "https://via.placeholder.com/300x400/3B2A23/F5EFE6?text=Glueless+Wig+A",
-        description: "Premium glueless wig with adjustable straps and natural hairline for comfortable all-day wear."
+        description: "Premium glueless wig with adjustable straps and natural hairline for comfortable all-day wear.",
+        category: "bridal-crowns"
     },
     {
         id: 2,
         name: "Glueless Wig Model B",
         price: 650,
         image: "https://via.placeholder.com/300x400/3B2A23/F5EFE6?text=Glueless+Wig+B",
-        description: "Luxury glueless wig featuring high-density hair and secure fit for versatile styling."
+        description: "Luxury glueless wig featuring high-density hair and secure fit for versatile styling.",
+        category: "bridal-crowns"
     },
     {
         id: 3,
         name: "Glueless Wig Model C",
         price: 750,
         image: "https://via.placeholder.com/300x400/3B2A23/F5EFE6?text=Glueless+Wig+C",
-        description: "Elegant glueless wig with breathable cap and realistic scalp for a natural appearance."
+        description: "Elegant glueless wig with breathable cap and realistic scalp for a natural appearance.",
+        category: "everyday-crown"
     },
     {
         id: 4,
         name: "Glueless Wig Model D",
         price: 800,
         image: "https://via.placeholder.com/300x400/3B2A23/F5EFE6?text=Glueless+Wig+D",
-        description: "Sophisticated glueless wig designed for durability and style, perfect for special occasions."
+        description: "Sophisticated glueless wig designed for durability and style, perfect for special occasions.",
+        category: "everyday-crown"
     },
     {
         id: 5,
         name: "Glueless Wig Model E",
         price: 900,
         image: "https://via.placeholder.com/300x400/3B2A23/F5EFE6?text=Glueless+Wig+E",
-        description: "High-end glueless wig with premium materials and expert craftsmanship for ultimate comfort."
+        description: "High-end glueless wig with premium materials and expert craftsmanship for ultimate comfort.",
+        category: "queens-curls"
     },
     {
         id: 6,
         name: "Custom Wig",
         price: 1200,
         image: "https://via.placeholder.com/300x400/3B2A23/F5EFE6?text=Custom+Wig",
-        description: "Bespoke wig tailored to your specifications, including color, length, and style preferences."
+        description: "Bespoke wig tailored to your specifications, including color, length, and style preferences.",
+        category: "signature-pixies"
+    }
+];
+// Collection data
+const collections = [
+    {
+        name: "The Bridal Crowns",
+        image: "bridalcrowns.jpg",
+        link: "bridal-crowns.html"
+    },
+    {
+        name: "The Everyday Crown",
+        image: "everydaycrown.jpg",
+        link: "everyday-crown.html"
+    },
+    {
+        name: "The Queen's Curls",
+        image: "queenscurls.jpg",
+        link: "queens-curls.html"
+    },
+    {
+        name: "The Signature Pixies",
+        image: "signaturepixies.jpg",
+        link: "signature-pixies.html"
     }
 ];
 function renderProducts(products, container, limit) {
@@ -120,6 +149,16 @@ function renderProducts(products, container, limit) {
             addToCart(productId);
         });
     });
+}
+function renderCollections(collections, container) {
+    container.innerHTML = collections.map(collection => `
+    <div class="product-card">
+      <a href="${collection.link}">
+        <img src="${collection.image}" alt="${collection.name}">
+        <h3>${collection.name}</h3>
+      </a>
+    </div>
+  `).join('');
 }
 function renderCart() {
     const cartContainer = document.getElementById('cart-items');
@@ -191,10 +230,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (featuredContainer) {
         renderProducts(products, featuredContainer, 3);
     }
-    // All products on collections page
+    // Collections or filtered products on collections page
     const collectionsContainer = document.getElementById('collections-products');
     if (collectionsContainer) {
-        renderProducts(products, collectionsContainer);
+        if (collectionsContainer.dataset.category) {
+            const filteredProducts = products.filter(p => p.category === collectionsContainer.dataset.category);
+            renderProducts(filteredProducts, collectionsContainer);
+        } else {
+            renderCollections(collections, collectionsContainer);
+        }
     }
     // Cart page
     if (document.getElementById('cart-items')) {

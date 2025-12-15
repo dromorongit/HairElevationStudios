@@ -5,42 +5,48 @@
       "name": "Glueless Wig Model A",
       "price": 500,
       "image": "https://via.placeholder.com/300x400/3B2A23/F5EFE6?text=Glueless+Wig+A",
-      "description": "Premium glueless wig with adjustable straps and natural hairline for comfortable all-day wear."
+      "description": "Premium glueless wig with adjustable straps and natural hairline for comfortable all-day wear.",
+      "category": "bridal-crowns"
     },
     {
       "id": 2,
       "name": "Glueless Wig Model B",
       "price": 650,
       "image": "https://via.placeholder.com/300x400/3B2A23/F5EFE6?text=Glueless+Wig+B",
-      "description": "Luxury glueless wig featuring high-density hair and secure fit for versatile styling."
+      "description": "Luxury glueless wig featuring high-density hair and secure fit for versatile styling.",
+      "category": "bridal-crowns"
     },
     {
       "id": 3,
       "name": "Glueless Wig Model C",
       "price": 750,
       "image": "https://via.placeholder.com/300x400/3B2A23/F5EFE6?text=Glueless+Wig+C",
-      "description": "Elegant glueless wig with breathable cap and realistic scalp for a natural appearance."
+      "description": "Elegant glueless wig with breathable cap and realistic scalp for a natural appearance.",
+      "category": "everyday-crown"
     },
     {
       "id": 4,
       "name": "Glueless Wig Model D",
       "price": 800,
       "image": "https://via.placeholder.com/300x400/3B2A23/F5EFE6?text=Glueless+Wig+D",
-      "description": "Sophisticated glueless wig designed for durability and style, perfect for special occasions."
+      "description": "Sophisticated glueless wig designed for durability and style, perfect for special occasions.",
+      "category": "everyday-crown"
     },
     {
       "id": 5,
       "name": "Glueless Wig Model E",
       "price": 900,
       "image": "https://via.placeholder.com/300x400/3B2A23/F5EFE6?text=Glueless+Wig+E",
-      "description": "High-end glueless wig with premium materials and expert craftsmanship for ultimate comfort."
+      "description": "High-end glueless wig with premium materials and expert craftsmanship for ultimate comfort.",
+      "category": "queens-curls"
     },
     {
       "id": 6,
       "name": "Custom Wig",
       "price": 1200,
       "image": "https://via.placeholder.com/300x400/3B2A23/F5EFE6?text=Custom+Wig",
-      "description": "Bespoke wig tailored to your specifications, including color, length, and style preferences."
+      "description": "Bespoke wig tailored to your specifications, including color, length, and style preferences.",
+      "category": "signature-pixies"
     }
   ]
 }
