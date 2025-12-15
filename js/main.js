@@ -48,11 +48,11 @@ function getCartCount() {
 
 function updateCartCount() {
     const count = getCartCount();
-    const countEl = document.getElementById('cart-count');
-    if (countEl) {
+    const countEls = document.querySelectorAll('.cart-count');
+    countEls.forEach(countEl => {
         countEl.textContent = count.toString();
         countEl.style.display = count > 0 ? 'block' : 'none';
-    }
+    });
 }
 // Product data
 const products = [
