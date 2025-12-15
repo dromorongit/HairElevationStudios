@@ -398,13 +398,21 @@ a {
   }
 
   .product-actions {
-    gap: 2px;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 10px;
+    align-items: center;
   }
 
   .product-actions .btn {
-    padding: 1px 2px;
-    font-size: 0.4rem;
-    min-width: 30px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    width: 80%;
+    min-width: unset;
+  }
+
+  .product-actions .add-to-cart {
+    order: -1;
   }
 }
 
