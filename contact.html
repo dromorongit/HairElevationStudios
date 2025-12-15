@@ -13,11 +13,19 @@
 <body>
   <header class="header">
     <div class="container">
-      <div class="logo">
-        <a href="index.html"><img src="HESLOGO.PNG" alt="Hair Elevation Studio"></a>
+      <div class="header-top">
+        <div class="logo">
+          <a href="index.html"><img src="HESLOGO.PNG" alt="Hair Elevation Studio"></a>
+        </div>
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
-      <nav class="nav">
-        <!-- Horizontal navigation for key items -->
+      
+      <!-- Horizontal navigation for mobile - positioned below logo -->
+      <div class="mobile-nav-container">
         <ul class="nav-list horizontal">
           <li><a href="index.html">Home</a></li>
           <li><a href="collections.html">Collections</a></li>
@@ -31,6 +39,9 @@
             </svg>
           </a></li>
         </ul>
+      </div>
+
+      <nav class="nav">
         <!-- Full navigation for hamburger menu -->
         <ul class="nav-list full">
           <li><a href="index.html">Home</a></li>
@@ -51,11 +62,6 @@
           <a href="book.html" class="btn">Book Now</a>
         </div>
       </nav>
-      <div class="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
     </div>
   </header>
 
