@@ -398,13 +398,13 @@ a {
   }
 
   .product-actions {
-    gap: 3px;
+    gap: 2px;
   }
 
   .product-actions .btn {
-    padding: 2px 4px;
-    font-size: 0.5rem;
-    min-width: 40px;
+    padding: 1px 2px;
+    font-size: 0.4rem;
+    min-width: 30px;
   }
 }
 
