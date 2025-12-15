@@ -410,7 +410,8 @@ a {
 
 /* Hero */
 .hero {
-  background: linear-gradient(135deg, rgba(59, 42, 35, 0.9) 0%, rgba(59, 42, 35, 0.7) 50%, rgba(200, 169, 126, 0.1) 100%), url('https://via.placeholder.com/1200x600/3B2A23/F5EFE6?text=Luxury+Wigs') center/cover;
+  background: linear-gradient(135deg, rgba(59, 42, 35, 0.95) 0%, rgba(59, 42, 35, 0.8) 50%, rgba(200, 169, 126, 0.2) 100%), url('threeladies.PNG') center/cover;
+  background-blend-mode: overlay;
   color: #F5EFE6;
   padding: 140px 0;
   text-align: center;
@@ -447,18 +448,6 @@ a {
   margin-bottom: 40px;
   opacity: 0.9;
   animation: fadeInUp 1s ease-out 0.2s both;
-}
-
-.hero-image {
-  max-width: 500px;
-  width: 100%;
-  height: auto;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(59, 42, 35, 0.3);
-  margin: 20px 0;
-  background: rgba(245, 239, 230, 0.1);
-  padding: 10px;
-  animation: fadeInUp 1s ease-out 0.5s both;
 }
 
 @keyframes fadeInUp {
