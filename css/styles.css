@@ -99,6 +99,13 @@ a {
 
 .header .container {
   display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Header Top - Logo and Hamburger */
+.header-top {
+  display: flex;
   justify-content: space-between;
   align-items: center;
 }
@@ -117,6 +124,11 @@ a {
   max-width: 300px;
   object-fit: contain;
   filter: brightness(0) invert(1);
+}
+
+/* Mobile Navigation Container */
+.mobile-nav-container {
+  display: none; /* Hidden by default on desktop */
 }
 
 .nav {
@@ -178,6 +190,15 @@ a {
 
 /* Mobile Nav */
 @media (max-width: 768px) {
+  .header .container {
+    gap: 10px;
+  }
+
+  /* Show mobile navigation container on mobile */
+  .mobile-nav-container {
+    display: block;
+  }
+
   /* Hide regular navigation on mobile */
   .nav-list:not(.horizontal):not(.full) {
     display: none;
@@ -187,7 +208,7 @@ a {
   .nav-list.horizontal {
     display: flex;
     position: static;
-    width: auto;
+    width: 100%;
     height: auto;
     background: none;
     backdrop-filter: none;
@@ -259,7 +280,7 @@ a {
     display: none;
   }
 
-  .header .container {
+  .header-top {
     flex-wrap: nowrap;
     gap: 10px;
   }
@@ -274,9 +295,7 @@ a {
   }
 
   .nav {
-    flex: 1;
-    justify-content: flex-end;
-    align-items: center;
+    display: none; /* Hide regular nav on mobile */
   }
 
   .hero-content h1 {
