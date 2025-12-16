@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hair Elevation Studios - Admin Dashboard (Demo)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Modern CSS Reset */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            /* Modern Color Palette */
+            --primary-color: #8B5A8B;
+            --primary-light: #B47BB4;
+            --primary-dark: #6B3A6B;
+            --secondary-color: #2C1810;
+            --accent-color: #F8F6F0;
+            --accent-light: #FCFCFA;
+            --text-dark: #1A1A1A;
+            --text-medium: #4A4A4A;
+            --text-light: #7A7A7A;
+            --text-muted: #A0A0A0;
+            --background-primary: #FFFFFF;
+            --background-secondary: #F9FAFB;
+            --background-tertiary: #F3F4F6;
+            --border-color: #E5E7EB;
+            --border-light: #F3F4F6;
+            --success-color: #10B981;
+            --success-light: #D1FAE5;
+            --danger-color: #EF4444;
+            --danger-light: #FEE2E2;
+            --warning-color: #F59E0B;
+            --warning-light: #FEF3C7;
+            
+            /* Modern Shadows */
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            
+            /* Modern Border Radius */
+            --radius-lg: 0.5rem;
+            --radius-xl: 0.75rem;
+            --radius-2xl: 1rem;
+            --radius-3xl: 1.5rem;
+            
+            /* Modern Transitions */
+            --transition-normal: 250ms ease-in-out;
+            
+            /* Modern Typography */
+            --font-family-sans: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            --font-family-serif: 'Playfair Display', 'Georgia', serif;
+            
+            /* Spacing Scale */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-12: 3rem;
+        }
+
+        body {
+            font-family: var(--font-family-sans);
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--background-secondary) 0%, var(--background-tertiary) 100%);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Demo Container */
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--space-8);
+        }
+
+        .demo-header {
+            text-align: center;
+            margin-bottom: var(--space-12);
+            background: var(--background-primary);
+            padding: var(--space-8);
+            border-radius: var(--radius-3xl);
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--border-light);
+        }
+
+        .demo-header h1 {
+            font-family: var(--font-family-serif);
+            color: var(--secondary-color);
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: var(--space-4);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .demo-header p {
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            margin-bottom: var(--space-6);
+        }
+
+        .demo-note {
+            background: linear-gradient(135deg, var(--warning-light), rgba(245, 158, 11, 0.05));
+            border: 1px solid var(--warning-color);
+            color: var(--text-dark);
+            padding: var(--space-4) var(--space-6);
+            border-radius: var(--radius-xl);
+            margin-bottom: var(--space-8);
+            font-weight: 500;
+        }
+
+        .demo-note i {
+            color: var(--warning-color);
+            margin-right: var(--space-2);
+        }
+
+        /* Modern Cards Preview */
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-6);
+            margin-bottom: var(--space-12);
+        }
+
+        .preview-card {
+            background: var(--background-primary);
+            padding: var(--space-6);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-light);
+            transition: var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preview-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+        }
+
+        .preview-card:hover {
+            box-shadow: var(--shadow-xl);
+            transform: translateY(-4px);
+        }
+
+        .preview-card h3 {
+            font-family: var(--font-family-serif);
+            color: var(--secondary-color);
+            margin-bottom: var(--space-4);
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .preview-card p {
+            color: var(--text-muted);
+            margin-bottom: var(--space-4);
+        }
+
+        .preview-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .preview-card li {
+            padding: var(--space-2) 0;
+            color: var(--text-medium);
+            position: relative;
+            padding-left: var(--space-6);
+        }
+
+        .preview-card li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        /* Modern Button Styles */
+        .btn {
+            padding: var(--space-3) var(--space-6);
+            border: none;
+            border-radius: var(--radius-lg);
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-family: var(--font-family-sans);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--text-medium), var(--text-light));
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, var(--text-dark), var(--text-medium));
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Feature Showcase */
+        .feature-showcase {
+            background: var(--background-primary);
+            padding: var(--space-8);
+            border-radius: var(--radius-3xl);
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--border-light);
+            margin-bottom: var(--space-8);
+        }
+
+        .feature-showcase h2 {
+            font-family: var(--font-family-serif);
+            color: var(--secondary-color);
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: var(--space-8);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-6);
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: var(--space-6);
+            background: var(--background-secondary);
+            border-radius: var(--radius-2xl);
+            transition: var(--transition-normal);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            border-radius: var(--radius-2xl);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            box-shadow: var(--shadow-lg);
+            margin: 0 auto var(--space-4);
+        }
+
+        .feature-item h3 {
+            color: var(--secondary-color);
+            margin-bottom: var(--space-2);
+            font-weight: 600;
+        }
+
+        .feature-item p {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* Color Palette Showcase */
+        .color-palette {
+            display: flex;
+            gap: var(--space-2);
+            margin-top: var(--space-4);
+            flex-wrap: wrap;
+        }
+
+        .color-swatch {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-lg);
+            border: 2px solid var(--background-primary);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-normal);
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .demo-container {
+                padding: var(--space-4);
+            }
+            
+            .demo-header h1 {
+                font-size: 2rem;
+            }
+            
+            .preview-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>Hair Elevation Studios</h1>
+            <p>Modern & Beautiful Admin Dashboard</p>
+            <div class="demo-note">
+                <i class="fas fa-info-circle"></i>
+                <strong>Demo Mode:</strong> This is a preview of the redesigned admin system. 
+                The full functionality requires the backend server to be running with database connection.
+            </div>
+        </div>
+
+        <div class="feature-showcase">
+            <h2>🎨 Beautiful Design Features</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Modern Color Scheme</h3>
+                    <p>Sophisticated purple/rose theme with beautiful gradients throughout</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Responsive Design</h3>
+                    <p>Beautiful on all devices with mobile-first approach</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h3>Smooth Animations</h3>
+                    <p>Micro-interactions and transitions that feel natural</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3>Modern UI Components</h3>
+                    <p>Cards, buttons, forms with elevated design and proper shadows</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="preview-grid">
+            <div class="preview-card">
+                <h3>🔐 Authentication System</h3>
+                <p>Complete login and registration system with beautiful modals</p>
+                <ul>
+                    <li>Modern login form with validation</li>
+                    <li>Account registration with security</li>
+                    <li>Smooth modal animations</li>
+                    <li>Beautiful form styling</li>
+                    <li>Error handling and feedback</li>
+                </ul>
+            </div>
+
+            <div class="preview-card">
+                <h3>📊 Dashboard Overview</h3>
+                <p>Beautiful statistics cards with real-time data</p>
+                <ul>
+                    <li>Total products count</li>
+                    <li>Featured products tracking</li>
+                    <li>Stock level monitoring</li>
+                    <li>Interactive stat cards</li>
+                    <li>Gradient icon backgrounds</li>
+                </ul>
+            </div>
+
+            <div class="preview-card">
+                <h3>📦 Product Management</h3>
+                <p>Complete CRUD operations for products</p>
+                <ul>
+                    <li>Add new products with image upload</li>
+                    <li>Edit existing products</li>
+                    <li>Delete products with confirmation</li>
+                    <li>Search and filter products</li>
+                    <li>Beautiful data tables</li>
+                </ul>
+            </div>
+
+            <div class="preview-card">
+                <h3>🏷️ Collections Management</h3>
+                <p>Organize products into beautiful collections</p>
+                <ul>
+                    <li>Visual collection cards</li>
+                    <li>Product count tracking</li>
+                    <li>Collection-specific management</li>
+                    <li>Beautiful image displays</li>
+                    <li>Interactive hover effects</li>
+                </ul>
+            </div>
+
+            <div class="preview-card">
+                <h3>⭐ Featured Products</h3>
+                <p>Manage homepage featured items</p>
+                <ul>
+                    <li>Add/remove featured products</li>
+                    <li>Featured product grid view</li>
+                    <li>Quick action buttons</li>
+                    <li>Visual product cards</li>
+                    <li>Easy management interface</li>
+                </ul>
+            </div>
+
+            <div class="preview-card">
+                <h3>📦 Inventory Tracking</h3>
+                <p>Monitor stock levels and availability</p>
+                <ul>
+                    <li>Stock quantity tracking</li>
+                    <li>Low stock alerts</li>
+                    <li>Inventory status badges</li>
+                    <li>Quick stock updates</li>
+                    <li>Historical tracking</li>
+                </ul>
+            </div>
+
+            <div class="preview-card">
+                <h3>📁 Media Library</h3>
+                <p>Upload and manage images and videos</p>
+                <ul>
+                    <li>Drag & drop file uploads</li>
+                    <li>Image and video management</li>
+                    <li>File preview gallery</li>
+                    <li>Upload progress tracking</li>
+                    <li>Media organization</li>
+                </ul>
+            </div>
+
+            <div class="preview-card">
+                <h3>🎛️ Advanced Features</h3>
+                <p>Professional admin tools and utilities</p>
+                <ul>
+                    <li>Account management</li>
+                    <li>Data export capabilities</li>
+                    <li>Advanced filtering</li>
+                    <li>Pagination controls</li>
+                    <li>Error handling</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="feature-showcase">
+            <h2>🎨 Design System</h2>
+            <div class="preview-card">
+                <h3>Color Palette</h3>
+                <p>Modern color scheme used throughout the admin system</p>
+                <div class="color-palette">
+                    <div class="color-swatch" style="background: #8B5A8B;" title="Primary Color"></div>
+                    <div class="color-swatch" style="background: #B47BB4;" title="Primary Light"></div>
+                    <div class="color-swatch" style="background: #6B3A6B;" title="Primary Dark"></div>
+                    <div class="color-swatch" style="background: #2C1810;" title="Secondary Color"></div>
+                    <div class="color-swatch" style="background: #F8F6F0;" title="Accent Color"></div>
+                    <div class="color-swatch" style="background: #10B981;" title="Success Color"></div>
+                    <div class="color-swatch" style="background: #EF4444;" title="Danger Color"></div>
+                    <div class="color-swatch" style="background: #F59E0B;" title="Warning Color"></div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-12);">
+            <h2 style="font-family: var(--font-family-serif); color: var(--secondary-color); margin-bottom: var(--space-6);">🚀 Ready to Experience the Full System?</h2>
+            <p style="color: var(--text-muted); margin-bottom: var(--space-6);">
+                The complete admin system includes login, product management, and all features shown above.
+            </p>
+            <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+                <a href="#" class="btn btn-primary" style="text-decoration: none;">
+                    <i class="fas fa-play"></i>
+                    Start Backend Server
+                </a>
+                <a href="#" class="btn btn-secondary" style="text-decoration: none;">
+                    <i class="fas fa-book"></i>
+                    View Documentation
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple demo interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects to feature icons
+            const featureIcons = document.querySelectorAll('.feature-icon');
+            featureIcons.forEach(icon => {
+                icon.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.1) rotate(5deg)';
+                });
+                
+                icon.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1) rotate(0deg)';
+                });
+            });
+
+            // Add click animations to buttons
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    if (this.getAttribute('href') === '#') {
+                        e.preventDefault();
+                        
+                        // Create ripple effect
+                        const ripple = document.createElement('span');
+                        const rect = this.getBoundingClientRect();
+                        const size = Math.max(rect.width, rect.height);
+                        const x = e.clientX - rect.left - size / 2;
+                        const y = e.clientY - rect.top - size / 2;
+                        
+                        ripple.style.width = ripple.style.height = size + 'px';
+                        ripple.style.left = x + 'px';
+                        ripple.style.top = y + 'px';
+                        ripple.style.position = 'absolute';
+                        ripple.style.borderRadius = '50%';
+                        ripple.style.background = 'rgba(255, 255, 255, 0.3)';
+                        ripple.style.transform = 'scale(0)';
+                        ripple.style.animation = 'ripple 0.6s linear';
+                        ripple.style.pointerEvents = 'none';
+                        
+                        this.style.position = 'relative';
+                        this.style.overflow = 'hidden';
+                        this.appendChild(ripple);
+                        
+                        setTimeout(() => {
+                            ripple.remove();
+                        }, 600);
+                    }
+                });
+            });
+
+            // Add CSS for ripple animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>
