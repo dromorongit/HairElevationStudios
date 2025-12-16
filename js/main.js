@@ -16,21 +16,21 @@ function getCart() {
 function saveCart(cart) {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
-function addToCart(productId) {
+function addToCart(productId, quantity = 1) {
     const cart = getCart();
     const existingItem = cart.find(item => item.product.id === productId);
     if (existingItem) {
-        existingItem.quantity += 1;
+        existingItem.quantity += quantity;
     }
     else {
         const product = products.find(p => p.id === productId);
         if (product) {
-            cart.push({ product, quantity: 1 });
+            cart.push({ product, quantity });
         }
     }
     saveCart(cart);
     updateCartCount();
-    alert('Product added to cart!');
+    alert(`${quantity} item(s) added to cart!`);
 }
 function removeFromCart(productId) {
     const cart = getCart().filter(item => item.product.id !== productId);
@@ -136,17 +136,45 @@ function renderProducts(products, container, limit) {
       <h3>${product.name}</h3>
       <p>₵${product.price}</p>
       <div class="product-actions">
-        <a href="product.html?id=${product.id}" class="btn">View Details</a>
+        <div class="quantity-controls">
+          <button class="quantity-btn decrease" data-id="${product.id}">-</button>
+          <span class="quantity" data-id="${product.id}">1</span>
+          <button class="quantity-btn increase" data-id="${product.id}">+</button>
+        </div>
         <button class="btn add-to-cart" data-id="${product.id}">Add to Cart</button>
+        <a href="product.html?id=${product.id}" class="btn">View Details</a>
       </div>
     </div>
   `).join('');
+    // Add event listeners for quantity buttons on cards
+    container.querySelectorAll('.increase').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const productId = e.target.dataset.id;
+            const quantitySpan = container.querySelector(`.quantity[data-id="${productId}"]`);
+            let qty = parseInt(quantitySpan.textContent);
+            qty += 1;
+            quantitySpan.textContent = qty.toString();
+        });
+    });
+    container.querySelectorAll('.decrease').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const productId = e.target.dataset.id;
+            const quantitySpan = container.querySelector(`.quantity[data-id="${productId}"]`);
+            let qty = parseInt(quantitySpan.textContent);
+            if (qty > 1) {
+                qty -= 1;
+                quantitySpan.textContent = qty.toString();
+            }
+        });
+    });
     // Add event listeners for Add to Cart buttons
     container.querySelectorAll('.add-to-cart').forEach(button => {
         button.addEventListener('click', (e) => {
             e.preventDefault();
             const productId = parseInt(e.target.dataset.id);
-            addToCart(productId);
+            const quantitySpan = container.querySelector(`.quantity[data-id="${productId}"]`);
+            const quantity = parseInt(quantitySpan.textContent);
+            addToCart(productId, quantity);
         });
     });
 }
