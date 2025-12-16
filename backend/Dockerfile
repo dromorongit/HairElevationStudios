@@ -10,8 +10,8 @@ COPY package*.json ./
 # Install all dependencies (including dev dependencies for building)
 RUN npm ci
 
-# Copy backend source code
-COPY backend/ ./backend/
+# Copy source code
+COPY . ./
 
 # Build the TypeScript backend
 RUN npm run build
