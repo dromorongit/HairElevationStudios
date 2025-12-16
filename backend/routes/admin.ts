@@ -342,8 +342,9 @@ router.get('/dashboard', (req: Request, res: Response) => {
                 <div id="products" class="section">
                     <div class="products-section">
                         <div class="product-form">
-                            <h3><i class="fas fa-plus"></i> Add New Product</h3>
+                            <h3 id="formTitle"><i class="fas fa-plus"></i> Add New Product</h3>
                             <form id="productForm" enctype="multipart/form-data">
+                                <input type="hidden" id="productId" name="productId">
                                 <div class="form-group">
                                     <label for="name">Product Name</label>
                                     <input type="text" id="name" name="name" required>
@@ -430,8 +431,11 @@ router.get('/dashboard', (req: Request, res: Response) => {
                                     <label for="videos">Video</label>
                                     <input type="file" id="videos" name="videos" accept="video/*">
                                 </div>
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" id="submitBtn" class="btn btn-primary">
                                     <i class="fas fa-save"></i> Add Product
+                                </button>
+                                <button type="button" id="cancelBtn" class="btn btn-secondary" style="display: none;" onclick="cancelEdit()">
+                                    <i class="fas fa-times"></i> Cancel
                                 </button>
                             </form>
                         </div>
@@ -535,6 +539,8 @@ router.get('/dashboard', (req: Request, res: Response) => {
             document.getElementById('productForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const formData = new FormData(e.target);
+                const productId = document.getElementById('productId').value;
+                const isEdit = productId !== '';
 
                 // Handle collections checkboxes
                 const collections = [];
@@ -554,24 +560,25 @@ router.get('/dashboard', (req: Request, res: Response) => {
                 formData.set('onSale', formData.has('onSale') ? 'true' : 'false');
 
                 try {
-                    const response = await fetch('/products/create', {
-                        method: 'POST',
+                    const url = isEdit ? \`/products/update/\${productId}\` : '/products/create';
+                    const method = isEdit ? 'PUT' : 'POST';
+                    const response = await fetch(url, {
+                        method: method,
                         headers: {
                             'Authorization': \`Bearer \${token}\`
                         },
                         body: formData
                     });
                     if (response.ok) {
-                        alert('Product added successfully!');
-                        e.target.reset();
-                        document.getElementById('promoPriceGroup').style.display = 'none';
+                        alert(\`Product \${isEdit ? 'updated' : 'added'} successfully!\`);
+                        cancelEdit();
                         loadProducts();
                     } else {
                         const error = await response.json();
-                        alert('Error adding product: ' + (error.message || 'Unknown error'));
+                        alert(\`Error \${isEdit ? 'updating' : 'adding'} product: \` + (error.message || 'Unknown error'));
                     }
                 } catch (error) {
-                    alert('Error adding product: ' + error.message);
+                    alert(\`Error \${isEdit ? 'updating' : 'adding'} product: \` + error.message);
                 }
             });
 
@@ -592,8 +599,66 @@ router.get('/dashboard', (req: Request, res: Response) => {
                 }
             }
 
-            function editProduct(id) {
-                alert('Edit functionality coming soon...');
+            async function editProduct(id) {
+                try {
+                    const response = await fetch(\`/products/\${id}\`, {
+                        headers: { 'Authorization': \`Bearer \${token}\` }
+                    });
+                    const product = await response.json();
+
+                    // Populate form
+                    document.getElementById('productId').value = product._id;
+                    document.getElementById('name').value = product.name;
+                    document.getElementById('description').value = product.description || '';
+                    document.getElementById('price').value = product.price;
+                    document.getElementById('onSale').checked = product.onSale;
+                    if (product.onSale) {
+                        document.getElementById('promoPriceGroup').style.display = 'block';
+                        document.getElementById('promoPrice').value = product.promoPrice || '';
+                    }
+                    document.getElementById('size').value = product.size ? product.size[0] : '';
+                    document.getElementById('featured').checked = product.featured;
+                    document.getElementById('length').value = product.length || '';
+                    document.getElementById('lace').value = product.lace || '';
+                    document.getElementById('density').value = product.density || '';
+                    document.getElementById('quality').value = product.quality || '';
+                    document.getElementById('color').value = product.color || '';
+                    document.getElementById('texture').value = product.texture || '';
+
+                    // Collections checkboxes
+                    document.querySelectorAll('input[name="collections"]').forEach(checkbox => {
+                        checkbox.checked = product.collections && product.collections.includes(checkbox.value);
+                    });
+
+                    // Update form title and button
+                    document.getElementById('formTitle').innerHTML = '<i class="fas fa-edit"></i> Edit Product';
+                    document.getElementById('submitBtn').innerHTML = '<i class="fas fa-save"></i> Update Product';
+                    document.getElementById('cancelBtn').style.display = 'inline-block';
+
+                    // Make file inputs optional for editing
+                    document.getElementById('coverImage').required = false;
+                    document.getElementById('additionalImages').required = false;
+                    document.getElementById('videos').required = false;
+
+                    // Scroll to form
+                    document.querySelector('.product-form').scrollIntoView({ behavior: 'smooth' });
+                } catch (error) {
+                    alert('Error loading product for editing');
+                }
+            }
+
+            function cancelEdit() {
+                document.getElementById('productForm').reset();
+                document.getElementById('productId').value = '';
+                document.getElementById('formTitle').innerHTML = '<i class="fas fa-plus"></i> Add New Product';
+                document.getElementById('submitBtn').innerHTML = '<i class="fas fa-save"></i> Add Product';
+                document.getElementById('cancelBtn').style.display = 'none';
+                document.getElementById('promoPriceGroup').style.display = 'none';
+
+                // Reset file inputs to required
+                document.getElementById('coverImage').required = true;
+                document.getElementById('additionalImages').required = false;
+                document.getElementById('videos').required = false;
             }
 
             // Load initial data

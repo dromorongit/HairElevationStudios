@@ -184,7 +184,7 @@ app.get('/', (req, res) => {
                 <h2>Admin Login</h2>
                 <form id="loginForm">
                     <div class="form-group">
-                        <input type="email" id="loginEmail" placeholder="Email Address" required>
+                        <input type="text" id="loginUsername" placeholder="Username" required>
                     </div>
                     <div class="form-group">
                         <input type="password" id="loginPassword" placeholder="Password" required>
@@ -265,13 +265,13 @@ app.get('/', (req, res) => {
             document.getElementById('loginForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 hideError(loginError);
-                const email = document.getElementById('loginEmail').value;
+                const username = document.getElementById('loginUsername').value;
                 const password = document.getElementById('loginPassword').value;
                 try {
                     const response = await fetch('/auth/login', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email, password })
+                        body: JSON.stringify({ username, password })
                     });
                     const data = await response.json();
                     if (response.ok) {
