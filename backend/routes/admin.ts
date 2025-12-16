@@ -45,14 +45,18 @@ router.get('/dashboard', (req: Request, res: Response) => {
                 gap: 0.5rem;
             }
             .header .logo {
-                max-height: 80px;
+                max-height: 50px;
+                max-width: 200px;
                 width: auto;
+                height: auto;
+                object-fit: contain;
+                filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
             }
             .header .subtitle {
                 margin: 0;
                 opacity: 0.9;
                 font-weight: 300;
-                font-size: 1.2rem;
+                font-size: 1.1rem;
             }
             .logout-btn {
                 position: absolute;

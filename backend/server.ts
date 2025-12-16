@@ -163,10 +163,15 @@ app.get('/', (req, res) => {
             }
             .logo {
                 text-align: center;
-                margin-bottom: 1rem;
-                font-size: 1.5rem;
-                font-weight: 700;
-                color: #333;
+                margin-bottom: 1.5rem;
+            }
+            .logo img {
+                max-height: 50px;
+                max-width: 180px;
+                width: auto;
+                height: auto;
+                object-fit: contain;
+                filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
             }
         </style>
     </head>
