@@ -15,7 +15,7 @@ const uploadRoutes = require('./routes/upload');
 
 // Import middleware
 const errorHandler = require('./middleware/errorHandler');
-const authMiddleware = require('./middleware/auth');
+const { auth } = require('./middleware/auth');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -75,8 +75,8 @@ app.get('/health', (req, res) => {
 
 // API routes
 app.use('/api/auth', authRoutes);
-app.use('/api/products', authMiddleware, productRoutes);
-app.use('/api/upload', authMiddleware, uploadRoutes);
+app.use('/api/products', auth, productRoutes);
+app.use('/api/upload', auth, uploadRoutes);
 
 // Serve admin interface
 app.use('/admin', express.static(path.join(__dirname, 'public', 'admin')));
@@ -109,12 +109,18 @@ app.use(errorHandler);
 // MongoDB connection
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI, {
+    const mongoURI = process.env.MONGODB_URI || 'mongodb://mongo:YSMCTEoYlMQzHJapOMWOotnBuqIOYEyt@mongodb.railway.internal:27017';
+    
+    const conn = await mongoose.connect(mongoURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      // Add these options for better Railway compatibility
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
     });
 
     console.log(`MongoDB Connected: ${conn.connection.host}`);
+    console.log(`Database: ${conn.connection.name}`);
 
     // Create default admin if none exists
     const Admin = require('./models/Admin');
@@ -133,10 +139,13 @@ const connectDB = async () => {
       console.log('Username:', defaultAdmin.username);
       console.log('Email:', defaultAdmin.email);
       console.log('Password:', process.env.ADMIN_PASSWORD || 'admin123');
+    } else {
+      console.log(`Found ${adminCount} existing admin(s)`);
     }
 
   } catch (error) {
     console.error('Database connection error:', error.message);
+    console.error('Error details:', error);
     process.exit(1);
   }
 };
