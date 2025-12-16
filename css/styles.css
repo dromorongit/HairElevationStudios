@@ -409,8 +409,8 @@ a {
   }
 
   .product-actions .btn {
-    padding: 6px 10px;
-    font-size: 0.7rem;
+    padding: 4px 8px;
+    font-size: 0.6rem;
     width: 60%;
     min-width: unset;
   }
