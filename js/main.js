@@ -94,6 +94,11 @@ function renderProducts(productsToShow, container, limit) {
       <img src="${window.apiService.getImageUrl(product.coverImage)}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x400/3B2A23/F5EFE6?text=No+Image'">
       <h3>${product.name}</h3>
       <p>₵${product.price}</p>
+      <div class="quantity-controls">
+        <button class="quantity-btn decrease" data-id="${product._id}">-</button>
+        <span class="quantity" data-id="${product._id}">1</span>
+        <button class="quantity-btn increase" data-id="${product._id}">+</button>
+      </div>
       <div class="product-actions">
         <button class="btn add-to-cart" data-id="${product._id}">Add to Cart</button>
         <a href="product.html?id=${product._id}" class="btn">View Details</a>
@@ -101,12 +106,37 @@ function renderProducts(productsToShow, container, limit) {
     </div>
   `).join('');
 
+    // Add event listeners for quantity buttons on cards
+    container.querySelectorAll('.increase').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const productId = e.target.dataset.id;
+            const quantitySpan = container.querySelector(`.quantity[data-id="${productId}"]`);
+            let qty = parseInt(quantitySpan.textContent);
+            qty += 1;
+            quantitySpan.textContent = qty.toString();
+        });
+    });
+
+    container.querySelectorAll('.decrease').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const productId = e.target.dataset.id;
+            const quantitySpan = container.querySelector(`.quantity[data-id="${productId}"]`);
+            let qty = parseInt(quantitySpan.textContent);
+            if (qty > 1) {
+                qty -= 1;
+                quantitySpan.textContent = qty.toString();
+            }
+        });
+    });
+
     // Add event listeners for Add to Cart buttons
     container.querySelectorAll('.add-to-cart').forEach(button => {
         button.addEventListener('click', (e) => {
             e.preventDefault();
             const productId = e.target.dataset.id;
-            addToCart(productId);
+            const quantitySpan = container.querySelector(`.quantity[data-id="${productId}"]`);
+            const quantity = parseInt(quantitySpan.textContent);
+            addToCart(productId, quantity);
         });
     });
 }
