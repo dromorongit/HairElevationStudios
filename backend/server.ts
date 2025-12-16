@@ -34,45 +34,176 @@ app.get('/', (req, res) => {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Hair Elevation Studios - Admin</title>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         <style>
-            body { font-family: Arial, sans-serif; background: #f4f4f4; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-            .container { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 300px; }
-            h2 { text-align: center; color: #333; }
-            input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; }
-            button { width: 100%; padding: 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; margin: 5px 0; }
-            button:hover { background: #0056b3; }
-            .error { color: red; text-align: center; margin-top: 10px; }
-            .success { color: green; text-align: center; margin-top: 10px; }
-            .toggle { text-align: center; margin-top: 10px; }
-            .toggle button { background: none; color: #007bff; border: none; cursor: pointer; text-decoration: underline; }
-            .toggle button:hover { background: none; color: #0056b3; }
+            * { box-sizing: border-box; }
+            body {
+                font-family: 'Poppins', sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                margin: 0;
+                padding: 20px;
+            }
+            .container {
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
+                padding: 2.5rem;
+                border-radius: 20px;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+                width: 100%;
+                max-width: 400px;
+                border: 1px solid rgba(255,255,255,0.2);
+                position: relative;
+                overflow: hidden;
+            }
+            .container::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 4px;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+            }
+            h2 {
+                text-align: center;
+                color: #333;
+                margin-bottom: 1.5rem;
+                font-weight: 600;
+                font-size: 1.8rem;
+            }
+            .form-group {
+                margin-bottom: 1.2rem;
+                position: relative;
+            }
+            input {
+                width: 100%;
+                padding: 12px 15px;
+                border: 2px solid #e1e5e9;
+                border-radius: 10px;
+                font-size: 16px;
+                transition: all 0.3s ease;
+                background: #f8f9fa;
+            }
+            input:focus {
+                outline: none;
+                border-color: #667eea;
+                background: white;
+                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            }
+            button {
+                width: 100%;
+                padding: 12px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+                font-size: 16px;
+                font-weight: 500;
+                transition: all 0.3s ease;
+                margin: 8px 0;
+            }
+            button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            }
+            button:active {
+                transform: translateY(0);
+            }
+            .error {
+                color: #e74c3c;
+                text-align: center;
+                margin-top: 10px;
+                font-size: 14px;
+                background: #fdf2f2;
+                padding: 8px;
+                border-radius: 5px;
+                border: 1px solid #fadbd8;
+            }
+            .success {
+                color: #27ae60;
+                text-align: center;
+                margin-top: 10px;
+                font-size: 14px;
+                background: #d5f4e6;
+                padding: 8px;
+                border-radius: 5px;
+                border: 1px solid #a8e6cf;
+            }
+            .toggle {
+                text-align: center;
+                margin-top: 1.5rem;
+            }
+            .toggle button {
+                background: none;
+                color: #667eea;
+                border: none;
+                cursor: pointer;
+                font-size: 14px;
+                text-decoration: none;
+                font-weight: 500;
+                transition: color 0.3s ease;
+            }
+            .toggle button:hover {
+                color: #764ba2;
+                text-decoration: underline;
+            }
             .hidden { display: none; }
+            .fade-in {
+                animation: fadeIn 0.5s ease-in;
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .logo {
+                text-align: center;
+                margin-bottom: 1rem;
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: #333;
+            }
         </style>
     </head>
     <body>
-        <div class="container">
+        <div class="container fade-in">
+            <div class="logo">Hair Elevation Studios</div>
             <div id="loginSection">
                 <h2>Admin Login</h2>
                 <form id="loginForm">
-                    <input type="email" id="loginEmail" placeholder="Email" required>
-                    <input type="password" id="loginPassword" placeholder="Password" required>
-                    <button type="submit">Login</button>
+                    <div class="form-group">
+                        <input type="email" id="loginEmail" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="loginPassword" placeholder="Password" required>
+                    </div>
+                    <button type="submit">Sign In</button>
                 </form>
-                <div id="loginError" class="error"></div>
+                <div id="loginError" class="error" style="display: none;"></div>
                 <div class="toggle">
-                    <button id="showRegister">Need to register?</button>
+                    <button id="showRegister">Create New Account</button>
                 </div>
             </div>
             <div id="registerSection" class="hidden">
-                <h2>Admin Register</h2>
+                <h2>Create Account</h2>
                 <form id="registerForm">
-                    <input type="text" id="username" placeholder="Username" required>
-                    <input type="email" id="registerEmail" placeholder="Email" required>
-                    <input type="password" id="registerPassword" placeholder="Password" required>
-                    <button type="submit">Register</button>
+                    <div class="form-group">
+                        <input type="text" id="username" placeholder="Username" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="registerEmail" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="registerPassword" placeholder="Password" required>
+                    </div>
+                    <button type="submit">Create Account</button>
                 </form>
-                <div id="registerError" class="error"></div>
-                <div id="registerSuccess" class="success"></div>
+                <div id="registerError" class="error" style="display: none;"></div>
+                <div id="registerSuccess" class="success" style="display: none;"></div>
                 <div class="toggle">
                     <button id="showLogin">Back to Login</button>
                 </div>
@@ -83,19 +214,49 @@ app.get('/', (req, res) => {
             const registerSection = document.getElementById('registerSection');
             const showRegister = document.getElementById('showRegister');
             const showLogin = document.getElementById('showLogin');
+            const loginError = document.getElementById('loginError');
+            const registerError = document.getElementById('registerError');
+            const registerSuccess = document.getElementById('registerSuccess');
 
-            showRegister.addEventListener('click', () => {
+            function showError(element, message) {
+                element.textContent = message;
+                element.style.display = 'block';
+            }
+
+            function hideError(element) {
+                element.style.display = 'none';
+            }
+
+            function showSuccess(element, message) {
+                element.textContent = message;
+                element.style.display = 'block';
+            }
+
+            function hideSuccess(element) {
+                element.style.display = 'none';
+            }
+
+            showRegister.addEventListener('click', (e) => {
+                e.preventDefault();
                 loginSection.classList.add('hidden');
                 registerSection.classList.remove('hidden');
+                hideError(loginError);
+                hideError(registerError);
+                hideSuccess(registerSuccess);
             });
 
-            showLogin.addEventListener('click', () => {
+            showLogin.addEventListener('click', (e) => {
+                e.preventDefault();
                 registerSection.classList.add('hidden');
                 loginSection.classList.remove('hidden');
+                hideError(loginError);
+                hideError(registerError);
+                hideSuccess(registerSuccess);
             });
 
             document.getElementById('loginForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
+                hideError(loginError);
                 const email = document.getElementById('loginEmail').value;
                 const password = document.getElementById('loginPassword').value;
                 try {
@@ -109,15 +270,17 @@ app.get('/', (req, res) => {
                         localStorage.setItem('token', data.token);
                         window.location.href = '/admin/dashboard';
                     } else {
-                        document.getElementById('loginError').textContent = data.message;
+                        showError(loginError, data.message);
                     }
                 } catch (error) {
-                    document.getElementById('loginError').textContent = 'Login failed';
+                    showError(loginError, 'Login failed. Please try again.');
                 }
             });
 
             document.getElementById('registerForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
+                hideError(registerError);
+                hideSuccess(registerSuccess);
                 const username = document.getElementById('username').value;
                 const email = document.getElementById('registerEmail').value;
                 const password = document.getElementById('registerPassword').value;
@@ -129,19 +292,17 @@ app.get('/', (req, res) => {
                     });
                     const data = await response.json();
                     if (response.ok) {
-                        document.getElementById('registerSuccess').textContent = 'Registration successful! You can now login.';
-                        document.getElementById('registerError').textContent = '';
+                        showSuccess(registerSuccess, 'Account created successfully! Redirecting to login...');
                         setTimeout(() => {
                             registerSection.classList.add('hidden');
                             loginSection.classList.remove('hidden');
+                            hideSuccess(registerSuccess);
                         }, 2000);
                     } else {
-                        document.getElementById('registerError').textContent = data.message;
-                        document.getElementById('registerSuccess').textContent = '';
+                        showError(registerError, data.message);
                     }
                 } catch (error) {
-                    document.getElementById('registerError').textContent = 'Registration failed';
-                    document.getElementById('registerSuccess').textContent = '';
+                    showError(registerError, 'Registration failed. Please try again.');
                 }
             });
         </script>
