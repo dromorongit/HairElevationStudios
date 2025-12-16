@@ -163,6 +163,19 @@ router.get('/dashboard', (req: Request, res: Response) => {
                 width: auto;
                 margin: 0;
             }
+            .form-row {
+                display: flex;
+                gap: 1rem;
+            }
+            .form-group.half {
+                flex: 1;
+            }
+            @media (max-width: 768px) {
+                .form-row {
+                    flex-direction: column;
+                    gap: 0;
+                }
+            }
             .btn {
                 padding: 12px 24px;
                 border: none;
@@ -332,6 +345,24 @@ router.get('/dashboard', (req: Request, res: Response) => {
                                     <input type="number" id="price" name="price" step="0.01" required>
                                 </div>
                                 <div class="form-group">
+                                    <label for="onSale">
+                                        <input type="checkbox" id="onSale" name="onSale"> On Sale/Promo
+                                    </label>
+                                </div>
+                                <div class="form-group" id="promoPriceGroup" style="display: none;">
+                                    <label for="promoPrice">Promo Price (GHS)</label>
+                                    <input type="number" id="promoPrice" name="promoPrice" step="0.01">
+                                </div>
+                                <div class="form-group">
+                                    <label for="size">Size</label>
+                                    <select id="size" name="size" required>
+                                        <option value="">Select Size</option>
+                                        <option value="Small">Small</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="Large">Large</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <label>Collections</label>
                                     <div class="checkbox-group">
                                         <label><input type="checkbox" name="collections" value="The Bridal Crowns"> The Bridal Crowns</label>
@@ -344,6 +375,36 @@ router.get('/dashboard', (req: Request, res: Response) => {
                                     <label for="featured">
                                         <input type="checkbox" id="featured" name="featured"> Featured Product
                                     </label>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group half">
+                                        <label for="length">Length</label>
+                                        <input type="text" id="length" name="length" placeholder="e.g. 10 inches">
+                                    </div>
+                                    <div class="form-group half">
+                                        <label for="lace">Lace</label>
+                                        <input type="text" id="lace" name="lace" placeholder="e.g. Swiss Lace">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group half">
+                                        <label for="density">Density</label>
+                                        <input type="text" id="density" name="density" placeholder="e.g. 150%">
+                                    </div>
+                                    <div class="form-group half">
+                                        <label for="quality">Quality</label>
+                                        <input type="text" id="quality" name="quality" placeholder="e.g. Premium">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group half">
+                                        <label for="color">Color</label>
+                                        <input type="text" id="color" name="color" placeholder="e.g. Natural Black">
+                                    </div>
+                                    <div class="form-group half">
+                                        <label for="texture">Texture</label>
+                                        <input type="text" id="texture" name="texture" placeholder="e.g. Straight">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="coverImage">Cover Image</label>
@@ -448,6 +509,17 @@ router.get('/dashboard', (req: Request, res: Response) => {
                 document.getElementById('totalCollections').textContent = collections.size;
             }
 
+            // Promo price toggle
+            document.getElementById('onSale').addEventListener('change', (e) => {
+                const promoGroup = document.getElementById('promoPriceGroup');
+                if (e.target.checked) {
+                    promoGroup.style.display = 'block';
+                } else {
+                    promoGroup.style.display = 'none';
+                    document.getElementById('promoPrice').value = '';
+                }
+            });
+
             document.getElementById('productForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const formData = new FormData(e.target);
@@ -459,8 +531,15 @@ router.get('/dashboard', (req: Request, res: Response) => {
                 });
                 formData.set('collections', JSON.stringify(collections));
 
-                // Convert featured checkbox to boolean
+                // Handle size as array
+                const size = formData.get('size');
+                if (size) {
+                    formData.set('size', JSON.stringify([size]));
+                }
+
+                // Convert checkboxes to boolean
                 formData.set('featured', formData.has('featured') ? 'true' : 'false');
+                formData.set('onSale', formData.has('onSale') ? 'true' : 'false');
 
                 try {
                     const response = await fetch('/products/create', {
@@ -473,6 +552,7 @@ router.get('/dashboard', (req: Request, res: Response) => {
                     if (response.ok) {
                         alert('Product added successfully!');
                         e.target.reset();
+                        document.getElementById('promoPriceGroup').style.display = 'none';
                         loadProducts();
                     } else {
                         const error = await response.json();

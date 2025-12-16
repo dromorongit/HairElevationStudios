@@ -58,11 +58,25 @@ router.post('/create', authMiddleware, upload.fields([
       }
     }
 
-    // Convert featured to boolean
-    productData.featured = productData.featured === 'true';
+    // Parse size if it's a JSON string
+    if (productData.size && typeof productData.size === 'string') {
+      try {
+        productData.size = JSON.parse(productData.size);
+      } catch (e) {
+        // If parsing fails, treat as single value array
+        productData.size = [productData.size];
+      }
+    }
 
-    // Convert price to number
+    // Convert booleans
+    productData.featured = productData.featured === 'true';
+    productData.onSale = productData.onSale === 'true';
+
+    // Convert prices to numbers
     productData.price = parseFloat(productData.price);
+    if (productData.promoPrice) {
+      productData.promoPrice = parseFloat(productData.promoPrice);
+    }
 
     if (files.coverImage) {
       productData.coverImage = files.coverImage[0].path;
