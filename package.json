@@ -1,9 +1,12 @@
 {
   "name": "hairelevationstudios",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Hair Elevation Studio Admin & Inventory System Backend",
+  "main": "backend/server.js",
   "scripts": {
+    "build": "tsc --project backend/tsconfig.json",
+    "start": "node dist/backend/server.js",
+    "dev": "ts-node --project backend/tsconfig.json backend/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,7 +20,23 @@
     "url": "https://github.com/dromorongit/HairElevationStudios/issues"
   },
   "homepage": "https://github.com/dromorongit/HairElevationStudios#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^8.0.3",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3",
+    "multer": "^1.4.5-lts.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1"
+  },
   "devDependencies": {
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/multer": "^1.4.11",
+    "@types/cors": "^2.8.17",
+    "@types/node": "^20.10.5",
+    "ts-node": "^10.9.2"
   }
 }
