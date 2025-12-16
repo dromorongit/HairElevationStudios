@@ -1,0 +1,10 @@
+{
+  "build": {
+    "builder": "DOCKERFILE"
+  },
+  "deploy": {
+    "startCommand": "node dist/backend/server.js",
+    "healthcheckPath": "/",
+    "healthcheckTimeout": 300
+  }
+}
