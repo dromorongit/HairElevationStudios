@@ -147,6 +147,22 @@ router.get('/dashboard', (req: Request, res: Response) => {
                 resize: vertical;
                 min-height: 80px;
             }
+            .checkbox-group {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+            .checkbox-group label {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                cursor: pointer;
+                font-weight: normal;
+            }
+            .checkbox-group input[type="checkbox"] {
+                width: auto;
+                margin: 0;
+            }
             .btn {
                 padding: 12px 24px;
                 border: none;
@@ -302,36 +318,44 @@ router.get('/dashboard', (req: Request, res: Response) => {
                     <div class="products-section">
                         <div class="product-form">
                             <h3><i class="fas fa-plus"></i> Add New Product</h3>
-                            <form id="productForm">
+                            <form id="productForm" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label for="name">Product Name</label>
-                                    <input type="text" id="name" required>
+                                    <input type="text" id="name" name="name" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="description">Description</label>
-                                    <textarea id="description"></textarea>
+                                    <textarea id="description" name="description"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="price">Price ($)</label>
-                                    <input type="number" id="price" step="0.01" required>
+                                    <label for="price">Price (GHS)</label>
+                                    <input type="number" id="price" name="price" step="0.01" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="collection">Collection</label>
-                                    <select id="collection">
-                                        <option value="The Bridal Crowns">The Bridal Crowns</option>
-                                        <option value="The Everyday Crown">The Everyday Crown</option>
-                                        <option value="The Queen's Curls">The Queen's Curls</option>
-                                        <option value="The Signature Pixies">The Signature Pixies</option>
-                                    </select>
+                                    <label>Collections</label>
+                                    <div class="checkbox-group">
+                                        <label><input type="checkbox" name="collections" value="The Bridal Crowns"> The Bridal Crowns</label>
+                                        <label><input type="checkbox" name="collections" value="The Everyday Crown"> The Everyday Crown</label>
+                                        <label><input type="checkbox" name="collections" value="The Queen's Curls"> The Queen's Curls</label>
+                                        <label><input type="checkbox" name="collections" value="The Signature Pixies"> The Signature Pixies</label>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="featured">
-                                        <input type="checkbox" id="featured"> Featured Product
+                                        <input type="checkbox" id="featured" name="featured"> Featured Product
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label for="coverImage">Cover Image URL</label>
-                                    <input type="url" id="coverImage">
+                                    <label for="coverImage">Cover Image</label>
+                                    <input type="file" id="coverImage" name="coverImage" accept="image/*" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="additionalImages">Additional Images</label>
+                                    <input type="file" id="additionalImages" name="additionalImages" accept="image/*" multiple>
+                                </div>
+                                <div class="form-group">
+                                    <label for="videos">Video</label>
+                                    <input type="file" id="videos" name="videos" accept="video/*">
                                 </div>
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-save"></i> Add Product
@@ -427,33 +451,35 @@ router.get('/dashboard', (req: Request, res: Response) => {
             document.getElementById('productForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const formData = new FormData(e.target);
-                const productData = {
-                    name: formData.get('name'),
-                    description: formData.get('description'),
-                    price: parseFloat(formData.get('price')),
-                    collections: [formData.get('collection')],
-                    featured: formData.get('featured') === 'on',
-                    coverImage: formData.get('coverImage') || ''
-                };
+
+                // Handle collections checkboxes
+                const collections = [];
+                document.querySelectorAll('input[name="collections"]:checked').forEach(checkbox => {
+                    collections.push(checkbox.value);
+                });
+                formData.set('collections', JSON.stringify(collections));
+
+                // Convert featured checkbox to boolean
+                formData.set('featured', formData.has('featured') ? 'true' : 'false');
 
                 try {
                     const response = await fetch('/products/create', {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json',
                             'Authorization': \`Bearer \${token}\`
                         },
-                        body: JSON.stringify(productData)
+                        body: formData
                     });
                     if (response.ok) {
                         alert('Product added successfully!');
                         e.target.reset();
                         loadProducts();
                     } else {
-                        alert('Error adding product');
+                        const error = await response.json();
+                        alert('Error adding product: ' + (error.message || 'Unknown error'));
                     }
                 } catch (error) {
-                    alert('Error adding product');
+                    alert('Error adding product: ' + error.message);
                 }
             });
 

@@ -48,6 +48,22 @@ router.post('/create', authMiddleware, upload.fields([
     const files = req.files as { [fieldname: string]: Express.Multer.File[] };
     const productData = req.body;
 
+    // Parse collections if it's a JSON string
+    if (productData.collections && typeof productData.collections === 'string') {
+      try {
+        productData.collections = JSON.parse(productData.collections);
+      } catch (e) {
+        // If parsing fails, treat as single value array
+        productData.collections = [productData.collections];
+      }
+    }
+
+    // Convert featured to boolean
+    productData.featured = productData.featured === 'true';
+
+    // Convert price to number
+    productData.price = parseFloat(productData.price);
+
     if (files.coverImage) {
       productData.coverImage = files.coverImage[0].path;
     }
