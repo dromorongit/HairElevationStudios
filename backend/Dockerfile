@@ -31,6 +31,9 @@ RUN npm ci --only=production && npm cache clean --force
 # Copy built application from builder stage
 COPY --from=builder /app/dist ./dist
 
+# Copy logo
+COPY --from=builder /app/HESLOGO.PNG ./
+
 # Create uploads directory
 RUN mkdir -p uploads
 
