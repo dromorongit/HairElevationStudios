@@ -38,15 +38,21 @@ router.get('/dashboard', (req: Request, res: Response) => {
                 text-align: center;
                 position: relative;
             }
-            .header h1 {
-                margin: 0;
-                font-size: 2.5rem;
-                font-weight: 700;
+            .header .logo-section {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            .header .logo {
+                max-height: 80px;
+                width: auto;
             }
             .header .subtitle {
-                margin: 0.5rem 0 0 0;
+                margin: 0;
                 opacity: 0.9;
                 font-weight: 300;
+                font-size: 1.2rem;
             }
             .logout-btn {
                 position: absolute;
@@ -292,8 +298,10 @@ router.get('/dashboard', (req: Request, res: Response) => {
     <body>
         <div class="dashboard">
             <div class="header">
-                <h1>Hair Elevation Studios</h1>
-                <p class="subtitle">Admin Dashboard</p>
+                <div class="logo-section">
+                    <img src="/HESLOGO.PNG" alt="Hair Elevation Studios Logo" class="logo">
+                    <p class="subtitle">Admin Dashboard</p>
+                </div>
                 <button class="logout-btn" onclick="logout()">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </button>

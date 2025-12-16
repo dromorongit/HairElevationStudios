@@ -21,6 +21,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+app.use(express.static(path.join(__dirname, '../')));
 
 // Health check
 app.get('/health', (req, res) => res.json({ status: 'OK' }));
@@ -171,7 +172,9 @@ app.get('/', (req, res) => {
     </head>
     <body>
         <div class="container fade-in">
-            <div class="logo">Hair Elevation Studios</div>
+            <div class="logo">
+                <img src="/HESLOGO.PNG" alt="Hair Elevation Studios Logo">
+            </div>
             <div id="loginSection">
                 <h2>Admin Login</h2>
                 <form id="loginForm">
