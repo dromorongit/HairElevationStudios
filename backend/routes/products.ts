@@ -79,13 +79,13 @@ router.post('/create', authMiddleware, upload.fields([
     }
 
     if (files.coverImage) {
-      productData.coverImage = files.coverImage[0].path;
+      productData.coverImage = '/uploads/' + files.coverImage[0].filename;
     }
     if (files.additionalImages) {
-      productData.additionalImages = files.additionalImages.map(file => file.path);
+      productData.additionalImages = files.additionalImages.map(file => '/uploads/' + file.filename);
     }
     if (files.videos) {
-      productData.videos = files.videos.map(file => file.path);
+      productData.videos = files.videos.map(file => '/uploads/' + file.filename);
     }
 
     const product = new Product(productData);
@@ -107,13 +107,13 @@ router.put('/update/:id', authMiddleware, upload.fields([
     const productData = req.body;
 
     if (files.coverImage) {
-      productData.coverImage = files.coverImage[0].path;
+      productData.coverImage = '/uploads/' + files.coverImage[0].filename;
     }
     if (files.additionalImages) {
-      productData.additionalImages = files.additionalImages.map(file => file.path);
+      productData.additionalImages = files.additionalImages.map(file => '/uploads/' + file.filename);
     }
     if (files.videos) {
-      productData.videos = files.videos.map(file => file.path);
+      productData.videos = files.videos.map(file => '/uploads/' + file.filename);
     }
 
     const product = await Product.findByIdAndUpdate(req.params.id, productData, { new: true });
