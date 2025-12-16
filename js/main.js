@@ -176,7 +176,12 @@ function renderCart() {
       <img src="${item.product.image}" alt="${item.product.name}">
       <div class="cart-item-details">
         <h3>${item.product.name}</h3>
-        <p>₵${item.product.price} x ${item.quantity}</p>
+        <div class="quantity-controls">
+          <button class="quantity-btn decrease" data-id="${item.product.id}">-</button>
+          <span class="quantity">${item.quantity}</span>
+          <button class="quantity-btn increase" data-id="${item.product.id}">+</button>
+        </div>
+        <p>₵${item.product.price} each</p>
         <p>Subtotal: ₵${item.product.price * item.quantity}</p>
       </div>
       <button class="btn remove-from-cart" data-id="${item.product.id}">Remove</button>
@@ -188,6 +193,37 @@ function renderCart() {
         button.addEventListener('click', (e) => {
             const productId = parseInt(e.target.dataset.id);
             removeFromCart(productId);
+        });
+    });
+    // Add event listeners for quantity buttons
+    cartContainer.querySelectorAll('.increase').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const productId = parseInt(e.target.dataset.id);
+            const cart = getCart();
+            const item = cart.find(item => item.product.id === productId);
+            if (item) {
+                item.quantity += 1;
+                saveCart(cart);
+                updateCartCount();
+                renderCart();
+            }
+        });
+    });
+    cartContainer.querySelectorAll('.decrease').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const productId = parseInt(e.target.dataset.id);
+            const cart = getCart();
+            const item = cart.find(item => item.product.id === productId);
+            if (item) {
+                if (item.quantity > 1) {
+                    item.quantity -= 1;
+                    saveCart(cart);
+                    updateCartCount();
+                    renderCart();
+                } else {
+                    removeFromCart(productId);
+                }
+            }
         });
     });
 }
