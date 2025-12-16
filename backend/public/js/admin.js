@@ -20,7 +20,13 @@ class AdminSystem {
     setupEventListeners() {
         // Authentication
         document.getElementById('loginForm').addEventListener('submit', (e) => this.handleLogin(e));
+        document.getElementById('signupForm').addEventListener('submit', (e) => this.handleSignup(e));
         document.getElementById('logoutBtn').addEventListener('click', () => this.handleLogout());
+        document.getElementById('deleteAccountBtn').addEventListener('click', () => this.handleDeleteAccount());
+
+        // Auth mode toggle
+        document.getElementById('loginTab').addEventListener('click', () => this.switchAuthMode('login'));
+        document.getElementById('signupTab').addEventListener('click', () => this.switchAuthMode('signup'));
 
         // Navigation
         document.querySelectorAll('.nav-link').forEach(link => {
@@ -151,12 +157,126 @@ class AdminSystem {
         }
     }
 
+    async handleSignup(e) {
+        e.preventDefault();
+        
+        // Validate password confirmation
+        const password = document.getElementById('signupPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        
+        if (password !== confirmPassword) {
+            this.showErrorMessage('signupError', 'Passwords do not match');
+            return;
+        }
+        
+        const formData = new FormData(e.target);
+        const data = {
+            username: formData.get('username'),
+            email: formData.get('email'),
+            password: formData.get('password'),
+            confirmPassword: formData.get('confirmPassword')
+        };
+
+        try {
+            const response = await fetch(`${this.apiBase}/auth/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                this.token = result.data.token;
+                this.currentUser = result.data.admin;
+                localStorage.setItem('adminToken', this.token);
+                this.showAdminInterface();
+                await this.loadDashboardStats();
+                this.showSuccessMessage('Admin account created successfully!');
+            } else {
+                this.showErrorMessage('signupError', result.message || 'Registration failed');
+            }
+        } catch (error) {
+            console.error('Signup error:', error);
+            this.showErrorMessage('signupError', 'Network error. Please try again.');
+        }
+    }
+
+    switchAuthMode(mode) {
+        const loginTab = document.getElementById('loginTab');
+        const signupTab = document.getElementById('signupTab');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const authTitle = document.getElementById('authTitle');
+        const loginError = document.getElementById('loginError');
+        const signupError = document.getElementById('signupError');
+        const signupSuccess = document.getElementById('signupSuccess');
+
+        // Clear messages
+        if (loginError) loginError.textContent = '';
+        if (signupError) signupError.textContent = '';
+        if (signupSuccess) signupSuccess.textContent = '';
+
+        if (mode === 'signup') {
+            loginTab.classList.remove('active');
+            signupTab.classList.add('active');
+            loginForm.style.display = 'none';
+            signupForm.style.display = 'block';
+            authTitle.textContent = 'Create Admin Account';
+        } else {
+            signupTab.classList.remove('active');
+            loginTab.classList.add('active');
+            signupForm.style.display = 'none';
+            loginForm.style.display = 'block';
+            authTitle.textContent = 'Admin Login';
+        }
+    }
+
     handleLogout() {
         localStorage.removeItem('adminToken');
         this.token = null;
         this.currentUser = null;
         this.showLoginModal();
         this.showSuccessMessage('Logged out successfully!');
+    }
+
+    async handleDeleteAccount() {
+        const confirmation = prompt(
+            '⚠️ DANGER: This will permanently delete your admin account and all associated data!\n\n' +
+            'Type "DELETE" to confirm account deletion:'
+        );
+        
+        if (confirmation !== 'DELETE') {
+            this.showErrorMessage('Account deletion cancelled.');
+            return;
+        }
+
+        try {
+            const response = await fetch(`${this.apiBase}/auth/account`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                }
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                // Clear local storage and show login modal
+                localStorage.removeItem('adminToken');
+                this.token = null;
+                this.currentUser = null;
+                this.showLoginModal();
+                this.showSuccessMessage('Admin account deleted successfully. You can now create a new account.');
+            } else {
+                this.showErrorMessage('Failed to delete account: ' + result.message);
+            }
+        } catch (error) {
+            console.error('Delete account error:', error);
+            this.showErrorMessage('Network error. Please try again.');
+        }
     }
 
     async loadDashboardStats() {
@@ -982,15 +1102,35 @@ class AdminSystem {
         sidebar.classList.toggle('show');
     }
 
-    showErrorMessage(message) {
+    showErrorMessage(elementId, message) {
         console.error(message);
-        // You can implement a better notification system here
+        
+        // If elementId is provided, show error in specific element
+        if (elementId) {
+            const errorElement = document.getElementById(elementId);
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+                return;
+            }
+        }
+        
+        // Fallback to alert if no specific element found
         alert('Error: ' + message);
     }
 
     showSuccessMessage(message) {
         console.log(message);
-        // You can implement a better notification system here
+        
+        // Check if there's a success element to display
+        const successElement = document.getElementById('signupSuccess');
+        if (successElement) {
+            successElement.textContent = message;
+            successElement.style.display = 'block';
+            return;
+        }
+        
+        // Fallback to alert if no success element found
         alert('Success: ' + message);
     }
 

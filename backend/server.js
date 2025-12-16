@@ -69,7 +69,13 @@ app.get('/health', (req, res) => {
     status: 'OK',
     message: 'Hair Elevation Admin API is running',
     timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development'
+    environment: process.env.NODE_ENV || 'development',
+    adminInterface: '/',
+    apiEndpoints: {
+      auth: '/api/auth',
+      products: '/api/products',
+      upload: '/api/upload'
+    }
   });
 });
 
@@ -78,11 +84,13 @@ app.use('/api/auth', authRoutes);
 app.use('/api/products', auth, productRoutes);
 app.use('/api/upload', auth, uploadRoutes);
 
-// Serve admin interface
-app.use('/admin', express.static(path.join(__dirname, 'public', 'admin')));
-
-// Default route
+// Default route - Serve admin interface
 app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'admin', 'index.html'));
+});
+
+// API info endpoint
+app.get('/api-info', (req, res) => {
   res.json({
     message: 'Hair Elevation Studios Admin API',
     version: '1.0.0',
@@ -90,7 +98,7 @@ app.get('/', (req, res) => {
       auth: '/api/auth',
       products: '/api/products',
       upload: '/api/upload',
-      admin: '/admin'
+      admin: '/'
     }
   });
 });
@@ -122,25 +130,16 @@ const connectDB = async () => {
     console.log(`MongoDB Connected: ${conn.connection.host}`);
     console.log(`Database: ${conn.connection.name}`);
 
-    // Create default admin if none exists
+    // Check for existing admins and provide setup instructions if none exist
     const Admin = require('./models/Admin');
     const adminCount = await Admin.countDocuments();
     
     if (adminCount === 0) {
-      const defaultAdmin = new Admin({
-        username: process.env.ADMIN_USERNAME || 'admin',
-        email: process.env.ADMIN_EMAIL || 'admin@hairelevationstudio.com',
-        password: process.env.ADMIN_PASSWORD || 'admin123',
-        role: 'super-admin'
-      });
-      
-      await defaultAdmin.save();
-      console.log('Default admin created successfully');
-      console.log('Username:', defaultAdmin.username);
-      console.log('Email:', defaultAdmin.email);
-      console.log('Password:', process.env.ADMIN_PASSWORD || 'admin123');
+      console.log('No admin accounts found.');
+      console.log('Please register your first admin account at: /admin');
+      console.log('Use the "Create Admin Account" option to set up your admin credentials.');
     } else {
-      console.log(`Found ${adminCount} existing admin(s)`);
+      console.log(`Found ${adminCount} existing admin account(s).`);
     }
 
   } catch (error) {

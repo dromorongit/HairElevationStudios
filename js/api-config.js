@@ -1,10 +1,27 @@
 // API Configuration for Frontend
 const API_CONFIG = {
-    // For development, use localhost
-    // For production, update this to your deployed backend URL
-    BASE_URL: window.location.hostname === 'localhost' 
-        ? 'http://localhost:5000/api' 
-        : 'https://your-railway-app.railway.app/api',
+    // Development and Production URL configuration
+    BASE_URL: (() => {
+        const hostname = window.location.hostname;
+        
+        // Development
+        if (hostname === 'localhost' || hostname === '127.0.0.1') {
+            return 'http://localhost:5000/api';
+        }
+        
+        // GitHub Pages (current deployment)
+        if (hostname === 'dromorongit.github.io') {
+            return 'https://hairelevationstudios-production.up.railway.app/api';
+        }
+        
+        // Custom domain (production)
+        if (hostname === 'www.hairelevationstudio.com' || hostname === 'hairelevationstudio.com') {
+            return 'https://hairelevationstudios-production.up.railway.app/api';
+        }
+        
+        // Fallback for other domains
+        return 'https://hairelevationstudios-production.up.railway.app/api';
+    })(),
     
     // Collection mapping
     COLLECTIONS: {
@@ -41,9 +58,14 @@ const API_CONFIG = {
         
         // If it's a relative path from backend uploads, prepend backend URL
         if (imagePath.startsWith('/uploads/')) {
-            return window.location.hostname === 'localhost' 
-                ? `http://localhost:5000${imagePath}`
-                : `https://your-railway-app.railway.app${imagePath}`;
+            const hostname = window.location.hostname;
+            
+            if (hostname === 'localhost' || hostname === '127.0.0.1') {
+                return `http://localhost:5000${imagePath}`;
+            } else {
+                // For GitHub Pages and custom domain
+                return `https://hairelevationstudios-production.up.railway.app${imagePath}`;
+            }
         }
         
         // For relative paths in the frontend folder, use as is
