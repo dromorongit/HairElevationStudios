@@ -3,8 +3,8 @@
     "builder": "DOCKERFILE"
   },
   "deploy": {
-    "startCommand": "node dist/backend/server.js",
-    "healthcheckPath": "/",
+    "startCommand": "node dist/server.js",
+    "healthcheckPath": "/health",
     "healthcheckTimeout": 300
   }
 }

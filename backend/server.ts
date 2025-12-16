@@ -34,10 +34,12 @@ app.use('/admin', adminRoutes);
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/hairelevation')
   .then(() => {
     console.log('Connected to MongoDB');
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
   })
   .catch((error) => {
     console.error('MongoDB connection error:', error);
   });
+
+// Start server
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
+});
