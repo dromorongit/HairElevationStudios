@@ -4,7 +4,7 @@ import authMiddleware from '../middleware/auth';
 const router = express.Router();
 
 // Admin dashboard
-router.get('/dashboard', authMiddleware, (req: Request, res: Response) => {
+router.get('/dashboard', (req: Request, res: Response) => {
   res.send(`
     <!DOCTYPE html>
     <html lang="en">
