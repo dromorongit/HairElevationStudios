@@ -135,12 +135,12 @@ function renderProducts(products, container, limit) {
       <img src="${product.image}" alt="${product.name}">
       <h3>${product.name}</h3>
       <p>₵${product.price}</p>
+      <div class="quantity-controls">
+        <button class="quantity-btn decrease" data-id="${product.id}">-</button>
+        <span class="quantity" data-id="${product.id}">1</span>
+        <button class="quantity-btn increase" data-id="${product.id}">+</button>
+      </div>
       <div class="product-actions">
-        <div class="quantity-controls">
-          <button class="quantity-btn decrease" data-id="${product.id}">-</button>
-          <span class="quantity" data-id="${product.id}">1</span>
-          <button class="quantity-btn increase" data-id="${product.id}">+</button>
-        </div>
         <button class="btn add-to-cart" data-id="${product.id}">Add to Cart</button>
         <a href="product.html?id=${product.id}" class="btn">View Details</a>
       </div>
