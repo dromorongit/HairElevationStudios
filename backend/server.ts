@@ -97,6 +97,6 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/haireleva
   });
 
 // Start server
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
