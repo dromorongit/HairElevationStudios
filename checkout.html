@@ -74,6 +74,15 @@
       <div class="container">
         <h1>Checkout</h1>
         <div class="checkout-content">
+          <div class="order-summary">
+            <h2>Order Summary</h2>
+            <div id="order-items">
+              <!-- Order items loaded dynamically -->
+            </div>
+            <div class="order-total">
+              <h3>Total: <span id="order-total">₵0</span></h3>
+            </div>
+          </div>
           <div class="checkout-form">
             <h2>Shipping Information</h2>
             <form id="checkout-form">
@@ -104,21 +113,11 @@
                   <option value="">Select Payment Method</option>
                   <option value="cash">Cash on Delivery</option>
                   <option value="mobile">Mobile Money</option>
-                  <option value="card">Credit/Debit Card (Coming Soon)</option>
                 </select>
               </div>
               <button type="submit" class="btn">Place Order</button>
             </form>
             <div id="checkout-message"></div>
-          </div>
-          <div class="order-summary">
-            <h2>Order Summary</h2>
-            <div id="order-items">
-              <!-- Order items loaded dynamically -->
-            </div>
-            <div class="order-total">
-              <h3>Total: <span id="order-total">₵0</span></h3>
-            </div>
           </div>
         </div>
       </div>
