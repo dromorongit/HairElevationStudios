@@ -20,7 +20,10 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../')));
+
+// Serve static files (frontend)
+app.use(express.static(path.join(__dirname)));
+
 // Serve uploaded files
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
