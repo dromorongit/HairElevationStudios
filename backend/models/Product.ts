@@ -18,6 +18,8 @@ export interface IProduct extends Document {
   coverImage: string;
   additionalImages: string[];
   videos: string[];
+  stock: number;
+  inStock: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -39,7 +41,9 @@ const ProductSchema: Schema = new Schema({
   collections: { type: [String], enum: ['The Bridal Crowns', 'The Everyday Crown', 'The Queen\'s Curls', 'The Signature Pixies'] },
   coverImage: { type: String, required: true },
   additionalImages: { type: [String], default: [] },
-  videos: { type: [String], default: [] }
+  videos: { type: [String], default: [] },
+  stock: { type: Number, default: 0 },
+  inStock: { type: Boolean, default: true }
 }, {
   timestamps: true
 });

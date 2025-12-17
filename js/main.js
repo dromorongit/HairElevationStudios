@@ -135,6 +135,7 @@ function renderProducts(productsToShow, container, limit) {
     container.innerHTML = products.map(product => `
     <div class="product-card">
       <img src="${window.apiService.getImageUrl(product.coverImage)}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x400/3B2A23/F5EFE6?text=No+Image'">
+      ${!product.inStock ? '<div class="out-of-stock-badge">Out of Stock</div>' : ''}
       <h3>${product.name}</h3>
       <p>₵${product.price}</p>
       <div class="quantity-controls">

@@ -385,6 +385,15 @@ router.get('/dashboard', (req: Request, res: Response) => {
                                     <input type="number" id="price" name="price" step="0.01" required>
                                 </div>
                                 <div class="form-group">
+                                    <label for="stock">Stock Quantity</label>
+                                    <input type="number" id="stock" name="stock" min="0" value="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inStock">
+                                        <input type="checkbox" id="inStock" name="inStock" checked> In Stock
+                                    </label>
+                                </div>
+                                <div class="form-group">
                                     <label for="onSale">
                                         <input type="checkbox" id="onSale" name="onSale"> On Sale/Promo
                                     </label>
@@ -615,6 +624,7 @@ router.get('/dashboard', (req: Request, res: Response) => {
                 // Convert checkboxes to boolean
                 formData.set('featured', formData.has('featured') ? 'true' : 'false');
                 formData.set('onSale', formData.has('onSale') ? 'true' : 'false');
+                formData.set('inStock', formData.has('inStock') ? 'true' : 'false');
 
                 try {
                     const url = isEdit ? \`/products/update/\${productId}\` : '/products/create';
@@ -690,6 +700,8 @@ router.get('/dashboard', (req: Request, res: Response) => {
                     document.getElementById('name').value = product.name;
                     document.getElementById('description').value = product.description || '';
                     document.getElementById('price').value = product.price;
+                    document.getElementById('stock').value = product.stock || 0;
+                    document.getElementById('inStock').checked = product.inStock !== false;
                     document.getElementById('onSale').checked = product.onSale;
                     if (product.onSale) {
                         document.getElementById('promoPriceGroup').style.display = 'block';
@@ -736,6 +748,10 @@ router.get('/dashboard', (req: Request, res: Response) => {
                 document.getElementById('submitBtn').innerHTML = '<i class="fas fa-save"></i> Add Product';
                 document.getElementById('cancelBtn').style.display = 'none';
                 document.getElementById('promoPriceGroup').style.display = 'none';
+
+                // Reset stock and inStock to defaults
+                document.getElementById('stock').value = '0';
+                document.getElementById('inStock').checked = true;
 
                 // Reset file inputs to required
                 document.getElementById('coverImage').required = true;
