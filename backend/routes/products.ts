@@ -106,6 +106,12 @@ router.put('/update/:id', authMiddleware, upload.fields([
     const files = req.files as { [fieldname: string]: Express.Multer.File[] };
     const productData = req.body;
 
+    // First, get the existing product to preserve file paths if no new files are uploaded
+    const existingProduct = await Product.findById(req.params.id);
+    if (!existingProduct) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
     // Parse collections if it's a JSON string
     if (productData.collections && typeof productData.collections === 'string') {
       try {
@@ -136,14 +142,23 @@ router.put('/update/:id', authMiddleware, upload.fields([
       productData.promoPrice = parseFloat(productData.promoPrice);
     }
 
+    // Only update file paths if new files are uploaded, otherwise preserve existing ones
     if (files.coverImage) {
       productData.coverImage = files.coverImage[0].path;
+    } else {
+      productData.coverImage = existingProduct.coverImage;
     }
+    
     if (files.additionalImages) {
       productData.additionalImages = files.additionalImages.map(file => file.path);
+    } else {
+      productData.additionalImages = existingProduct.additionalImages;
     }
+    
     if (files.videos) {
       productData.videos = files.videos.map(file => file.path);
+    } else {
+      productData.videos = existingProduct.videos;
     }
 
     const product = await Product.findByIdAndUpdate(req.params.id, productData, { new: true });
