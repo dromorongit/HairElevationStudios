@@ -106,14 +106,44 @@ router.put('/update/:id', authMiddleware, upload.fields([
     const files = req.files as { [fieldname: string]: Express.Multer.File[] };
     const productData = req.body;
 
+    // Parse collections if it's a JSON string
+    if (productData.collections && typeof productData.collections === 'string') {
+      try {
+        productData.collections = JSON.parse(productData.collections);
+      } catch (e) {
+        // If parsing fails, treat as single value array
+        productData.collections = [productData.collections];
+      }
+    }
+
+    // Parse size if it's a JSON string
+    if (productData.size && typeof productData.size === 'string') {
+      try {
+        productData.size = JSON.parse(productData.size);
+      } catch (e) {
+        // If parsing fails, treat as single value array
+        productData.size = [productData.size];
+      }
+    }
+
+    // Convert booleans
+    productData.featured = productData.featured === 'true';
+    productData.onSale = productData.onSale === 'true';
+
+    // Convert prices to numbers
+    productData.price = parseFloat(productData.price);
+    if (productData.promoPrice) {
+      productData.promoPrice = parseFloat(productData.promoPrice);
+    }
+
     if (files.coverImage) {
-      productData.coverImage = '/uploads/' + files.coverImage[0].filename;
+      productData.coverImage = files.coverImage[0].path;
     }
     if (files.additionalImages) {
-      productData.additionalImages = files.additionalImages.map(file => '/uploads/' + file.filename);
+      productData.additionalImages = files.additionalImages.map(file => file.path);
     }
     if (files.videos) {
-      productData.videos = files.videos.map(file => '/uploads/' + file.filename);
+      productData.videos = files.videos.map(file => file.path);
     }
 
     const product = await Product.findByIdAndUpdate(req.params.id, productData, { new: true });
