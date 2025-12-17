@@ -42,15 +42,42 @@ router.get('/dashboard', (req: Request, res: Response) => {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                gap: 0.5rem;
+                gap: 0.8rem;
+                position: relative;
+                padding: 1rem 0;
+            }
+            .header .logo-section::before {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 120px;
+                height: 3px;
+                background: linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+                border-radius: 2px;
             }
             .header .logo {
-                max-height: 50px;
-                max-width: 200px;
+                max-height: 70px;
+                max-width: 280px;
                 width: auto;
                 height: auto;
                 object-fit: contain;
-                filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+                filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+                transition: all 0.3s ease;
+                animation: dashboardLogoGlow 3s ease-in-out infinite alternate;
+            }
+            .header .logo:hover {
+                transform: scale(1.05);
+                filter: drop-shadow(0 6px 12px rgba(0,0,0,0.3));
+            }
+            @keyframes dashboardLogoGlow {
+                from {
+                    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+                }
+                to {
+                    filter: drop-shadow(0 4px 8px rgba(255,255,255,0.3));
+                }
             }
             .header .subtitle {
                 margin: 0;

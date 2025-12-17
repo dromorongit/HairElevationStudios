@@ -177,15 +177,42 @@ app.get('/', (req, res) => {
             }
             .logo {
                 text-align: center;
-                margin-bottom: 1.5rem;
+                margin-bottom: 2rem;
+                position: relative;
+            }
+            .logo::before {
+                content: '';
+                position: absolute;
+                top: -20px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 80px;
+                height: 4px;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                border-radius: 2px;
+                opacity: 0.8;
             }
             .logo img {
-                max-height: 50px;
-                max-width: 180px;
+                max-height: 80px;
+                max-width: 280px;
                 width: auto;
                 height: auto;
                 object-fit: contain;
-                filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+                filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+                transition: all 0.3s ease;
+                animation: logoGlow 2s ease-in-out infinite alternate;
+            }
+            .logo img:hover {
+                transform: scale(1.05);
+                filter: drop-shadow(0 6px 12px rgba(0,0,0,0.2));
+            }
+            @keyframes logoGlow {
+                from {
+                    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+                }
+                to {
+                    filter: drop-shadow(0 4px 8px rgba(102, 126, 234, 0.3));
+                }
             }
         </style>
     </head>
