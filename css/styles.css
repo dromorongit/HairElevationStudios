@@ -697,30 +697,6 @@ h2 {
   font-size: 1.1rem;
 }
 
-/* Featured Collections */
-.featured {
-  background: linear-gradient(rgba(200, 169, 126, 0.3), rgba(200, 169, 126, 0.3)), url('../shopinner.jpg') center center / cover no-repeat;
-  color: #F5EFE6;
-  position: relative;
-  overflow: hidden;
-}
-
-.featured::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.featured .container {
-  position: relative;
-  z-index: 1;
-}
-
 /* Services */
 .services {
   background: linear-gradient(rgba(200, 169, 126, 0.3), rgba(200, 169, 126, 0.3)), url('../shopinner.jpg') center center / cover no-repeat;
