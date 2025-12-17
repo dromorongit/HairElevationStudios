@@ -22,16 +22,16 @@ function saveCart(cart) {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-function addToCart(productId, quantity = 1) {
+function addToCart(productId, quantity = 1, selectedSize = null) {
     const cart = getCart();
-    const existingItem = cart.find(item => item.product._id === productId);
+    const existingItem = cart.find(item => item.product._id === productId && item.selectedSize === selectedSize);
 
     if (existingItem) {
         existingItem.quantity += quantity;
     } else {
         const product = products.find(p => p._id === productId);
         if (product) {
-            cart.push({ product, quantity });
+            cart.push({ product, quantity, selectedSize });
         }
     }
 
@@ -40,28 +40,51 @@ function addToCart(productId, quantity = 1) {
     alert(`${quantity} item(s) added to cart!`);
 }
 
-function removeFromCart(productId) {
-    const cart = getCart().filter(item => item.product._id !== productId);
+function removeFromCart(productId, selectedSize = null) {
+    const cart = getCart().filter(item => !(item.product._id === productId && item.selectedSize === selectedSize));
     saveCart(cart);
     updateCartCount();
     renderCart();
 }
 
-function updateCartItemQuantity(productId, change) {
+function updateCartItemQuantity(productId, change, selectedSize = null) {
     const cart = getCart();
-    const item = cart.find(item => item.product._id === productId);
-    
+    const item = cart.find(item => item.product._id === productId && item.selectedSize === selectedSize);
+
     if (item) {
         item.quantity += change;
-        
+
         // Remove item if quantity becomes 0 or negative
         if (item.quantity <= 0) {
-            const updatedCart = cart.filter(item => item.product._id !== productId);
+            const updatedCart = cart.filter(item => !(item.product._id === productId && item.selectedSize === selectedSize));
             saveCart(updatedCart);
         } else {
             saveCart(cart);
         }
-        
+
+        updateCartCount();
+        renderCart();
+    }
+}
+
+function updateCartItemSize(index, newSize) {
+    const cart = getCart();
+    if (cart[index] && newSize) {
+        // Remove the old item
+        const oldItem = cart.splice(index, 1)[0];
+
+        // Check if an item with the same product and new size already exists
+        const existingItem = cart.find(item => item.product._id === oldItem.product._id && item.selectedSize === newSize);
+
+        if (existingItem) {
+            // Merge quantities
+            existingItem.quantity += oldItem.quantity;
+        } else {
+            // Add the item with new size
+            cart.splice(index, 0, { ...oldItem, selectedSize: newSize });
+        }
+
+        saveCart(cart);
         updateCartCount();
         renderCart();
     }
@@ -176,20 +199,30 @@ function renderCart() {
         return;
     }
 
-    cartContainer.innerHTML = cart.map(item => `
+    cartContainer.innerHTML = cart.map((item, index) => `
     <div class="cart-item">
       <img src="${window.apiService.getImageUrl(item.product.coverImage)}" alt="${item.product.name}">
       <div class="cart-item-details">
         <h3>${item.product.name}</h3>
         <p>₵${item.product.price} each</p>
+        ${item.selectedSize ? `<p><strong>Size:</strong> ${item.selectedSize}</p>` : ''}
+        ${item.product.size && item.product.size.length > 1 && !item.selectedSize ? `
+          <div class="cart-size-selection">
+            <label><strong>Select Size:</strong></label>
+            <select class="size-selector" data-index="${index}">
+              <option value="">Choose size</option>
+              ${item.product.size.map(size => `<option value="${size}">${size}</option>`).join('')}
+            </select>
+          </div>
+        ` : ''}
         <div class="quantity-controls">
-          <button class="quantity-btn decrease-cart" data-id="${item.product._id}">-</button>
-          <span class="quantity cart-quantity" data-id="${item.product._id}">${item.quantity}</span>
-          <button class="quantity-btn increase-cart" data-id="${item.product._id}">+</button>
+          <button class="quantity-btn decrease-cart" data-id="${item.product._id}" data-size="${item.selectedSize || ''}">-</button>
+          <span class="quantity cart-quantity" data-id="${item.product._id}" data-size="${item.selectedSize || ''}">${item.quantity}</span>
+          <button class="quantity-btn increase-cart" data-id="${item.product._id}" data-size="${item.selectedSize || ''}">+</button>
         </div>
         <p>Subtotal: ₵${item.product.price * item.quantity}</p>
       </div>
-      <button class="btn remove-from-cart" data-id="${item.product._id}">Remove</button>
+      <button class="btn remove-from-cart" data-id="${item.product._id}" data-size="${item.selectedSize || ''}">Remove</button>
     </div>
   `).join('');
 
@@ -199,7 +232,8 @@ function renderCart() {
     cartContainer.querySelectorAll('.remove-from-cart').forEach(button => {
         button.addEventListener('click', (e) => {
             const productId = e.target.dataset.id;
-            removeFromCart(productId);
+            const selectedSize = e.target.dataset.size;
+            removeFromCart(productId, selectedSize);
         });
     });
 
@@ -207,14 +241,25 @@ function renderCart() {
     cartContainer.querySelectorAll('.increase-cart').forEach(button => {
         button.addEventListener('click', (e) => {
             const productId = e.target.dataset.id;
-            updateCartItemQuantity(productId, 1);
+            const selectedSize = e.target.dataset.size;
+            updateCartItemQuantity(productId, 1, selectedSize);
         });
     });
 
     cartContainer.querySelectorAll('.decrease-cart').forEach(button => {
         button.addEventListener('click', (e) => {
             const productId = e.target.dataset.id;
-            updateCartItemQuantity(productId, -1);
+            const selectedSize = e.target.dataset.size;
+            updateCartItemQuantity(productId, -1, selectedSize);
+        });
+    });
+
+    // Add event listeners for size selectors
+    cartContainer.querySelectorAll('.size-selector').forEach(selector => {
+        selector.addEventListener('change', (e) => {
+            const index = parseInt(e.target.dataset.index);
+            const newSize = e.target.value;
+            updateCartItemSize(index, newSize);
         });
     });
 }
@@ -272,6 +317,19 @@ async function renderProductDetail() {
               </ul>
             </div>
             <div class="product-description">${product.description || ''}</div>
+            ${product.size && product.size.length > 0 ? `
+              <div class="product-size-selection">
+                <h3>Select Size</h3>
+                <div class="size-options">
+                  ${product.size.map(sizeOption => `
+                    <label class="size-option">
+                      <input type="radio" name="product-size" value="${sizeOption}" ${product.size.length === 1 ? 'checked' : ''}>
+                      <span>${sizeOption}</span>
+                    </label>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
             <div class="product-detail-actions">
               <button class="btn add-to-cart-detail" data-id="${product._id}">Add to Cart</button>
               <a href="collections.html" class="btn">Back to Collections</a>
@@ -285,7 +343,15 @@ async function renderProductDetail() {
         if (addToCartBtn) {
             addToCartBtn.addEventListener('click', (e) => {
                 const productId = e.target.dataset.id;
-                addToCart(productId);
+
+                // Get selected size if product has sizes
+                let selectedSize = null;
+                const sizeRadio = document.querySelector('input[name="product-size"]:checked');
+                if (sizeRadio) {
+                    selectedSize = sizeRadio.value;
+                }
+
+                addToCart(productId, 1, selectedSize);
             });
         }
     } catch (error) {
@@ -382,7 +448,7 @@ async function initializePage() {
       <div class="order-item">
         <img src="${window.apiService.getImageUrl(item.product.coverImage)}" alt="${item.product.name}" class="order-item-image" onerror="this.src='https://via.placeholder.com/60x60/3B2A23/F5EFE6?text=No+Image'">
         <div class="order-item-details">
-          <p class="order-item-name">${item.product.name}</p>
+          <p class="order-item-name">${item.product.name}${item.selectedSize ? ` (${item.selectedSize})` : ''}</p>
           <p>Qty: ${item.quantity} × ₵${item.product.price}</p>
           <p class="order-item-price">₵${item.product.price * item.quantity}</p>
         </div>
@@ -434,7 +500,8 @@ async function initializePage() {
                     name: item.product.name,
                     quantity: item.quantity,
                     price: item.product.price,
-                    coverImage: item.product.coverImage
+                    coverImage: item.product.coverImage,
+                    selectedSize: item.selectedSize
                 })),
                 total: getCartTotal()
             };
@@ -651,7 +718,8 @@ async function initializePage() {
 
             message += `🛒 *ORDER ITEMS:*\n`;
             orderData.items.forEach((item, index) => {
-                message += `${index + 1}. ${item.name} x${item.quantity} - ₵${item.price * item.quantity}\n`;
+                const sizeInfo = item.selectedSize ? ` (${item.selectedSize})` : '';
+                message += `${index + 1}. ${item.name}${sizeInfo} x${item.quantity} - ₵${item.price * item.quantity}\n`;
             });
 
             message += `\n💰 *TOTAL: ₵${orderData.total}*\n`;
