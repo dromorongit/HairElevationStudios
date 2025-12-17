@@ -347,7 +347,17 @@ app.use(express.static(path.join(__dirname, '..')));
 // Serve uploaded files
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-// Specific route for logo to ensure it loads correctly - serve from backend directory
+// Specific routes for logos to ensure they load correctly
+app.get('/HESLOGO.PNG', (req, res) => {
+  const logoPath = path.join(__dirname, '..', 'HESLOGO.PNG');
+  res.sendFile(logoPath, (err) => {
+    if (err) {
+      console.error('Error serving logo:', err);
+      res.status(404).send('Logo not found');
+    }
+  });
+});
+
 app.get('/admin-logo.png', (req, res) => {
   const backendLogoPath = path.join(__dirname, 'HESLOGO.PNG');
   res.sendFile(backendLogoPath, (err) => {
