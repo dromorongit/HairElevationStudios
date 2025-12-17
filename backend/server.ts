@@ -200,7 +200,7 @@ app.get('/admin', (req, res) => {
     <body>
         <div class="container fade-in">
             <div class="logo">
-                <img src="/HESLOGO.PNG" alt="Hair Elevation Studios Logo" onerror="this.src='/admin-logo.png'">
+                <img src="/HESLOGO.PNG" alt="Hair Elevation Studios Logo">
             </div>
             <div id="loginSection">
                 <h2>Admin Login</h2>
@@ -347,13 +347,13 @@ app.use(express.static(path.join(__dirname, '..')));
 // Serve uploaded files
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-// Specific route for logo to ensure it loads correctly - serve from both locations
-app.get('/HESLOGO.PNG', (req, res) => {
-  const logoPath = path.join(__dirname, '..', 'HESLOGO.PNG');
-  res.sendFile(logoPath, (err) => {
+// Specific route for logo to ensure it loads correctly - serve from backend directory
+app.get('/admin-logo.png', (req, res) => {
+  const backendLogoPath = path.join(__dirname, 'HESLOGO.PNG');
+  res.sendFile(backendLogoPath, (err) => {
     if (err) {
-      console.error('Error serving logo:', err);
-      res.status(404).send('Logo not found');
+      console.error('Error serving backend logo:', err);
+      res.status(404).send('Backend logo not found');
     }
   });
 });
@@ -556,7 +556,7 @@ app.get('/', (req, res) => {
     <body>
         <div class="container fade-in">
             <div class="logo">
-                <img src="/HESLOGO.PNG" alt="Hair Elevation Studios Logo" onerror="this.src='/admin-logo.png'">
+                <img src="/HESLOGO.PNG" alt="Hair Elevation Studios Logo">
             </div>
             <div id="loginSection">
                 <h2>Admin Login</h2>
