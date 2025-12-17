@@ -376,30 +376,36 @@ async function initializePage() {
     const checkoutMessage = document.getElementById('checkout-message');
 
     if (checkoutForm && orderItems && orderTotal) {
-        // Display order summary
+        // Display order summary with images
         const cart = getCart();
         orderItems.innerHTML = cart.map(item => `
       <div class="order-item">
-        <p>${item.product.name} x ${item.quantity} - ₵${item.product.price * item.quantity}</p>
+        <img src="${window.apiService.getImageUrl(item.product.coverImage)}" alt="${item.product.name}" class="order-item-image" onerror="this.src='https://via.placeholder.com/60x60/3B2A23/F5EFE6?text=No+Image'">
+        <div class="order-item-details">
+          <p class="order-item-name">${item.product.name}</p>
+          <p>Qty: ${item.quantity} × ₵${item.product.price}</p>
+          <p class="order-item-price">₵${item.product.price * item.quantity}</p>
+        </div>
       </div>
     `).join('');
         orderTotal.textContent = `₵${getCartTotal()}`;
 
         checkoutForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            // Simple validation
+            
+            // Validation
             const name = document.getElementById('shipping-name').value;
             const email = document.getElementById('shipping-email').value;
             const phone = document.getElementById('shipping-phone').value;
             const address = document.getElementById('shipping-address').value;
             const city = document.getElementById('shipping-city').value;
             const payment = document.getElementById('payment-method').value;
-            const notes = document.getElementById('additional-notes').value; // Optional field
+            const notes = document.getElementById('additional-notes').value;
 
-            // Only require essential fields (notes is optional)
-            if (!name || !email || !phone || !address || !city || !payment) {
+            // Required fields (email is now optional)
+            if (!name.trim() || !phone.trim() || !address.trim() || !city.trim() || !payment) {
                 if (checkoutMessage) {
-                    checkoutMessage.textContent = 'Please fill in all required fields.';
+                    checkoutMessage.textContent = 'Please fill in all required fields (Name, Phone, Address, City, Payment Method).';
                     checkoutMessage.style.color = 'red';
                 }
                 return;
@@ -414,42 +420,252 @@ async function initializePage() {
                 return;
             }
 
-            // Prepare order data including notes
-            const orderData = {
+            // Store order data temporarily
+            window.currentOrderData = {
                 name,
                 email,
                 phone,
                 address,
                 city,
                 payment,
-                notes: notes || '', // Include notes if provided
+                notes: notes || '',
                 items: cart.map(item => ({
                     productId: item.product._id,
                     name: item.product.name,
                     quantity: item.quantity,
-                    price: item.product.price
+                    price: item.product.price,
+                    coverImage: item.product.coverImage
                 })),
                 total: getCartTotal()
             };
 
-            // Log order data (in real app, this would be sent to backend)
-            console.log('Order submitted:', orderData);
-
-            // Simulate order placement
-            localStorage.removeItem('cart');
-            if (checkoutMessage) {
-                let successMessage = 'Order placed successfully! You will receive a confirmation email shortly.';
-                if (notes.trim()) {
-                    successMessage += ` Your notes: "${notes.trim()}" have been noted for processing.`;
-                }
-                checkoutMessage.textContent = successMessage;
-                checkoutMessage.style.color = 'green';
-            }
-            checkoutForm.reset();
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 3000);
+            // Show Mobile Money payment instructions modal
+            showMobileMoneyModal();
         });
+
+        // Modal functionality
+        const mobileMoneyModal = document.getElementById('mobile-money-modal');
+        const paymentProofModal = document.getElementById('payment-proof-modal');
+        const closeModals = document.querySelectorAll('.close-modal');
+
+        // Close modal functionality
+        closeModals.forEach(closeBtn => {
+            closeBtn.addEventListener('click', () => {
+                mobileMoneyModal.style.display = 'none';
+                paymentProofModal.style.display = 'none';
+            });
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (event) => {
+            if (event.target === mobileMoneyModal) {
+                mobileMoneyModal.style.display = 'none';
+            }
+            if (event.target === paymentProofModal) {
+                paymentProofModal.style.display = 'none';
+            }
+        });
+
+        // Payment method change handler
+        const paymentMethodSelect = document.getElementById('payment-method');
+        if (paymentMethodSelect) {
+            paymentMethodSelect.addEventListener('change', (e) => {
+                if (e.target.value === 'mobile') {
+                    // Show payment instructions when Mobile Money is selected
+                    showMobileMoneyModal();
+                }
+            });
+        }
+
+        // Modal event handlers
+        const paymentConfirmBtn = document.getElementById('payment-instructions-confirm');
+        if (paymentConfirmBtn) {
+            paymentConfirmBtn.addEventListener('click', () => {
+                mobileMoneyModal.style.display = 'none';
+                // Show payment proof upload modal
+                showPaymentProofModal();
+            });
+        }
+
+        // Payment proof upload functionality
+        const paymentProofInput = document.getElementById('payment-proof-input');
+        const uploadLabel = document.querySelector('.file-upload-label');
+        const uploadedImagePreview = document.getElementById('uploaded-image-preview');
+        const previewImage = document.getElementById('preview-image');
+        const removeImageBtn = document.getElementById('remove-image');
+        const uploadPaymentProofBtn = document.getElementById('upload-payment-proof');
+
+        let uploadedImageFile = null;
+
+        // File upload handling
+        if (paymentProofInput && uploadLabel) {
+            // Click to upload
+            uploadLabel.addEventListener('click', () => {
+                paymentProofInput.click();
+            });
+
+            // File change handling
+            paymentProofInput.addEventListener('change', (e) => {
+                handleFileUpload(e.target.files[0]);
+            });
+
+            // Drag and drop functionality
+            uploadLabel.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadLabel.style.borderColor = '#B8956A';
+                uploadLabel.style.background = 'rgba(200, 169, 126, 0.15)';
+            });
+
+            uploadLabel.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                uploadLabel.style.borderColor = '#C8A97E';
+                uploadLabel.style.background = 'rgba(200, 169, 126, 0.05)';
+            });
+
+            uploadLabel.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadLabel.style.borderColor = '#C8A97E';
+                uploadLabel.style.background = 'rgba(200, 169, 126, 0.05)';
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleFileUpload(files[0]);
+                }
+            });
+        }
+
+        // Remove uploaded image
+        if (removeImageBtn) {
+            removeImageBtn.addEventListener('click', () => {
+                uploadedImageFile = null;
+                uploadedImagePreview.style.display = 'none';
+                uploadLabel.style.display = 'flex';
+                paymentProofInput.value = '';
+            });
+        }
+
+        // Place order with payment proof
+        if (uploadPaymentProofBtn) {
+            uploadPaymentProofBtn.addEventListener('click', () => {
+                if (!uploadedImageFile) {
+                    alert('Please upload a payment proof image before placing your order.');
+                    return;
+                }
+
+                // Process the order with payment proof
+                processOrderWithPaymentProof();
+            });
+        }
+
+        // File upload handler
+        function handleFileUpload(file) {
+            if (!file) return;
+
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file.');
+                return;
+            }
+
+            // Validate file size (5MB max)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('File size must be less than 5MB.');
+                return;
+            }
+
+            uploadedImageFile = file;
+
+            // Show preview
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImage.src = e.target.result;
+                uploadLabel.style.display = 'none';
+                uploadedImagePreview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Show Mobile Money Modal
+        function showMobileMoneyModal() {
+            if (mobileMoneyModal) {
+                mobileMoneyModal.style.display = 'block';
+            }
+        }
+
+        // Show Payment Proof Modal
+        function showPaymentProofModal() {
+            if (paymentProofModal) {
+                paymentProofModal.style.display = 'block';
+            }
+        }
+
+        // Process order with payment proof
+        function processOrderWithPaymentProof() {
+            const orderData = window.currentOrderData;
+            if (!orderData) return;
+
+            // Convert image to base64 for WhatsApp
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const imageBase64 = e.target.result;
+                
+                // Create WhatsApp message
+                const whatsappMessage = createWhatsAppMessage(orderData, imageBase64);
+                
+                // Open WhatsApp with pre-filled message
+                const whatsappUrl = `https://wa.me/233534057109?text=${encodeURIComponent(whatsappMessage)}`;
+                window.open(whatsappUrl, '_blank');
+
+                // Clear cart and show success message
+                localStorage.removeItem('cart');
+                paymentProofModal.style.display = 'none';
+                
+                if (checkoutMessage) {
+                    checkoutMessage.textContent = 'Order submitted successfully! Please complete the payment confirmation on WhatsApp.';
+                    checkoutMessage.style.color = 'green';
+                }
+                
+                checkoutForm.reset();
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 5000);
+            };
+            reader.readAsDataURL(uploadedImageFile);
+        }
+
+        // Create WhatsApp message
+        function createWhatsAppMessage(orderData, paymentProofImage) {
+            const date = new Date().toLocaleDateString('en-GB');
+            const time = new Date().toLocaleTimeString('en-GB');
+            
+            let message = `🛍️ *NEW ORDER - Hair Elevation Studio*\n\n`;
+            message += `📅 *Date:* ${date} at ${time}\n`;
+            message += `👤 *Customer:* ${orderData.name}\n`;
+            
+            if (orderData.email) {
+                message += `📧 *Email:* ${orderData.email}\n`;
+            }
+            
+            message += `📱 *Phone:* ${orderData.phone}\n`;
+            message += `📍 *Address:* ${orderData.address}, ${orderData.city}\n\n`;
+            
+            message += `🛒 *ORDER ITEMS:*\n`;
+            orderData.items.forEach((item, index) => {
+                message += `${index + 1}. ${item.name} x${item.quantity} - ₵${item.price * item.quantity}\n`;
+            });
+            
+            message += `\n💰 *TOTAL: ₵${orderData.total}*\n`;
+            message += `💳 *Payment Method:* Mobile Money\n`;
+            
+            if (orderData.notes.trim()) {
+                message += `\n📝 *Additional Notes:* ${orderData.notes.trim()}\n`;
+            }
+            
+            message += `\n📸 *Payment Proof:* Attached\n`;
+            message += `✅ *Status:* Payment confirmation required\n\n`;
+            message += `Please confirm this order and payment.`;
+            
+            return message;
+        }
     }
 }
 
