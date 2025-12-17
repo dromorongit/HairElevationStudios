@@ -9,6 +9,47 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .price-list-section {
+      padding: 4rem 0;
+      background: #f8f9fa;
+      text-align: center;
+    }
+    .price-list-section .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .price-list-section h2 {
+      font-size: 2.5rem;
+      color: #333;
+      margin-bottom: 2rem;
+      font-weight: 600;
+    }
+    .price-list-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .price-list-image:hover {
+      transform: translateY(-5px);
+    }
+    .price-list-note {
+      margin-top: 1.5rem;
+      font-size: 1rem;
+      color: #666;
+      font-style: italic;
+    }
+    @media (max-width: 768px) {
+      .price-list-section {
+        padding: 2rem 0;
+      }
+      .price-list-section h2 {
+        font-size: 2rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -91,6 +132,15 @@
             <a href="book.html" class="btn">Book Appointment</a>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- Price List Section -->
+    <section class="price-list-section">
+      <div class="container">
+        <h2>Our Service Prices</h2>
+        <img src="pricelist.jpg" alt="Hair Elevation Studio Price List" class="price-list-image">
+        <p class="price-list-note">*Prices may vary based on complexity and specific requirements. Contact us for a personalized quote.</p>
       </div>
     </section>
   </main>
