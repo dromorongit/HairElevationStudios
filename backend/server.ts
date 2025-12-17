@@ -27,6 +27,11 @@ app.use(express.static(path.join(__dirname)));
 // Serve uploaded files
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
+// Specific route for logo to ensure it loads correctly
+app.get('/HESLOGO.PNG', (req, res) => {
+  res.sendFile(path.join(__dirname, 'HESLOGO.PNG'));
+});
+
 // Health check
 app.get('/health', (req, res) => res.json({ status: 'OK' }));
 
@@ -182,7 +187,7 @@ app.get('/', (req, res) => {
     <body>
         <div class="container fade-in">
             <div class="logo">
-                <img src="/HESLOGO.PNG" alt="Hair Elevation Studios Logo">
+                <img src="/HESLOGO.PNG" alt="Hair Elevation Studios Logo" onerror="this.style.display='none'">
             </div>
             <div id="loginSection">
                 <h2>Admin Login</h2>

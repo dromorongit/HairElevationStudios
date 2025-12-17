@@ -303,7 +303,7 @@ router.get('/dashboard', (req: Request, res: Response) => {
         <div class="dashboard">
             <div class="header">
                 <div class="logo-section">
-                    <img src="/HESLOGO.PNG" alt="Hair Elevation Studios Logo" class="logo">
+                    <img src="/HESLOGO.PNG" alt="Hair Elevation Studios Logo" class="logo" onerror="this.style.display='none'">
                     <p class="subtitle">Admin Dashboard</p>
                 </div>
                 <button class="logout-btn" onclick="logout()">
@@ -411,7 +411,7 @@ router.get('/dashboard', (req: Request, res: Response) => {
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group half">
-                                        <label for="color">Color</label>
+                                       color">Color <label for="</label>
                                         <input type="text" id="color" name="color" placeholder="e.g. Natural Black">
                                     </div>
                                     <div class="form-group half">
