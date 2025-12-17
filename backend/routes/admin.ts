@@ -438,7 +438,7 @@ router.get('/dashboard', (req: Request, res: Response) => {
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group half">
-                                       color">Color <label for="</label>
+                                        <label for="color">Color</label>
                                         <input type="text" id="color" name="color" placeholder="e.g. Natural Black">
                                     </div>
                                     <div class="form-group half">
