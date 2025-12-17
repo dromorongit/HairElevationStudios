@@ -116,6 +116,7 @@
                 <select id="payment-method" name="payment" required>
                   <option value="">Select Payment Method</option>
                   <option value="mobile">Mobile Money</option>
+                  <option value="bank">Payment to Bank</option>
                 </select>
               </div>
               <button type="submit" class="btn">Place Order</button>
@@ -210,6 +211,45 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn" id="payment-instructions-confirm">I have made the payment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bank Payment Instructions Modal -->
+  <div id="bank-payment-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Bank Payment Instructions</h2>
+        <span class="close-modal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="payment-info">
+          <div class="payment-details">
+            <p><strong>Bank Name:</strong></p>
+            <p class="payment-number">EcoBank</p>
+            <p><strong>Account Number:</strong></p>
+            <p class="account-name">1441005080927</p>
+            <p><strong>Account Name:</strong></p>
+            <p class="account-name">Hair Elevation Studio</p>
+          </div>
+          <div class="payment-steps">
+            <h3>Payment Steps:</h3>
+            <ol>
+              <li>Visit your bank's mobile app or website</li>
+              <li>Select "Transfer" or "Make Payment"</li>
+              <li>Enter the account details above</li>
+              <li>Enter the exact amount of your order</li>
+              <li>Complete the transfer and save the receipt</li>
+              <li>Take a screenshot of the payment confirmation</li>
+            </ol>
+          </div>
+          <div class="payment-warning">
+            <p><strong>Important:</strong> Please take a screenshot of your payment confirmation as proof of payment. You will need to upload this in the next step.</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" id="bank-payment-instructions-confirm">I have made the payment</button>
       </div>
     </div>
   </div>

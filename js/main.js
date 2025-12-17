@@ -477,8 +477,8 @@ async function initializePage() {
                 return;
             }
 
-            // Validate payment method (only mobile money now)
-            if (payment !== 'mobile') {
+            // Validate payment method
+            if (payment !== 'mobile' && payment !== 'bank') {
                 if (checkoutMessage) {
                     checkoutMessage.textContent = 'Please select a valid payment method.';
                     checkoutMessage.style.color = 'red';
@@ -506,12 +506,17 @@ async function initializePage() {
                 total: getCartTotal()
             };
 
-            // Show Mobile Money payment instructions modal
-            showMobileMoneyModal();
+            // Show appropriate payment instructions modal
+            if (payment === 'mobile') {
+                showMobileMoneyModal();
+            } else if (payment === 'bank') {
+                showBankPaymentModal();
+            }
         });
 
         // Modal functionality
         const mobileMoneyModal = document.getElementById('mobile-money-modal');
+        const bankPaymentModal = document.getElementById('bank-payment-modal');
         const paymentProofModal = document.getElementById('payment-proof-modal');
         const closeModals = document.querySelectorAll('.close-modal');
 
@@ -519,6 +524,7 @@ async function initializePage() {
         closeModals.forEach(closeBtn => {
             closeBtn.addEventListener('click', () => {
                 mobileMoneyModal.style.display = 'none';
+                bankPaymentModal.style.display = 'none';
                 paymentProofModal.style.display = 'none';
             });
         });
@@ -527,6 +533,9 @@ async function initializePage() {
         window.addEventListener('click', (event) => {
             if (event.target === mobileMoneyModal) {
                 mobileMoneyModal.style.display = 'none';
+            }
+            if (event.target === bankPaymentModal) {
+                bankPaymentModal.style.display = 'none';
             }
             if (event.target === paymentProofModal) {
                 paymentProofModal.style.display = 'none';
@@ -538,6 +547,15 @@ async function initializePage() {
         if (paymentConfirmBtn) {
             paymentConfirmBtn.addEventListener('click', () => {
                 mobileMoneyModal.style.display = 'none';
+                // Show payment proof upload modal
+                showPaymentProofModal();
+            });
+        }
+
+        const bankPaymentConfirmBtn = document.getElementById('bank-payment-instructions-confirm');
+        if (bankPaymentConfirmBtn) {
+            bankPaymentConfirmBtn.addEventListener('click', () => {
+                bankPaymentModal.style.display = 'none';
                 // Show payment proof upload modal
                 showPaymentProofModal();
             });
@@ -646,6 +664,13 @@ async function initializePage() {
             }
         }
 
+        // Show Bank Payment Modal
+        function showBankPaymentModal() {
+            if (bankPaymentModal) {
+                bankPaymentModal.style.display = 'block';
+            }
+        }
+
         // Show Payment Proof Modal
         function showPaymentProofModal() {
             if (paymentProofModal) {
@@ -723,7 +748,8 @@ async function initializePage() {
             });
 
             message += `\n💰 *TOTAL: ₵${orderData.total}*\n`;
-            message += `💳 *Payment Method:* Mobile Money\n`;
+            const paymentMethodText = orderData.payment === 'mobile' ? 'Mobile Money' : 'Bank Transfer';
+            message += `💳 *Payment Method:* ${paymentMethodText}\n`;
 
             if (orderData.notes.trim()) {
                 message += `\n📝 *Additional Notes:* ${orderData.notes.trim()}\n`;
