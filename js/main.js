@@ -679,6 +679,40 @@ async function initializePage() {
             }
         }
 
+        // Enhanced WhatsApp opening function with multiple fallbacks
+        function openWhatsApp(message) {
+            const phoneNumber = '233534057109';
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Check if mobile device
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            let whatsappUrl;
+            
+            if (isMobile) {
+                // Mobile WhatsApp deep link - opens WhatsApp app directly
+                whatsappUrl = `whatsapp://send?phone=${phoneNumber}&text=${encodedMessage}`;
+                
+                // Try to open WhatsApp app
+                window.location.href = whatsappUrl;
+                
+                // Fallback: also try web version
+                setTimeout(() => {
+                    const webUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+                    window.open(webUrl, '_blank');
+                }, 1000);
+            } else {
+                // Desktop - use WhatsApp Web
+                whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+                window.open(whatsappUrl, '_blank');
+                
+                // Double-check with direct navigation
+                setTimeout(() => {
+                    window.location.href = whatsappUrl;
+                }, 500);
+            }
+        }
+
         // Process order with payment proof
         function processOrderWithPaymentProof() {
             const orderData = window.currentOrderData;
@@ -699,26 +733,40 @@ async function initializePage() {
             })
             .then(data => {
                 const paymentProofUrl = data.url;
+                
                 // Create WhatsApp message
                 const whatsappMessage = createWhatsAppMessage(orderData, paymentProofUrl);
-
-                // Open WhatsApp with pre-filled message
-                const whatsappUrl = `https://wa.me/233534057109?text=${encodeURIComponent(whatsappMessage)}`;
-                window.open(whatsappUrl, '_blank');
+                
+                // Open WhatsApp with multiple fallback methods
+                openWhatsApp(whatsappMessage);
 
                 // Clear cart and show success message
                 localStorage.removeItem('cart');
                 paymentProofModal.style.display = 'none';
 
                 if (checkoutMessage) {
-                    checkoutMessage.textContent = 'Order submitted successfully! Please complete the payment confirmation on WhatsApp.';
+                    checkoutMessage.innerHTML = `
+                        <div style="background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; border: 1px solid #c3e6cb;">
+                            <strong>✅ Order submitted successfully!</strong><br>
+                            WhatsApp should open automatically with your order details.
+                            If it doesn't open, please click the WhatsApp button below to complete the payment confirmation.
+                            <div style="margin-top: 10px;">
+                                <a href="https://wa.me/233534057109?text=${encodeURIComponent(whatsappMessage)}"
+                                   target="_blank"
+                                   style="display: inline-block; background: #25D366; color: white; padding: 8px 16px; text-decoration: none; border-radius: 5px; margin-top: 10px;">
+                                    📱 Open WhatsApp
+                                </a>
+                            </div>
+                        </div>
+                    `;
                     checkoutMessage.style.color = 'green';
                 }
 
                 checkoutForm.reset();
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 5000);
+                // Don't auto-redirect so user can complete WhatsApp if needed
+                // setTimeout(() => {
+                //     window.location.href = 'index.html';
+                // }, 5000);
             })
             .catch(error => {
                 console.error('Error uploading payment proof:', error);
