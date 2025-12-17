@@ -106,12 +106,15 @@
                 <label for="shipping-city">City</label>
                 <input type="text" id="shipping-city" name="city" required>
               </div>
+              <div class="form-group">
+                <label for="additional-notes">Additional Notes (Optional)</label>
+                <textarea id="additional-notes" name="notes" rows="4" placeholder="Any special instructions or notes for your order..."></textarea>
+              </div>
               <h2>Payment Information</h2>
               <div class="form-group">
                 <label for="payment-method">Payment Method</label>
                 <select id="payment-method" name="payment" required>
                   <option value="">Select Payment Method</option>
-                  <option value="cash">Cash on Delivery</option>
                   <option value="mobile">Mobile Money</option>
                 </select>
               </div>

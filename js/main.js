@@ -394,7 +394,9 @@ async function initializePage() {
             const address = document.getElementById('shipping-address').value;
             const city = document.getElementById('shipping-city').value;
             const payment = document.getElementById('payment-method').value;
+            const notes = document.getElementById('additional-notes').value; // Optional field
 
+            // Only require essential fields (notes is optional)
             if (!name || !email || !phone || !address || !city || !payment) {
                 if (checkoutMessage) {
                     checkoutMessage.textContent = 'Please fill in all required fields.';
@@ -403,10 +405,44 @@ async function initializePage() {
                 return;
             }
 
+            // Validate payment method (only mobile money now)
+            if (payment !== 'mobile') {
+                if (checkoutMessage) {
+                    checkoutMessage.textContent = 'Please select a valid payment method.';
+                    checkoutMessage.style.color = 'red';
+                }
+                return;
+            }
+
+            // Prepare order data including notes
+            const orderData = {
+                name,
+                email,
+                phone,
+                address,
+                city,
+                payment,
+                notes: notes || '', // Include notes if provided
+                items: cart.map(item => ({
+                    productId: item.product._id,
+                    name: item.product.name,
+                    quantity: item.quantity,
+                    price: item.product.price
+                })),
+                total: getCartTotal()
+            };
+
+            // Log order data (in real app, this would be sent to backend)
+            console.log('Order submitted:', orderData);
+
             // Simulate order placement
             localStorage.removeItem('cart');
             if (checkoutMessage) {
-                checkoutMessage.textContent = 'Order placed successfully! You will receive a confirmation email shortly.';
+                let successMessage = 'Order placed successfully! You will receive a confirmation email shortly.';
+                if (notes.trim()) {
+                    successMessage += ` Your notes: "${notes.trim()}" have been noted for processing.`;
+                }
+                checkoutMessage.textContent = successMessage;
                 checkoutMessage.style.color = 'green';
             }
             checkoutForm.reset();
