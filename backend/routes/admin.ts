@@ -394,13 +394,12 @@ router.get('/dashboard', (req: Request, res: Response) => {
                                     <input type="number" id="promoPrice" name="promoPrice" step="0.01">
                                 </div>
                                 <div class="form-group">
-                                    <label for="size">Size</label>
-                                    <select id="size" name="size" required>
-                                        <option value="">Select Size</option>
-                                        <option value="Small">Small</option>
-                                        <option value="Medium">Medium</option>
-                                        <option value="Large">Large</option>
-                                    </select>
+                                    <label>Sizes</label>
+                                    <div class="checkbox-group">
+                                        <label><input type="checkbox" name="sizes" value="Small"> Small</label>
+                                        <label><input type="checkbox" name="sizes" value="Medium"> Medium</label>
+                                        <label><input type="checkbox" name="sizes" value="Large"> Large</label>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Collections</label>
@@ -604,10 +603,13 @@ router.get('/dashboard', (req: Request, res: Response) => {
                 });
                 formData.set('collections', JSON.stringify(collections));
 
-                // Handle size as array
-                const size = formData.get('size');
-                if (size) {
-                    formData.set('size', JSON.stringify([size]));
+                // Handle sizes checkboxes
+                const sizes = [];
+                document.querySelectorAll('input[name="sizes"]:checked').forEach(checkbox => {
+                    sizes.push(checkbox.value);
+                });
+                if (sizes.length > 0) {
+                    formData.set('size', JSON.stringify(sizes));
                 }
 
                 // Convert checkboxes to boolean
@@ -693,7 +695,10 @@ router.get('/dashboard', (req: Request, res: Response) => {
                         document.getElementById('promoPriceGroup').style.display = 'block';
                         document.getElementById('promoPrice').value = product.promoPrice || '';
                     }
-                    document.getElementById('size').value = product.size ? product.size[0] : '';
+                    // Size checkboxes
+                    document.querySelectorAll('input[name="sizes"]').forEach(checkbox => {
+                        checkbox.checked = product.size && product.size.includes(checkbox.value);
+                    });
                     document.getElementById('featured').checked = product.featured;
                     document.getElementById('length').value = product.length || '';
                     document.getElementById('lace').value = product.lace || '';
