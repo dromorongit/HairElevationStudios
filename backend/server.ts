@@ -27,9 +27,26 @@ app.use(express.static(path.join(__dirname, '..')));
 // Serve uploaded files
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-// Specific route for logo to ensure it loads correctly
+// Specific route for logo to ensure it loads correctly - serve from both locations
 app.get('/HESLOGO.PNG', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'HESLOGO.PNG'));
+  const logoPath = path.join(__dirname, '..', 'HESLOGO.PNG');
+  res.sendFile(logoPath, (err) => {
+    if (err) {
+      console.error('Error serving logo:', err);
+      res.status(404).send('Logo not found');
+    }
+  });
+});
+
+// Also serve logo from backend directory as fallback
+app.get('/admin-logo.png', (req, res) => {
+  const backendLogoPath = path.join(__dirname, 'HESLOGO.PNG');
+  res.sendFile(backendLogoPath, (err) => {
+    if (err) {
+      console.error('Error serving backend logo:', err);
+      res.status(404).send('Backend logo not found');
+    }
+  });
 });
 
 // Specific route for pricelist image
@@ -219,7 +236,7 @@ app.get('/', (req, res) => {
     <body>
         <div class="container fade-in">
             <div class="logo">
-                <img src="/HESLOGO.PNG" alt="Hair Elevation Studios Logo" onerror="this.style.display='none'">
+                <img src="/HESLOGO.PNG" alt="Hair Elevation Studios Logo" onerror="this.src='/admin-logo.png'">
             </div>
             <div id="loginSection">
                 <h2>Admin Login</h2>

@@ -330,7 +330,7 @@ router.get('/dashboard', (req: Request, res: Response) => {
         <div class="dashboard">
             <div class="header">
                 <div class="logo-section">
-                    <img src="/HESLOGO.PNG" alt="Hair Elevation Studios Logo" class="logo" onerror="this.style.display='none'">
+                    <img src="/HESLOGO.PNG" alt="Hair Elevation Studios Logo" class="logo" onerror="this.src='/admin-logo.png'">
                     <p class="subtitle">Admin Dashboard</p>
                 </div>
                 <button class="logout-btn" onclick="logout()">
