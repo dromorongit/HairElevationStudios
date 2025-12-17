@@ -591,14 +591,24 @@ async function initializePage() {
             const orderData = window.currentOrderData;
             if (!orderData) return;
 
-            // Convert image to base64 for WhatsApp
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const imageBase64 = e.target.result;
-                
+            // Upload the image to server
+            const formData = new FormData();
+            formData.append('paymentProof', uploadedImageFile);
+            fetch('https://hairelevationstudios-production.up.railway.app/products/upload-payment-proof', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Upload failed');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const paymentProofUrl = data.url;
                 // Create WhatsApp message
-                const whatsappMessage = createWhatsAppMessage(orderData, imageBase64);
-                
+                const whatsappMessage = createWhatsAppMessage(orderData, paymentProofUrl);
+
                 // Open WhatsApp with pre-filled message
                 const whatsappUrl = `https://wa.me/233534057109?text=${encodeURIComponent(whatsappMessage)}`;
                 window.open(whatsappUrl, '_blank');
@@ -606,52 +616,55 @@ async function initializePage() {
                 // Clear cart and show success message
                 localStorage.removeItem('cart');
                 paymentProofModal.style.display = 'none';
-                
+
                 if (checkoutMessage) {
                     checkoutMessage.textContent = 'Order submitted successfully! Please complete the payment confirmation on WhatsApp.';
                     checkoutMessage.style.color = 'green';
                 }
-                
+
                 checkoutForm.reset();
                 setTimeout(() => {
                     window.location.href = 'index.html';
                 }, 5000);
-            };
-            reader.readAsDataURL(uploadedImageFile);
+            })
+            .catch(error => {
+                console.error('Error uploading payment proof:', error);
+                alert('Error uploading payment proof. Please try again.');
+            });
         }
 
         // Create WhatsApp message
-        function createWhatsAppMessage(orderData, paymentProofImage) {
+        function createWhatsAppMessage(orderData, paymentProofUrl) {
             const date = new Date().toLocaleDateString('en-GB');
             const time = new Date().toLocaleTimeString('en-GB');
-            
+
             let message = `🛍️ *NEW ORDER - Hair Elevation Studio*\n\n`;
             message += `📅 *Date:* ${date} at ${time}\n`;
             message += `👤 *Customer:* ${orderData.name}\n`;
-            
+
             if (orderData.email) {
                 message += `📧 *Email:* ${orderData.email}\n`;
             }
-            
+
             message += `📱 *Phone:* ${orderData.phone}\n`;
             message += `📍 *Address:* ${orderData.address}, ${orderData.city}\n\n`;
-            
+
             message += `🛒 *ORDER ITEMS:*\n`;
             orderData.items.forEach((item, index) => {
                 message += `${index + 1}. ${item.name} x${item.quantity} - ₵${item.price * item.quantity}\n`;
             });
-            
+
             message += `\n💰 *TOTAL: ₵${orderData.total}*\n`;
             message += `💳 *Payment Method:* Mobile Money\n`;
-            
+
             if (orderData.notes.trim()) {
                 message += `\n📝 *Additional Notes:* ${orderData.notes.trim()}\n`;
             }
-            
-            message += `\n📸 *Payment Proof:* Attached\n`;
+
+            message += `\n📸 *Payment Proof:* ${paymentProofUrl}\n`;
             message += `✅ *Status:* Payment confirmation required\n\n`;
             message += `Please confirm this order and payment.`;
-            
+
             return message;
         }
     }
