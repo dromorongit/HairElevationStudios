@@ -78,7 +78,9 @@ router.post('/create', authMiddleware, upload.fields([
       productData.promoPrice = parseFloat(productData.promoPrice);
     }
 
-    if (files.coverImage) {
+    // Handle Cloudinary uploaded files
+    if (files.coverImage && files.coverImage[0]) {
+      // For Cloudinary, the secure URL is in file.path
       productData.coverImage = files.coverImage[0].path;
     }
     if (files.additionalImages) {
@@ -92,6 +94,7 @@ router.post('/create', authMiddleware, upload.fields([
     await product.save();
     res.status(201).json(product);
   } catch (error) {
+    console.error('Error creating product:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -143,19 +146,19 @@ router.put('/update/:id', authMiddleware, upload.fields([
     }
 
     // Only update file paths if new files are uploaded, otherwise preserve existing ones
-    if (files.coverImage) {
+    if (files.coverImage && files.coverImage[0]) {
       productData.coverImage = files.coverImage[0].path;
     } else {
       productData.coverImage = existingProduct.coverImage;
     }
     
-    if (files.additionalImages) {
+    if (files.additionalImages && files.additionalImages.length > 0) {
       productData.additionalImages = files.additionalImages.map(file => file.path);
     } else {
       productData.additionalImages = existingProduct.additionalImages;
     }
     
-    if (files.videos) {
+    if (files.videos && files.videos.length > 0) {
       productData.videos = files.videos.map(file => file.path);
     } else {
       productData.videos = existingProduct.videos;
@@ -167,6 +170,7 @@ router.put('/update/:id', authMiddleware, upload.fields([
     }
     res.json(product);
   } catch (error) {
+    console.error('Error updating product:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });

@@ -33,8 +33,19 @@ class APIService {
 
     getImageUrl(path) {
         if (!path) return 'https://via.placeholder.com/300x400/3B2A23/F5EFE6?text=No+Image';
-        if (path.startsWith('http')) return path;
-        return `${API_BASE_URL}${path}`;
+        
+        // Handle different URL formats
+        if (path.startsWith('http')) {
+            // Already a full URL (Cloudinary, AWS S3, etc.)
+            return path;
+        } else if (path.startsWith('/uploads/')) {
+            // Legacy local upload path - these won't work on Railway
+            // Return placeholder until you implement cloud storage
+            return 'https://via.placeholder.com/300x400/3B2A23/F5EFE6?text=Image+Unavailable';
+        } else {
+            // Relative path - construct full URL (for local development)
+            return `${API_BASE_URL}${path}`;
+        }
     }
 
     getProductsByCollection(collectionName) {

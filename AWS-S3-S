@@ -1,0 +1,135 @@
+# AWS S3 Setup for Image Storage
+
+## Why AWS S3?
+- Very reliable and scalable
+- Pay-as-you-use pricing
+- Good for high-traffic applications
+- Advanced features like lifecycle policies
+
+## Step 1: Create AWS Account and S3 Bucket
+1. Create AWS account at https://aws.amazon.com
+2. Create S3 bucket for image storage
+3. Configure bucket permissions for public read access
+4. Note your AWS credentials and bucket name
+
+## Step 2: Install AWS SDK
+```bash
+cd backend
+npm install @aws-sdk/client-s3 @aws-sdk/s3-request-presigner
+```
+
+## Step 3: Update Environment Variables
+Add to Railway environment:
+```
+AWS_ACCESS_KEY_ID=your_access_key
+AWS_SECRET_ACCESS_KEY=your_secret_key
+AWS_REGION=us-east-1
+S3_BUCKET_NAME=your-bucket-name
+```
+
+## Step 4: Update Upload Middleware
+```typescript
+import multer from 'multer';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import path from 'path';
+import crypto from 'crypto';
+
+// Configure S3 client
+const s3Client = new S3Client({
+  region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!
+  }
+});
+
+// Storage configuration for S3
+const storage = multer.memoryStorage();
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/') || file.mimetype.startsWith('video/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Invalid file type'));
+    }
+  }
+});
+
+// Custom upload function for S3
+export const uploadToS3 = async (file: Express.Multer.File, folder: string = 'products') => {
+  const fileExtension = path.extname(file.originalname);
+  const fileName = `${folder}/${Date.now()}-${crypto.randomBytes(16).toString('hex')}${fileExtension}`;
+  
+  const command = new PutObjectCommand({
+    Bucket: process.env.S3_BUCKET_NAME!,
+    Key: fileName,
+    Body: file.buffer,
+    ContentType: file.mimetype,
+    ACL: 'public-read'
+  });
+
+  await s3Client.send(command);
+  
+  return `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileName}`;
+};
+
+export default upload;
+```
+
+## Step 5: Update Product Routes
+Modify `backend/routes/products.ts` to use S3 upload:
+
+```typescript
+import { uploadToS3 } from '../middleware/upload';
+
+// In the create product route:
+if (files.coverImage) {
+  productData.coverImage = await uploadToS3(files.coverImage[0], 'covers');
+}
+if (files.additionalImages) {
+  productData.additionalImages = await Promise.all(
+    files.additionalImages.map(file => uploadToS3(file, 'additional'))
+  );
+}
+if (files.videos) {
+  productData.videos = await Promise.all(
+    files.videos.map(file => uploadToS3(file, 'videos'))
+  );
+}
+```
+
+## Step 6: Update API Service
+Update `js/api.js` to handle S3 URLs:
+
+```javascript
+getImageUrl(path) {
+    if (!path) return 'https://via.placeholder.com/300x400/3B2A23/F5EFE6?text=No+Image';
+    
+    if (path.startsWith('http')) {
+        return path; // S3 URLs are already full URLs
+    }
+    
+    return `${API_BASE_URL}${path}`;
+}
+```
+
+## Costs
+- Storage: ~$0.023/GB/month
+- Data transfer: ~$0.09/GB for first 10TB
+- Good for moderate traffic sites
+
+## Pros and Cons
+**Pros:**
+- Very reliable
+- Scalable
+- Cost-effective for moderate usage
+- Advanced features
+
+**Cons:**
+- More complex setup
+- Need to manage AWS credentials
+- More expensive for small sites

@@ -483,14 +483,35 @@ router.get('/dashboard', (req: Request, res: Response) => {
 
             async function loadProducts() {
                 try {
+                    console.log('Loading products...');
                     const response = await fetch('/products', {
                         headers: { 'Authorization': \`Bearer \${token}\` }
                     });
+                    
+                    console.log('Products response status:', response.status);
+                    
+                    if (!response.ok) {
+                        if (response.status === 401) {
+                            alert('Authentication failed. Please login again.');
+                            logout();
+                            return;
+                        }
+                        throw new Error(\`HTTP error! status: \${response.status}\`);
+                    }
+                    
                     const products = await response.json();
+                    console.log('Loaded products:', products);
                     displayProducts(products);
                     updateStats(products);
                 } catch (error) {
-                    document.getElementById('productList').innerHTML = '<p>Error loading products</p>';
+                    console.error('Error loading products:', error);
+                    document.getElementById('productList').innerHTML =
+                        '<div style="color: red; padding: 20px; text-align: center;">' +
+                        '<h4>Unable to connect to server</h4>' +
+                        '<p>Please ensure the backend server is running on port 5000</p>' +
+                        '<p>Error: ' + error.message + '</p>' +
+                        '<button onclick="loadProducts()" style="padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer;">Retry</button>' +
+                        '</div>';
                 }
             }
 
@@ -538,6 +559,13 @@ router.get('/dashboard', (req: Request, res: Response) => {
 
             document.getElementById('productForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
+                
+                // Show loading state
+                const submitBtn = document.getElementById('submitBtn');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                submitBtn.disabled = true;
+                
                 const formData = new FormData(e.target);
                 const productId = document.getElementById('productId').value;
                 const isEdit = productId !== '';
@@ -562,6 +590,8 @@ router.get('/dashboard', (req: Request, res: Response) => {
                 try {
                     const url = isEdit ? \`/products/update/\${productId}\` : '/products/create';
                     const method = isEdit ? 'PUT' : 'POST';
+                    console.log('Sending request to:', url, 'Method:', method);
+                    
                     const response = await fetch(url, {
                         method: method,
                         headers: {
@@ -569,16 +599,36 @@ router.get('/dashboard', (req: Request, res: Response) => {
                         },
                         body: formData
                     });
+                    
+                    console.log('Response status:', response.status);
+                    console.log('Response ok:', response.ok);
+                    
                     if (response.ok) {
+                        const result = await response.json();
+                        console.log('Success result:', result);
                         alert(\`Product \${isEdit ? 'updated' : 'added'} successfully!\`);
                         cancelEdit();
                         loadProducts();
                     } else {
-                        const error = await response.json();
-                        alert(\`Error \${isEdit ? 'updating' : 'adding'} product: \` + (error.message || 'Unknown error'));
+                        const errorText = await response.text();
+                        console.error('Error response:', errorText);
+                        let errorMessage = 'Unknown error';
+                        try {
+                            const error = JSON.parse(errorText);
+                            errorMessage = error.message || errorText;
+                        } catch (e) {
+                            errorMessage = errorText || 'Server error';
+                        }
+                        alert(\`Error \${isEdit ? 'updating' : 'adding'} product: \` + errorMessage);
                     }
                 } catch (error) {
-                    alert(\`Error \${isEdit ? 'updating' : 'adding'} product: \` + error.message);
+                    console.error('Network error:', error);
+                    alert(\`Network Error: \${isEdit ? 'updating' : 'adding'} product failed. \` +
+                          'Please check if the server is running and try again. Error: ' + error.message);
+                } finally {
+                    // Restore button state
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
                 }
             });
 
