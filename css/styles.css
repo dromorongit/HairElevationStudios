@@ -1625,11 +1625,14 @@ textarea {
   border-radius: 20px;
   width: 90%;
   max-width: 600px;
+  max-height: 90vh;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(200, 169, 126, 0.2);
   position: relative;
   overflow: hidden;
   animation: modalSlideIn 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
 }
 
 @keyframes modalSlideIn {
@@ -1683,6 +1686,28 @@ textarea {
 
 .modal-body {
   padding: 30px;
+  flex: 1;
+  overflow-y: auto;
+  max-height: calc(90vh - 140px);
+}
+
+/* Custom scrollbar for modal body */
+.modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background: rgba(200, 169, 126, 0.1);
+  border-radius: 3px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: rgba(200, 169, 126, 0.5);
+  border-radius: 3px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(200, 169, 126, 0.7);
 }
 
 .modal-footer {
@@ -1931,25 +1956,38 @@ textarea {
   
   .modal-body {
     padding: 20px;
+    max-height: calc(90vh - 120px);
   }
   
   .payment-details {
-    padding: 20px;
+    padding: 15px;
   }
   
   .payment-number {
-    font-size: 1.5rem !important;
+    font-size: 1.4rem !important;
   }
   
   .account-name {
-    font-size: 1.2rem !important;
+    font-size: 1.1rem !important;
   }
   
   .file-upload-label {
-    padding: 30px 15px;
+    padding: 25px 15px;
   }
   
   .upload-icon {
     font-size: 2.5rem;
+  }
+  
+  .payment-steps {
+    font-size: 0.9rem;
+  }
+  
+  .payment-steps ol {
+    padding-left: 15px;
+  }
+  
+  .payment-steps li {
+    margin-bottom: 6px;
   }
 }
