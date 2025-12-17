@@ -1895,8 +1895,20 @@ textarea {
   color: #C8A97E !important;
 }
 
+/* Mobile Money Modal Size Optimization */
+#mobile-money-modal .modal-content {
+  max-width: 500px;
+  margin: 3% auto;
+}
+
 /* Mobile Responsive for Modals */
 @media (max-width: 768px) {
+  #mobile-money-modal .modal-content {
+    width: 95%;
+    margin: 5% auto;
+    max-width: none;
+  }
+  
   .modal-content {
     width: 95%;
     margin: 10% auto;

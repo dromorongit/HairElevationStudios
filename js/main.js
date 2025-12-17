@@ -466,17 +466,6 @@ async function initializePage() {
             }
         });
 
-        // Payment method change handler
-        const paymentMethodSelect = document.getElementById('payment-method');
-        if (paymentMethodSelect) {
-            paymentMethodSelect.addEventListener('change', (e) => {
-                if (e.target.value === 'mobile') {
-                    // Show payment instructions when Mobile Money is selected
-                    showMobileMoneyModal();
-                }
-            });
-        }
-
         // Modal event handlers
         const paymentConfirmBtn = document.getElementById('payment-instructions-confirm');
         if (paymentConfirmBtn) {
