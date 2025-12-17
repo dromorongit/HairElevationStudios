@@ -359,22 +359,11 @@ app.get('/HESLOGO.PNG', (req, res) => {
 });
 
 app.get('/admin-logo.png', (req, res) => {
-  const backendLogoPath = path.join(__dirname, 'HESLOGO.PNG');
-  res.sendFile(backendLogoPath, (err) => {
+  const logoPath = path.join(__dirname, '..', 'HESLOGO.PNG');
+  res.sendFile(logoPath, (err) => {
     if (err) {
-      console.error('Error serving backend logo:', err);
-      res.status(404).send('Backend logo not found');
-    }
-  });
-});
-
-// Also serve logo from backend directory as fallback
-app.get('/admin-logo.png', (req, res) => {
-  const backendLogoPath = path.join(__dirname, 'HESLOGO.PNG');
-  res.sendFile(backendLogoPath, (err) => {
-    if (err) {
-      console.error('Error serving backend logo:', err);
-      res.status(404).send('Backend logo not found');
+      console.error('Error serving logo:', err);
+      res.status(404).send('Logo not found');
     }
   });
 });
