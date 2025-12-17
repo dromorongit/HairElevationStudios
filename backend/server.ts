@@ -200,7 +200,7 @@ app.get('/admin', (req, res) => {
     <body>
         <div class="container fade-in">
             <div class="logo">
-                <img src="/HESLOGO.PNG" alt="Hair Elevation Studios Logo">
+                <img src="/admin-logo.png" alt="Hair Elevation Studios Logo">
             </div>
             <div id="loginSection">
                 <h2>Admin Login</h2>
@@ -566,7 +566,7 @@ app.get('/', (req, res) => {
     <body>
         <div class="container fade-in">
             <div class="logo">
-                <img src="/HESLOGO.PNG" alt="Hair Elevation Studios Logo">
+                <img src="/admin-logo.png" alt="Hair Elevation Studios Logo">
             </div>
             <div id="loginSection">
                 <h2>Admin Login</h2>
