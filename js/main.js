@@ -47,6 +47,26 @@ function removeFromCart(productId) {
     renderCart();
 }
 
+function updateCartItemQuantity(productId, change) {
+    const cart = getCart();
+    const item = cart.find(item => item.product._id === productId);
+    
+    if (item) {
+        item.quantity += change;
+        
+        // Remove item if quantity becomes 0 or negative
+        if (item.quantity <= 0) {
+            const updatedCart = cart.filter(item => item.product._id !== productId);
+            saveCart(updatedCart);
+        } else {
+            saveCart(cart);
+        }
+        
+        updateCartCount();
+        renderCart();
+    }
+}
+
 function getCartTotal() {
     return getCart().reduce((total, item) => total + item.product.price * item.quantity, 0);
 }
@@ -161,7 +181,12 @@ function renderCart() {
       <img src="${window.apiService.getImageUrl(item.product.coverImage)}" alt="${item.product.name}">
       <div class="cart-item-details">
         <h3>${item.product.name}</h3>
-        <p>₵${item.product.price} x ${item.quantity}</p>
+        <p>₵${item.product.price} each</p>
+        <div class="quantity-controls">
+          <button class="quantity-btn decrease-cart" data-id="${item.product._id}">-</button>
+          <span class="quantity cart-quantity" data-id="${item.product._id}">${item.quantity}</span>
+          <button class="quantity-btn increase-cart" data-id="${item.product._id}">+</button>
+        </div>
         <p>Subtotal: ₵${item.product.price * item.quantity}</p>
       </div>
       <button class="btn remove-from-cart" data-id="${item.product._id}">Remove</button>
@@ -175,6 +200,21 @@ function renderCart() {
         button.addEventListener('click', (e) => {
             const productId = e.target.dataset.id;
             removeFromCart(productId);
+        });
+    });
+
+    // Add event listeners for cart quantity controls
+    cartContainer.querySelectorAll('.increase-cart').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const productId = e.target.dataset.id;
+            updateCartItemQuantity(productId, 1);
+        });
+    });
+
+    cartContainer.querySelectorAll('.decrease-cart').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const productId = e.target.dataset.id;
+            updateCartItemQuantity(productId, -1);
         });
     });
 }
