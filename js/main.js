@@ -488,14 +488,12 @@ async function initializePage() {
 
         // File upload handling
         if (paymentProofInput && uploadLabel) {
-            // Click to upload
-            uploadLabel.addEventListener('click', () => {
-                paymentProofInput.click();
-            });
-
             // File change handling
             paymentProofInput.addEventListener('change', (e) => {
-                handleFileUpload(e.target.files[0]);
+                // Small delay to ensure file is loaded on mobile devices
+                setTimeout(() => {
+                    handleFileUpload(e.target.files[0]);
+                }, 100);
             });
 
             // Drag and drop functionality
@@ -525,6 +523,10 @@ async function initializePage() {
         // Remove uploaded image
         if (removeImageBtn) {
             removeImageBtn.addEventListener('click', () => {
+                if (previewImage.src) {
+                    URL.revokeObjectURL(previewImage.src);
+                }
+                previewImage.src = '';
                 uploadedImageFile = null;
                 uploadedImagePreview.style.display = 'none';
                 uploadLabel.style.display = 'flex';
@@ -563,14 +565,11 @@ async function initializePage() {
 
             uploadedImageFile = file;
 
-            // Show preview
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                previewImage.src = e.target.result;
-                uploadLabel.style.display = 'none';
-                uploadedImagePreview.style.display = 'block';
-            };
-            reader.readAsDataURL(file);
+            // Show preview using object URL for better performance
+            const objectUrl = URL.createObjectURL(file);
+            previewImage.src = objectUrl;
+            uploadLabel.style.display = 'none';
+            uploadedImagePreview.style.display = 'block';
         }
 
         // Show Mobile Money Modal
