@@ -21,15 +21,20 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// Serve static files (frontend)
-app.use(express.static(path.join(__dirname)));
+// Serve static files (frontend) - Serve from project root directory
+app.use(express.static(path.join(__dirname, '..')));
 
 // Serve uploaded files
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // Specific route for logo to ensure it loads correctly
 app.get('/HESLOGO.PNG', (req, res) => {
-  res.sendFile(path.join(__dirname, 'HESLOGO.PNG'));
+  res.sendFile(path.join(__dirname, '..', 'HESLOGO.PNG'));
+});
+
+// Specific route for pricelist image
+app.get('/pricelist.jpg', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'pricelist.jpg'));
 });
 
 // Health check
