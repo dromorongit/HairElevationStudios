@@ -1142,10 +1142,11 @@ textarea {
 .cart-item-details h3 {
   margin-bottom: 5px;
   font-size: 1.2rem;
+  color: #000000 !important;
 }
 
 .cart-item-details p {
-  color: #666;
+  color: #000000;
   margin-bottom: 5px;
 }
 
@@ -1196,6 +1197,7 @@ textarea {
 .cart-summary h2 {
   margin-bottom: 20px;
   font-size: 1.5rem;
+  color: #000000 !important;
 }
 
 /* Checkout */
@@ -1841,6 +1843,52 @@ textarea {
 
 .modal-body::-webkit-scrollbar-thumb:hover {
   background: rgba(200, 169, 126, 0.7);
+}
+
+/* Modal text color fixes for better visibility */
+.modal-body {
+  color: #000000 !important;
+}
+
+.modal-body p {
+  color: #000000 !important;
+}
+
+.modal-body li {
+  color: #000000 !important;
+}
+
+.modal-body strong {
+  color: #000000 !important;
+}
+
+/* Specific modal element color fixes */
+.payment-details p {
+  color: #000000 !important;
+}
+
+.payment-steps {
+  color: #000000 !important;
+}
+
+.payment-steps p {
+  color: #000000 !important;
+}
+
+.payment-steps li {
+  color: #000000 !important;
+}
+
+.upload-section p {
+  color: #000000 !important;
+}
+
+.upload-text {
+  color: #000000 !important;
+}
+
+.upload-note {
+  color: #000000 !important;
 }
 
 .modal-footer {
