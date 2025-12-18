@@ -142,6 +142,10 @@ a {
   position: relative;
 }
 
+.nav-list a[aria-label="Shopping Cart"] {
+  position: relative;
+}
+
 .cart-count {
   position: absolute;
   top: -5px;
