@@ -427,14 +427,17 @@ a {
     flex-direction: column;
     gap: 5px;
     margin-top: 10px;
+    margin-bottom: 15px;
     align-items: center;
   }
 
   .product-actions .btn {
-    padding: 4px 8px;
-    font-size: 0.6rem;
+    padding: 8px 12px;
+    font-size: 0.7rem;
     width: 60%;
     min-width: unset;
+    height: auto;
+    line-height: 1.2;
   }
 
   .product-actions .add-to-cart {
