@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Products API</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .product { background: white; padding: 15px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd; }
+        .promo { background: #ffe6e6; border-color: #d32f2f; }
+        .loading { color: #666; text-align: center; padding: 20px; }
+        .error { color: red; background: #ffe6e6; padding: 15px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Products API Debug</h1>
+        <div id="status" class="loading">Loading products...</div>
+        <div id="results"></div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+        async function debugAPI() {
+            try {
+                console.log('Fetching products...');
+                const products = await window.apiService.getAllProducts();
+                
+                console.log('API Response:', products);
+                console.log('Products count:', products.length);
+                
+                if (products.length === 0) {
+                    document.getElementById('status').innerHTML = 'No products found';
+                    return;
+                }
+                
+                document.getElementById('status').innerHTML = `Found ${products.length} products`;
+                
+                const resultsDiv = document.getElementById('results');
+                resultsDiv.innerHTML = '';
+                
+                products.forEach((product, index) => {
+                    console.log(`Product ${index + 1}:`, product);
+                    
+                    const productDiv = document.createElement('div');
+                    productDiv.className = 'product';
+                    if (product.onSale && product.promoPrice) {
+                        productDiv.className += ' promo';
+                    }
+                    
+                    productDiv.innerHTML = `
+                        <h3>${product.name || 'Unnamed Product'}</h3>
+                        <p><strong>Price:</strong> ₵${product.price || 'N/A'}</p>
+                        <p><strong>On Sale:</strong> ${product.onSale ? 'Yes' : 'No'}</p>
+                        <p><strong>Promo Price:</strong> ${product.promoPrice ? '₵' + product.promoPrice : 'None'}</p>
+                        <p><strong>ID:</strong> ${product._id || product.id || 'N/A'}</p>
+                        <details>
+                            <summary>Full Data</summary>
+                            <pre>${JSON.stringify(product, null, 2)}</pre>
+                        </details>
+                    `;
+                    
+                    resultsDiv.appendChild(productDiv);
+                });
+                
+                // Check for promo products specifically
+                const promoProducts = products.filter(p => p.onSale && p.promoPrice);
+                console.log('Products with promo:', promoProducts);
+                
+                if (promoProducts.length === 0) {
+                    const noPromoDiv = document.createElement('div');
+                    noPromoDiv.className = 'error';
+                    noPromoDiv.innerHTML = '<h3>⚠️ No products with promo prices found!</h3><p>Make sure you have set products as "On Sale" with promo prices in your admin system.</p>';
+                    resultsDiv.insertBefore(noPromoDiv, resultsDiv.firstChild);
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('status').innerHTML = `
+                    <div class="error">
+                        <h3>Error loading products</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Wait for DOM to load
+        document.addEventListener('DOMContentLoaded', debugAPI);
+    </script>
+</body>
+</html>

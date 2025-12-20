@@ -130,6 +130,9 @@ function renderProducts(productsToShow, container, limit) {
 
     const products = limit ? productsToShow.slice(0, limit) : productsToShow;
 
+    console.log('Rendering products:', products.length);
+    console.log('Products with sale/promo data:', products.map(p => ({ name: p.name, onSale: p.onSale, promoPrice: p.promoPrice, price: p.price })));
+
     if (products.length === 0) {
         container.innerHTML = '<div style="text-align: center; padding: 40px;"><p>No products found.</p></div>';
         return;
@@ -389,6 +392,12 @@ async function loadData() {
         // Load all products
         products = await window.apiService.getAllProducts();
         console.log('Products loaded:', products.length);
+        console.log('Sample product data:', products[0]);
+        
+        // Debug: Check if any products have promo prices
+        const productsWithPromo = products.filter(p => p.onSale && p.promoPrice);
+        console.log('Products with promo prices:', productsWithPromo.length);
+        
     } catch (error) {
         console.error('Failed to load products:', error);
         products = [];
