@@ -443,6 +443,26 @@ a {
   .product-actions .add-to-cart {
     order: -1;
   }
+
+  .sale-badge, .out-of-stock-badge {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+  }
+
+  .price-container {
+    padding: 0 15px 15px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .original-price {
+    font-size: 0.9rem;
+  }
+
+  .promo-price {
+    font-size: 1rem;
+  }
 }
 
 /* Hero */
@@ -728,6 +748,40 @@ h2 {
   letter-spacing: 0.5px;
   z-index: 2;
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.sale-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #d32f2f;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.price-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px 20px;
+}
+
+.original-price {
+  font-size: 1rem;
+  color: #999;
+}
+
+.promo-price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #d32f2f;
 }
 
 .product-card h3, .service-card h3 {
@@ -1634,6 +1688,18 @@ textarea {
   padding: 8px 16px;
   border-radius: 25px;
   border: 1px solid rgba(200, 169, 126, 0.2);
+}
+
+.product-price .original-price {
+  font-size: 18px;
+  text-decoration: line-through;
+  color: #999;
+  margin-right: 10px;
+}
+
+.product-price .promo-price {
+  color: #d32f2f;
+  font-size: 24px;
 }
 
 .product-description {

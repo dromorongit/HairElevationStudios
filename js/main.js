@@ -91,7 +91,10 @@ function updateCartItemSize(index, newSize) {
 }
 
 function getCartTotal() {
-    return getCart().reduce((total, item) => total + item.product.price * item.quantity, 0);
+    return getCart().reduce((total, item) => {
+        const price = item.product.onSale && item.product.promoPrice ? item.product.promoPrice : item.product.price;
+        return total + (price * item.quantity);
+    }, 0);
 }
 
 function getCartCount() {
@@ -136,8 +139,14 @@ function renderProducts(productsToShow, container, limit) {
     <div class="product-card">
       <img src="${window.apiService.getImageUrl(product.coverImage)}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x400/3B2A23/F5EFE6?text=No+Image'">
       ${!product.inStock ? '<div class="out-of-stock-badge">Out of Stock</div>' : ''}
+      ${product.onSale ? '<div class="sale-badge">Sale</div>' : ''}
       <h3>${product.name}</h3>
-      <p>₵${product.price}</p>
+      ${product.onSale && product.promoPrice ? `
+        <p class="price-container">
+          <span class="original-price" style="text-decoration: line-through; color: #999;">₵${product.price}</span>
+          <span class="promo-price" style="color: #d32f2f; font-weight: bold;">₵${product.promoPrice}</span>
+        </p>
+      ` : `<p>₵${product.price}</p>`}
       <div class="quantity-controls">
         <button class="quantity-btn decrease" data-id="${product._id}">-</button>
         <span class="quantity" data-id="${product._id}">1</span>
@@ -205,7 +214,12 @@ function renderCart() {
       <img src="${window.apiService.getImageUrl(item.product.coverImage)}" alt="${item.product.name}">
       <div class="cart-item-details">
         <h3>${item.product.name}</h3>
-        <p>₵${item.product.price} each</p>
+        ${item.product.onSale && item.product.promoPrice ? `
+          <p class="cart-item-price" style="color: #d32f2f; font-weight: bold;">
+            <span style="text-decoration: line-through; color: #999;">₵${item.product.price} each</span><br>
+            ₵${item.product.promoPrice} each
+          </p>
+        ` : `<p>₵${item.product.price} each</p>`}
         ${item.selectedSize ? `<p><strong>Size:</strong> ${item.selectedSize}</p>` : ''}
         ${item.product.size && item.product.size.length > 1 && !item.selectedSize ? `
           <div class="cart-size-selection">
@@ -221,7 +235,7 @@ function renderCart() {
           <span class="quantity cart-quantity" data-id="${item.product._id}" data-size="${item.selectedSize || ''}">${item.quantity}</span>
           <button class="quantity-btn increase-cart" data-id="${item.product._id}" data-size="${item.selectedSize || ''}">+</button>
         </div>
-        <p>Subtotal: ₵${item.product.price * item.quantity}</p>
+        <p>Subtotal: ₵${(item.product.onSale && item.product.promoPrice ? item.product.promoPrice : item.product.price) * item.quantity}</p>
       </div>
       <button class="btn remove-from-cart" data-id="${item.product._id}" data-size="${item.selectedSize || ''}">Remove</button>
     </div>
@@ -304,7 +318,12 @@ async function renderProductDetail() {
           </div>
           <div class="product-info">
             <h1>${product.name}</h1>
-            <div class="product-price">₵${product.price}</div>
+            <div class="product-price">
+              ${product.onSale && product.promoPrice ? `
+                <span class="original-price" style="text-decoration: line-through; color: #999; font-size: 18px;">₵${product.price}</span>
+                <span class="promo-price" style="color: #d32f2f; font-size: 24px; font-weight: bold;">₵${product.promoPrice}</span>
+              ` : `<span>₵${product.price}</span>`}
+            </div>
             <div class="product-specs">
               <h3>Specifications</h3>
               <ul>
@@ -450,8 +469,8 @@ async function initializePage() {
         <img src="${window.apiService.getImageUrl(item.product.coverImage)}" alt="${item.product.name}" class="order-item-image" onerror="this.src='https://via.placeholder.com/60x60/3B2A23/F5EFE6?text=No+Image'">
         <div class="order-item-details">
           <p class="order-item-name">${item.product.name}${item.selectedSize ? ` (${item.selectedSize})` : ''}</p>
-          <p>Qty: ${item.quantity} × ₵${item.product.price}</p>
-          <p class="order-item-price">₵${item.product.price * item.quantity}</p>
+          <p>Qty: ${item.quantity} × ${item.product.onSale && item.product.promoPrice ? `₵${item.product.promoPrice} (was ₵${item.product.price})` : `₵${item.product.price}`}</p>
+          <p class="order-item-price">₵${(item.product.onSale && item.product.promoPrice ? item.product.promoPrice : item.product.price) * item.quantity}</p>
         </div>
       </div>
     `).join('');
@@ -500,7 +519,9 @@ async function initializePage() {
                     productId: item.product._id,
                     name: item.product.name,
                     quantity: item.quantity,
-                    price: item.product.price,
+                    price: item.product.onSale && item.product.promoPrice ? item.product.promoPrice : item.product.price,
+                    originalPrice: item.product.price,
+                    onSale: item.product.onSale,
                     coverImage: item.product.coverImage,
                     selectedSize: item.selectedSize
                 })),
@@ -793,7 +814,9 @@ async function initializePage() {
             message += `🛒 *ORDER ITEMS:*\n`;
             orderData.items.forEach((item, index) => {
                 const sizeInfo = item.selectedSize ? ` (${item.selectedSize})` : '';
-                message += `${index + 1}. ${item.name}${sizeInfo} x${item.quantity} - ₵${item.price * item.quantity}\n`;
+                const priceInfo = item.onSale ? `₵${item.price} (was ₵${item.originalPrice})` : `₵${item.price}`;
+                message += `${index + 1}. ${item.name}${sizeInfo} x${item.quantity} - ${priceInfo}
+`;
             });
 
             message += `\n💰 *TOTAL: ₵${orderData.total}*\n`;
