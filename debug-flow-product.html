@@ -100,7 +100,7 @@
                         <h3>🎨 Generated HTML</h3>
                         <p><strong>Price HTML that would be generated:</strong></p>
                         <div style="background: #f0f0f0; padding: 10px; font-family: monospace;">
-                            ${priceHTML.replace(/</g, '<').replace(/>/g, '>')}
+                            ${priceHTML.replace(/</g, '&lt;').replace(/>/g, '&gt;')}
                         </div>
                         <p><strong>How it will look:</strong></p>
                         <div class="test-card ${shouldShowPromo ? 'promo' : ''}">
