@@ -451,17 +451,22 @@ a {
 
   .price-container {
     padding: 0 15px 15px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
   }
 
-  .original-price {
+  .price-container .original-price {
     font-size: 0.9rem;
   }
 
-  .promo-price {
+  .price-container .promo-price {
     font-size: 1rem;
+  }
+
+  .product-card p {
+    padding: 0 15px 15px;
+    font-size: 0.9rem;
   }
 }
 
@@ -766,24 +771,6 @@ h2 {
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
-.price-container {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0 20px 20px;
-}
-
-.original-price {
-  font-size: 1rem;
-  color: #999;
-}
-
-.promo-price {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #d32f2f;
-}
-
 .product-card h3, .service-card h3 {
   padding: 20px 20px 10px;
   font-size: 1.3rem;
@@ -795,6 +782,26 @@ h2 {
   font-weight: 500;
   color: #C8A97E;
   font-size: 1.1rem;
+}
+
+/* Price container styles for promo prices */
+.price-container {
+  padding: 0 20px 20px;
+}
+
+.price-container .original-price {
+  font-weight: 500;
+  color: #999;
+  font-size: 1.1rem;
+  text-decoration: line-through;
+}
+
+.price-container .promo-price {
+  font-weight: 500;
+  color: #d32f2f;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-left: 8px;
 }
 
 /* Services */

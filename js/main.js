@@ -138,29 +138,37 @@ function renderProducts(productsToShow, container, limit) {
         return;
     }
 
-    container.innerHTML = products.map(product => `
-    <div class="product-card">
-      <img src="${window.apiService.getImageUrl(product.coverImage)}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x400/3B2A23/F5EFE6?text=No+Image'">
-      ${!product.inStock ? '<div class="out-of-stock-badge">Out of Stock</div>' : ''}
-      ${product.onSale ? '<div class="sale-badge">Sale</div>' : ''}
-      <h3>${product.name}</h3>
-      ${product.onSale && product.promoPrice ? `
-        <p class="price-container">
-          <span class="original-price" style="text-decoration: line-through; color: #999;">₵${product.price}</span>
-          <span class="promo-price" style="color: #d32f2f; font-weight: bold;">₵${product.promoPrice}</span>
-        </p>
-      ` : `<p>₵${product.price}</p>`}
-      <div class="quantity-controls">
-        <button class="quantity-btn decrease" data-id="${product._id}">-</button>
-        <span class="quantity" data-id="${product._id}">1</span>
-        <button class="quantity-btn increase" data-id="${product._id}">+</button>
-      </div>
-      <div class="product-actions">
-        <button class="btn add-to-cart" data-id="${product._id}">Add to Cart</button>
-        <a href="product.html?id=${product._id}" class="btn">View Details</a>
-      </div>
-    </div>
-  `).join('');
+    container.innerHTML = products.map(product => {
+        console.log(`Rendering product: ${product.name}, onSale: ${product.onSale}, promoPrice: ${product.promoPrice}`);
+        
+        const priceHTML = product.onSale && product.promoPrice ? `
+            <div class="price-container">
+                <span class="original-price" style="text-decoration: line-through; color: #999;">₵${product.price}</span>
+                <span class="promo-price" style="color: #d32f2f; font-weight: bold;">₵${product.promoPrice}</span>
+            </div>
+        ` : `<div>₵${product.price}</div>`;
+        
+        console.log('Price HTML:', priceHTML);
+        
+        return `
+        <div class="product-card">
+          <img src="${window.apiService.getImageUrl(product.coverImage)}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x400/3B2A23/F5EFE6?text=No+Image'">
+          ${!product.inStock ? '<div class="out-of-stock-badge">Out of Stock</div>' : ''}
+          ${product.onSale ? '<div class="sale-badge">Sale</div>' : ''}
+          <h3>${product.name}</h3>
+          ${priceHTML}
+          <div class="quantity-controls">
+            <button class="quantity-btn decrease" data-id="${product._id}">-</button>
+            <span class="quantity" data-id="${product._id}">1</span>
+            <button class="quantity-btn increase" data-id="${product._id}">+</button>
+          </div>
+          <div class="product-actions">
+            <button class="btn add-to-cart" data-id="${product._id}">Add to Cart</button>
+            <a href="product.html?id=${product._id}" class="btn">View Details</a>
+          </div>
+        </div>
+      `;
+    }).join('');
 
     // Add event listeners for quantity buttons on cards
     container.querySelectorAll('.increase').forEach(button => {
