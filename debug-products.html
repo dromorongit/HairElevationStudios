@@ -49,12 +49,19 @@
                         productDiv.className += ' promo';
                     }
                     
+                    // Special highlighting for "Flow" product
+                    if (product.name && product.name.toLowerCase().includes('flow')) {
+                        productDiv.style.border = '3px solid #ff6b6b';
+                        productDiv.style.background = '#fff5f5';
+                    }
+                    
                     productDiv.innerHTML = `
                         <h3>${product.name || 'Unnamed Product'}</h3>
                         <p><strong>Price:</strong> ₵${product.price || 'N/A'}</p>
-                        <p><strong>On Sale:</strong> ${product.onSale ? 'Yes' : 'No'}</p>
-                        <p><strong>Promo Price:</strong> ${product.promoPrice ? '₵' + product.promoPrice : 'None'}</p>
+                        <p><strong>On Sale:</strong> ${product.onSale ? 'Yes ✅' : 'No ❌'}</p>
+                        <p><strong>Promo Price:</strong> ${product.promoPrice ? '₵' + product.promoPrice + ' ✅' : 'None ❌'}</p>
                         <p><strong>ID:</strong> ${product._id || product.id || 'N/A'}</p>
+                        ${product.name && product.name.toLowerCase().includes('flow') ? '<p style="color: #d32f2f; font-weight: bold;">🔍 THIS IS THE "FLOW" PRODUCT</p>' : ''}
                         <details>
                             <summary>Full Data</summary>
                             <pre>${JSON.stringify(product, null, 2)}</pre>

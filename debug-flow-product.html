@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Flow Product Rendering</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .test-card { background: white; padding: 15px; margin: 20px 0; border-radius: 8px; border: 2px solid #ddd; }
+        .test-card.promo { border-color: #d32f2f; background: #ffe6e6; }
+        .debug-info { background: #e7f3ff; padding: 15px; border-radius: 5px; margin: 10px 0; }
+        .error { color: red; background: #ffe6e6; padding: 15px; border-radius: 5px; }
+        .price-container { padding: 10px; margin: 10px 0; border: 1px solid #ccc; }
+        .original-price { text-decoration: line-through; color: #999; }
+        .promo-price { color: #d32f2f; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Flow Product Rendering Test</h1>
+        <div id="status" class="debug-info">Loading...</div>
+        <div id="flow-test"></div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+        async function testFlowProduct() {
+            try {
+                console.log('Fetching products...');
+                const products = await window.apiService.getAllProducts();
+                
+                console.log('All products:', products);
+                
+                // Find the Flow product
+                const flowProduct = products.find(p => p.name && p.name.toLowerCase().includes('flow'));
+                
+                const statusDiv = document.getElementById('status');
+                const testDiv = document.getElementById('flow-test');
+                
+                if (!flowProduct) {
+                    statusDiv.innerHTML = '<div class="error">❌ No product with "flow" in the name found!</div>';
+                    statusDiv.innerHTML += '<div class="debug-info">All products: ' + products.map(p => p.name).join(', ') + '</div>';
+                    return;
+                }
+                
+                statusDiv.innerHTML = '✅ Found Flow product!';
+                
+                console.log('Flow product data:', flowProduct);
+                
+                // Test the exact rendering logic from main.js
+                testDiv.innerHTML = `
+                    <div class="debug-info">
+                        <h3>🔍 Flow Product Data Analysis</h3>
+                        <p><strong>Name:</strong> ${flowProduct.name}</p>
+                        <p><strong>Price:</strong> ₵${flowProduct.price}</p>
+                        <p><strong>onSale:</strong> ${flowProduct.onSale}</p>
+                        <p><strong>promoPrice:</strong> ${flowProduct.promoPrice}</p>
+                        <p><strong>ID:</strong> ${flowProduct._id}</p>
+                        <p><strong>Type of onSale:</strong> ${typeof flowProduct.onSale}</p>
+                        <p><strong>Type of promoPrice:</strong> ${typeof flowProduct.promoPrice}</p>
+                        <p><strong>onSale === true:</strong> ${flowProduct.onSale === true}</p>
+                        <p><strong>onSale == 'true':</strong> ${flowProduct.onSale == 'true'}</p>
+                        <p><strong>!!onSale:</strong> ${!!flowProduct.onSale}</p>
+                        <p><strong>Boolean(onSale):</strong> ${Boolean(flowProduct.onSale)}</p>
+                    </div>
+                `;
+                
+                // Test the exact conditional logic
+                const shouldShowPromo = flowProduct.onSale && flowProduct.promoPrice;
+                console.log('Should show promo?', shouldShowPromo);
+                console.log('onSale value:', flowProduct.onSale);
+                console.log('promoPrice value:', flowProduct.promoPrice);
+                console.log('onSale truthy?', !!flowProduct.onSale);
+                
+                testDiv.innerHTML += `
+                    <div class="debug-info">
+                        <h3>🧪 Conditional Logic Test</h3>
+                        <p><strong>Should show promo price?</strong> ${shouldShowPromo ? 'YES ✅' : 'NO ❌'}</p>
+                        <p><strong>Condition breakdown:</strong></p>
+                        <ul>
+                            <li>onSale is truthy: ${!!flowProduct.onSale ? 'YES ✅' : 'NO ❌'}</li>
+                            <li>promoPrice exists: ${flowProduct.promoPrice ? 'YES ✅' : 'NO ❌'}</li>
+                        </ul>
+                    </div>
+                `;
+                
+                // Test the actual HTML generation
+                const priceHTML = flowProduct.onSale && flowProduct.promoPrice ? `
+                    <div class="price-container">
+                        <span class="original-price">₵${flowProduct.price}</span>
+                        <span class="promo-price">₵${flowProduct.promoPrice}</span>
+                    </div>
+                ` : `<div>₵${flowProduct.price}</div>`;
+                
+                console.log('Generated price HTML:', priceHTML);
+                
+                testDiv.innerHTML += `
+                    <div class="debug-info">
+                        <h3>🎨 Generated HTML</h3>
+                        <p><strong>Price HTML that would be generated:</strong></p>
+                        <div style="background: #f0f0f0; padding: 10px; font-family: monospace;">
+                            ${priceHTML.replace(/</g, '<').replace(/>/g, '>')}
+                        </div>
+                        <p><strong>How it will look:</strong></p>
+                        <div class="test-card ${shouldShowPromo ? 'promo' : ''}">
+                            ${priceHTML}
+                        </div>
+                    </div>
+                `;
+                
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('status').innerHTML = `
+                    <div class="error">
+                        <h3>Error loading products</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', testFlowProduct);
+    </script>
+</body>
+</html>
