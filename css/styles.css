@@ -449,19 +449,52 @@ a {
     padding: 4px 8px;
   }
 
+  /* Enhanced mobile pricing display for promo prices */
+  .price-container {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 6px !important;
+    padding: 0 15px 12px !important;
+    min-height: 22px !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .price-container .original-price {
+    font-size: 0.8rem !important;
+    line-height: 1.2 !important;
+    flex-shrink: 0 !important;
+  }
+
+  .price-container .promo-price {
+    font-size: 0.9rem !important;
+    line-height: 1.2 !important;
+    flex-shrink: 0 !important;
+    font-weight: bold !important;
+    color: #d32f2f !important;
+  }
+
   .price-container {
     padding: 0 15px 15px;
     flex-direction: row;
     align-items: center;
     gap: 8px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    overflow: visible;
+    min-height: 24px;
   }
 
   .price-container .original-price {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    flex-shrink: 0;
   }
 
   .price-container .promo-price {
     font-size: 1rem;
+    flex-shrink: 0;
+    font-weight: bold;
   }
 
   .product-card p {
@@ -2273,5 +2306,30 @@ textarea {
   
   .payment-steps li {
     margin-bottom: 6px;
+  }
+
+  /* Ensure promo prices are always visible on all mobile sizes */
+  .product-card {
+    overflow: visible !important;
+  }
+
+  .price-container {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+  .price-container .original-price,
+  .price-container .promo-price {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  /* Override any potential hiding styles */
+  .product-card .price-container {
+    display: flex !important;
   }
 }
