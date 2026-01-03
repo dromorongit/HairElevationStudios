@@ -1171,6 +1171,57 @@ textarea {
   color: rgba(245, 239, 230, 0.8);
 }
 
+.developer-credits {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  color: rgba(245, 239, 230, 0.7);
+  font-weight: 300;
+  letter-spacing: 0.3px;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out 0.3s both;
+  position: relative;
+}
+
+.developer-credits::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #C8A97E, transparent);
+  border-radius: 1px;
+}
+
+.developer-name {
+  color: #C8A97E;
+  font-weight: 500;
+  position: relative;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.developer-name::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #C8A97E, #B8956A);
+  transition: width 0.3s ease;
+}
+
+.developer-name:hover::after {
+  width: 100%;
+}
+
+.developer-name:hover {
+  color: #B8956A;
+  text-shadow: 0 0 8px rgba(200, 169, 126, 0.3);
+}
+
 /* WhatsApp Float */
 .whatsapp-float {
   position: fixed;
