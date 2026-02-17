@@ -454,11 +454,12 @@ a {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    justify-content: flex-start !important;
+    justify-content: center !important;
     gap: 6px !important;
-    padding: 0 15px 12px !important;
+    padding: 0 15px 10px !important;
     min-height: 22px !important;
     flex-wrap: nowrap !important;
+    text-align: center !important;
   }
 
   .price-container .original-price {
@@ -476,14 +477,16 @@ a {
   }
 
   .price-container {
-    padding: 0 15px 15px;
+    padding: 0 15px 10px;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     flex-wrap: nowrap;
     white-space: nowrap;
     overflow: visible;
     min-height: 24px;
+    text-align: center;
   }
 
   .price-container .original-price {
@@ -748,6 +751,7 @@ h2 {
   transition: all 0.3s ease;
   position: relative;
   border: 1px solid rgba(200, 169, 126, 0.15);
+  cursor: pointer;
 }
 
 
@@ -819,7 +823,8 @@ h2 {
 
 /* Price container styles for promo prices */
 .price-container {
-  padding: 0 20px 20px;
+  padding: 0 20px 10px;
+  text-align: center;
 }
 
 .price-container .original-price {
@@ -835,6 +840,15 @@ h2 {
   font-size: 1.1rem;
   font-weight: bold;
   margin-left: 8px;
+}
+
+/* Center price above quantity controls */
+.product-card .price-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 /* Services */
@@ -2366,10 +2380,12 @@ textarea {
 
   .price-container {
     display: flex !important;
+    justify-content: center !important;
     visibility: visible !important;
     opacity: 1 !important;
     position: relative !important;
     z-index: 1 !important;
+    text-align: center !important;
   }
 
   .price-container .original-price,
@@ -2382,5 +2398,6 @@ textarea {
   /* Override any potential hiding styles */
   .product-card .price-container {
     display: flex !important;
+    justify-content: center !important;
   }
 }
