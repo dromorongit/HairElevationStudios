@@ -825,6 +825,7 @@ h2 {
 .price-container {
   padding: 0 20px 10px;
   text-align: center;
+  color: #000000;
 }
 
 .price-container .original-price {
@@ -840,6 +841,12 @@ h2 {
   font-size: 1.1rem;
   font-weight: bold;
   margin-left: 8px;
+}
+
+/* Price for non-sale products */
+.price-container:not(.has-promo) {
+  color: #000000;
+  font-weight: 500;
 }
 
 /* Center price above quantity controls */
@@ -1345,6 +1352,7 @@ textarea {
   justify-content: center;
   gap: 10px;
   margin: 10px 0;
+  color: #000000;
 }
 
 .quantity-btn {
@@ -1352,7 +1360,7 @@ textarea {
   height: 30px;
   border: 1px solid #C8A97E;
   background: #fff;
-  color: #C8A97E;
+  color: #000000;
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
@@ -1373,6 +1381,7 @@ textarea {
   font-weight: 600;
   min-width: 30px;
   text-align: center;
+  color: #000000;
 }
 
 .cart-summary {
