@@ -106,8 +106,14 @@ router.post('/create', authMiddleware, upload.fields([
     // Return more specific error message
     if (error.name === 'ValidationError') {
       const validationErrors = Object.values(error.errors).map((e: any) => e.message);
+      console.error('Validation errors:', validationErrors);
       return res.status(400).json({ message: 'Validation error', errors: validationErrors });
     }
+    if (error.name === 'MongoServerError') {
+      console.error('MongoDB error:', error.message);
+      return res.status(500).json({ message: 'Database error: ' + error.message });
+    }
+    console.error('Error stack:', error.stack);
     res.status(500).json({ message: error.message || 'Server error' });
   }
 });
