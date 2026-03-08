@@ -48,6 +48,11 @@ router.post('/create', authMiddleware, upload.fields([
     const files = req.files as { [fieldname: string]: Express.Multer.File[] };
     const productData = req.body;
 
+    // Check if cover image is provided
+    if (!files.coverImage || !files.coverImage[0]) {
+      return res.status(400).json({ message: 'Cover image is required' });
+    }
+
     // Parse collections if it's a JSON string
     if (productData.collections && typeof productData.collections === 'string') {
       try {
@@ -74,6 +79,9 @@ router.post('/create', authMiddleware, upload.fields([
 
     // Convert prices to numbers
     productData.price = parseFloat(productData.price);
+    if (isNaN(productData.price)) {
+      return res.status(400).json({ message: 'Valid price is required' });
+    }
     if (productData.promoPrice) {
       productData.promoPrice = parseFloat(productData.promoPrice);
     }
@@ -93,9 +101,14 @@ router.post('/create', authMiddleware, upload.fields([
     const product = new Product(productData);
     await product.save();
     res.status(201).json(product);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error creating product:', error);
-    res.status(500).json({ message: 'Server error' });
+    // Return more specific error message
+    if (error.name === 'ValidationError') {
+      const validationErrors = Object.values(error.errors).map((e: any) => e.message);
+      return res.status(400).json({ message: 'Validation error', errors: validationErrors });
+    }
+    res.status(500).json({ message: error.message || 'Server error' });
   }
 });
 

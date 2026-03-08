@@ -701,6 +701,26 @@ app.use('/auth', authRoutes);
 app.use('/products', productRoutes);
 app.use('/admin', adminRoutes);
 
+// Global error handler
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.error('Global error:', err);
+  
+  // Handle multer errors
+  if (err.code === 'LIMIT_FILE_SIZE') {
+    return res.status(400).json({ message: 'File too large. Maximum size is 50MB.' });
+  }
+  if (err.message === 'Invalid file type. Only images and videos are allowed.') {
+    return res.status(400).json({ message: err.message });
+  }
+  
+  // Handle Cloudinary errors
+  if (err.message && err.message.includes('Cloudinary')) {
+    return res.status(500).json({ message: 'Cloudinary configuration error. Please check environment variables.' });
+  }
+  
+  res.status(500).json({ message: 'Internal server error' });
+});
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/hairelevation')
   .then(() => {
