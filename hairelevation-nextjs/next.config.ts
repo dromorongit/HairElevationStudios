@@ -5,8 +5,6 @@ const nextConfig: NextConfig = {
   experimental: {
     // Enable optimized package imports
     optimizePackageImports: ["framer-motion"],
-    // Explicitly configure Turbopack
-    turbopack: {},
   },
 
   // Image optimization
