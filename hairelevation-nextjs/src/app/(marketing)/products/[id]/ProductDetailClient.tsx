@@ -1,6 +1,7 @@
 /**
  * ProductDetailClient Component
  * Client component for product detail page with interactive state
+ * Refined spacing and typography
  */
 
 "use client";
@@ -48,11 +49,11 @@ export function ProductDetailClient({
 
   return (
     <main>
-      <section className="product-detail py-16 px-5">
+      <section className="product-detail py-20 px-5">
         <div className="container max-w-[1200px] mx-auto">
           {/* Breadcrumb */}
-          <nav className="mb-8 text-sm" aria-label="Breadcrumb">
-            <Link href={ROUTES.products} className="text-[#C8A97E] hover:text-[#B8956A]">
+          <nav className="mb-10 text-sm" aria-label="Breadcrumb">
+            <Link href={ROUTES.products} className="text-[#C8A97E] hover:text-[#B8956A] transition-colors">
               Products
             </Link>
             <span className="mx-2 text-[#999999]" aria-hidden="true">/</span>
@@ -67,7 +68,7 @@ export function ProductDetailClient({
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <div className="relative aspect-[3/4] rounded-[10px] overflow-hidden bg-[#F5EFE6] shadow-[0_8px_20px_rgba(99,42,35,0.1)] mb-4">
+              <div className="relative aspect-[3/4] rounded-xl overflow-hidden bg-[#F5EFE6] shadow-[0_8px_20px_rgba(99,42,35,0.1)] mb-6">
                 <Image
                   src={imageUrl}
                   alt={product.name}
@@ -102,7 +103,7 @@ export function ProductDetailClient({
                   {additionalImages.slice(0, 4).map((img, index) => (
                     <motion.div
                       key={index}
-                      className="relative aspect-square rounded-[5px] overflow-hidden bg-[#F5EFE6] cursor-pointer"
+                      className="relative aspect-square rounded-md overflow-hidden bg-[#F5EFE6] cursor-pointer"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -126,12 +127,12 @@ export function ProductDetailClient({
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <h1 className="text-[2rem] font-bold text-[#3B2A23] mb-4">
+              <h1 className="text-3xl md:text-4xl font-bold text-[#3B2A23] mb-6">
                 {product.name}
               </h1>
 
               {/* Price */}
-              <div className="mb-6">
+              <div className="mb-8">
                 <PriceDisplay
                   price={product.price}
                   promoPrice={product.promoPrice}
@@ -141,7 +142,7 @@ export function ProductDetailClient({
               </div>
 
               {/* Product Details */}
-              <div className="space-y-2 mb-6 text-[#666666]">
+              <div className="space-y-3 mb-8 text-[#666666]">
                 {product.length && (
                   <p>
                     <strong className="text-[#3B2A23]">Length:</strong> {product.length}
@@ -182,8 +183,8 @@ export function ProductDetailClient({
 
               {/* Description */}
               {product.description && (
-                <div className="mb-6">
-                  <h3 className="text-lg font-bold text-[#3B2A23] mb-2">
+                <div className="mb-8">
+                  <h3 className="text-xl font-semibold text-[#3B2A23] mb-3">
                     Description
                   </h3>
                   <p className="text-[#666666] leading-relaxed">
@@ -194,7 +195,7 @@ export function ProductDetailClient({
 
               {/* Size Selection */}
               {product.size && product.size.length > 0 && !isOutOfStock && (
-                <div className="mb-6">
+                <div className="mb-8">
                   <SizeSelector
                     sizes={product.size}
                     selectedSize={selectedSize}
@@ -205,7 +206,7 @@ export function ProductDetailClient({
 
               {/* Add to Cart */}
               {!isOutOfStock && (
-                <div className="space-y-4 mb-6">
+                <div className="space-y-5 mb-8">
                   <div className="flex items-center gap-4">
                     <QuantityControls
                       quantity={quantity}

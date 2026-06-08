@@ -19,8 +19,7 @@ import {
 
 export function Hero() {
   return (
-    <section className="hero relative min-h-[70vh] flex items-center justify-center overflow-hidden">
-      {/* Background Image with subtle parallax */}
+    <section className="hero relative min-h-[60vh] md:min-h-[70vh] flex items-center justify-center overflow-hidden">
       <motion.div
         className="absolute inset-0 z-0"
         initial="hidden"
@@ -35,11 +34,9 @@ export function Hero() {
           sizes="100vw"
           className="object-cover"
         />
-        {/* Overlay with gradient for depth */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/60" />
       </motion.div>
 
-      {/* Hero Content with staggered reveal */}
       <motion.div
         className="hero-content relative z-10 text-center px-5 max-w-4xl mx-auto"
         initial="hidden"
@@ -47,7 +44,7 @@ export function Hero() {
         variants={heroContentVariants}
       >
         <motion.h1
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-[#F5EFE6] mb-6 leading-tight tracking-tight"
+          className="text-4xl sm:text-5xl md:text-6xl font-black text-[#F5EFE6] mb-8 leading-tight tracking-tight"
           style={{ textShadow: "0 4px 12px rgba(0,0,0,0.5)" }}
           variants={heroItemVariants}
         >
@@ -55,7 +52,7 @@ export function Hero() {
         </motion.h1>
 
         <motion.p
-          className="text-lg sm:text-xl text-[#F5EFE6] mb-10 max-w-2xl mx-auto leading-relaxed font-light"
+          className="text-lg sm:text-xl text-[#F5EFE6] mb-12 max-w-2xl mx-auto leading-relaxed font-light"
           style={{ textShadow: "0 2px 8px rgba(0,0,0,0.4)" }}
           variants={heroItemVariants}
         >

@@ -36,7 +36,7 @@ export function CollectionsPreview() {
           variants={contentContainerVariants}
         >
           <motion.h2
-            className="text-[2rem] sm:text-[2.2rem] font-bold text-[#3B2A23] text-center mb-4 tracking-tight"
+            className="text-3xl md:text-4xl font-bold text-[#3B2A23] text-center mb-6 tracking-tight"
             variants={contentItemVariants}
           >
             Our Collections

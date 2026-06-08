@@ -5,7 +5,7 @@
 
 import { Metadata } from "next";
 import { Button } from "@/components/ui/Button";
-import { WHATSAPP, ROUTES, BUSINESS } from "@/constants/brand";
+import { WHATSAPP, BUSINESS } from "@/constants/brand";
 
 export const metadata: Metadata = {
   title: "Contact & Location - Hair Elevation Studio",
@@ -16,21 +16,21 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <main>
-      <section className="contact py-16 px-5">
+      <section className="contact py-20 px-5">
         <div className="container max-w-[1200px] mx-auto">
-          <h1 className="text-[2rem] font-bold text-[#3B2A23] mb-10">
+          <h1 className="text-3xl md:text-4xl font-bold text-[#3B2A23] mb-12">
             Contact & Location
           </h1>
 
           <div className="contact-content grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
             {/* Contact Info */}
-            <div className="contact-info bg-white rounded-[10px] shadow-[0_8px_20px_rgba(99,42,35,0.1)] p-6">
-              <h2 className="text-[1.5rem] font-bold text-[#3B2A23] mb-4">
+            <div className="contact-info bg-white rounded-xl shadow-[0_8px_20px_rgba(99,42,35,0.1)] p-8">
+              <h2 className="text-2xl font-bold text-[#3B2A23] mb-6">
                 Get in Touch
               </h2>
-              <div className="space-y-3 text-[#666666]">
-                <p>
-                  <strong>Phone/WhatsApp:</strong>{" "}
+              <div className="space-y-4 text-[#666666]">
+                <p className="flex items-start gap-2">
+                  <span className="font-semibold text-[#3B2A23] min-w-[100px]">Phone/WhatsApp:</span>
                   <a
                     href={WHATSAPP.url}
                     target="_blank"
@@ -40,8 +40,8 @@ export default function ContactPage() {
                     0534057109
                   </a>
                 </p>
-                <p>
-                  <strong>Email:</strong>{" "}
+                <p className="flex items-start gap-2">
+                  <span className="font-semibold text-[#3B2A23] min-w-[100px]">Email:</span>
                   <a
                     href={`mailto:${BUSINESS.email}`}
                     className="text-[#C8A97E] hover:text-[#B8956A] transition-colors"
@@ -49,15 +49,17 @@ export default function ContactPage() {
                     {BUSINESS.email}
                   </a>
                 </p>
-                <p>
-                  <strong>Location:</strong> {BUSINESS.location}
+                <p className="flex items-start gap-2">
+                  <span className="font-semibold text-[#3B2A23] min-w-[100px]">Location:</span>
+                  <span>{BUSINESS.location}</span>
                 </p>
-                <p>
-                  <strong>Opening Hours:</strong> {BUSINESS.hours}
+                <p className="flex items-start gap-2">
+                  <span className="font-semibold text-[#3B2A23] min-w-[100px]">Hours:</span>
+                  <span>{BUSINESS.hours}</span>
                 </p>
               </div>
 
-              <h3 className="text-[1.2rem] font-bold text-[#3B2A23] mt-6 mb-3">
+              <h3 className="text-xl font-bold text-[#3B2A23] mt-8 mb-4">
                 Follow Us
               </h3>
               <div className="social-icons flex gap-4">
@@ -107,8 +109,8 @@ export default function ContactPage() {
             </div>
 
             {/* Location */}
-            <div className="location bg-white rounded-[10px] shadow-[0_8px_20px_rgba(99,42,35,0.1)] p-6">
-              <h2 className="text-[1.5rem] font-bold text-[#3B2A23] mb-4">
+            <div className="location bg-white rounded-xl shadow-[0_8px_20px_rgba(99,42,35,0.1)] p-8">
+              <h2 className="text-2xl font-bold text-[#3B2A23] mb-4">
                 Our Location
               </h2>
               <p className="text-[#666666] mb-4">
@@ -116,15 +118,15 @@ export default function ContactPage() {
                 us for personalized wig consultations and services.
               </p>
               {/* Map placeholder */}
-              <div className="map-placeholder bg-[#F5EFE6] rounded-[10px] p-8 text-center text-[#666666]">
+              <div className="map-placeholder bg-[#F5EFE6] rounded-xl p-8 text-center text-[#666666]">
                 <p>Map integration can be added here (e.g., Google Maps embed)</p>
               </div>
             </div>
           </div>
 
           {/* WhatsApp Channel Section */}
-          <div className="whatsapp-channel-section text-center bg-white rounded-[10px] shadow-[0_8px_20px_rgba(99,42,35,0.1)] p-8">
-            <h2 className="text-[1.5rem] font-bold text-[#3B2A23] mb-4">
+          <div className="whatsapp-channel-section text-center bg-white rounded-xl shadow-[0_8px_20px_rgba(99,42,35,0.1)] p-10">
+            <h2 className="text-2xl font-bold text-[#3B2A23] mb-4">
               Visit our WhatsApp Channel to explore more:
             </h2>
             <Button asLink href={WHATSAPP.channel} target="_blank" rel="noopener noreferrer" size="lg">

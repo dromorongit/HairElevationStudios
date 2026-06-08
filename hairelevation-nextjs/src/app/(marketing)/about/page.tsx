@@ -14,9 +14,9 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <main>
-      <section className="about py-16 px-5">
+      <section className="about py-20 px-5">
         <div className="container max-w-[1200px] mx-auto">
-          <h1 className="text-[2rem] font-bold text-[#3B2A23] mb-6">
+          <h1 className="text-3xl md:text-4xl font-bold text-[#3B2A23] mb-6">
             About Hair Elevation Studio
           </h1>
           <div className="space-y-4 text-[#666666] leading-relaxed">
@@ -29,7 +29,7 @@ export default function AboutPage() {
             </p>
             <p>
               Our mission is to elevate the wig-wearing experience through
-              innovation, quality, and personalized care. Whether you're
+              innovation, quality, and personalized care. Whether you&apos;re
               looking for ready-to-wear glueless wigs or bespoke custom
               creations, Hair Elevation Studio is your go-to destination for all
               things luxurious and feminine.

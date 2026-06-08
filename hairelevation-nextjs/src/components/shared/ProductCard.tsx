@@ -46,7 +46,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
   return (
     <motion.div
-      className="product-card bg-white rounded-[10px] shadow-[0_8px_20px_rgba(99,42,35,0.1)] overflow-hidden"
+      className="product-card bg-white rounded-xl shadow-[0_8px_20px_rgba(99,42,35,0.1)] overflow-hidden"
       variants={productCardHoverVariants}
       initial="initial"
       whileHover="hover"
@@ -84,16 +84,16 @@ export function ProductCard({ product }: ProductCardProps) {
       </Link>
 
       {/* Product Info */}
-      <div className="p-4">
+      <div className="p-6">
         <Link href={`/products/${product._id}`}>
-          <h3 className="text-[1.3rem] font-bold text-[#3B2A23] mb-2 hover:text-[#C8A97E] transition-colors">
+          <h3 className="text-xl font-bold text-[#3B2A23] mb-3 hover:text-[#C8A97E] transition-colors">
             {product.name}
           </h3>
         </Link>
 
         {/* Product Details */}
         {(product.length || product.lace || product.density || product.texture) && (
-          <div className="text-sm text-[#666666] mb-2 space-y-1">
+          <div className="text-sm text-[#666666] mb-3 space-y-1">
             {product.length && <p>Length: {product.length}</p>}
             {product.lace && <p>Lace: {product.lace}</p>}
             {product.density && <p>Density: {product.density}</p>}
@@ -102,7 +102,7 @@ export function ProductCard({ product }: ProductCardProps) {
         )}
 
         {/* Price */}
-        <div className="mb-4">
+        <div className="mb-5">
           <PriceDisplay
             price={product.price}
             promoPrice={product.promoPrice}
@@ -112,7 +112,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
         {/* Add to Cart */}
         {!isOutOfStock ? (
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <QuantityControls
               quantity={quantity}
               onIncrease={() => setQuantity((q) => Math.min(q + 1, product.stock))}

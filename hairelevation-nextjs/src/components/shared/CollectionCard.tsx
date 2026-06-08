@@ -5,7 +5,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ROUTES, COLLECTIONS } from "@/constants/brand";
+import { ROUTES } from "@/constants/brand";
 
 interface CollectionCardProps {
   name: string;
@@ -13,14 +13,6 @@ interface CollectionCardProps {
   imageSrc: string;
   slug: string;
 }
-
-// Map collection names to their HTML file slugs
-const collectionSlugMap: Record<string, string> = {
-  "The Bridal Crowns": "bridal-crowns",
-  "The Everyday Crown": "everyday-crown",
-  "The Queen's Curls": "queens-curls",
-  "The Signature Pixies": "signature-pixies",
-};
 
 export function CollectionCard({
   name,
@@ -31,7 +23,7 @@ export function CollectionCard({
   return (
     <Link
       href={ROUTES.collectionDetail(slug)}
-      className="collection-card block bg-white rounded-[10px] shadow-[0_8px_20px_rgba(99,42,35,0.1)] overflow-hidden transition-all duration-300 hover:shadow-[0_12px_30px_rgba(99,42,35,0.15)] hover:-translate-y-1 cursor-pointer"
+      className="collection-card block bg-white rounded-xl shadow-[0_8px_20px_rgba(99,42,35,0.1)] overflow-hidden transition-all duration-300 hover:shadow-[0_12px_30px_rgba(99,42,35,0.15)] hover:-translate-y-1 cursor-pointer"
     >
       <div className="collection-image relative aspect-[4/3] overflow-hidden">
         <Image
@@ -42,8 +34,8 @@ export function CollectionCard({
           className="object-cover transition-transform duration-300 hover:scale-105"
         />
       </div>
-      <div className="collection-content p-5">
-        <h2 className="text-[1.3rem] font-bold text-[#3B2A23] mb-2">{name}</h2>
+      <div className="collection-content p-6">
+        <h2 className="text-xl font-bold text-[#3B2A23] mb-2">{name}</h2>
         <p className="text-[#666666] text-sm">{description}</p>
       </div>
     </Link>

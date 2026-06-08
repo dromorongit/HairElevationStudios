@@ -50,7 +50,7 @@ export function ServicesPreview() {
           variants={contentContainerVariants}
         >
           <motion.h2
-            className="text-[2rem] sm:text-[2.2rem] font-bold text-[#3B2A23] text-center mb-10 tracking-tight"
+            className="text-3xl md:text-4xl font-bold text-[#3B2A23] text-center mb-12 tracking-tight"
             variants={contentItemVariants}
           >
             Our Services

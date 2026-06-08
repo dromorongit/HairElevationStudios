@@ -6,7 +6,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProductGrid } from "@/components/shared/ProductGrid";
-import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { productService } from "@/services/productService";
 import { generateCollectionSchema, generateBreadcrumbSchema, JsonLdScript } from "@/lib/structured-data";
 import type { Product } from "@/types/api/product";
@@ -81,7 +80,6 @@ export default async function CollectionDetailPage({ params }: PageProps) {
   const products = await getCollectionProducts(collectionName);
   const description = collectionDescriptions[slug] || "";
 
-  // Generate breadcrumb schema
   const breadcrumbItems = [
     { name: "Home", url: "https://hairelevationstudios.com" },
     { name: "Collections", url: "https://hairelevationstudios.com/collections" },
@@ -93,12 +91,12 @@ export default async function CollectionDetailPage({ params }: PageProps) {
       <JsonLdScript data={generateCollectionSchema(collectionName, description)} />
       <JsonLdScript data={generateBreadcrumbSchema(breadcrumbItems)} />
       <main>
-        <section className="collection-detail py-16 px-5">
+        <section className="collection-detail py-20 px-5">
           <div className="container max-w-[1200px] mx-auto">
-            <h1 className="text-[2rem] font-bold text-[#3B2A23] text-center mb-4">
+            <h1 className="text-3xl md:text-4xl font-bold text-[#3B2A23] text-center mb-6">
               {collectionName}
             </h1>
-            <p className="text-center text-[#666666] mb-10 max-w-2xl mx-auto">
+            <p className="text-center text-[#666666] mb-12 max-w-2xl mx-auto text-lg leading-relaxed">
               {description}
             </p>
             <ProductGrid

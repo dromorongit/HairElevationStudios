@@ -5,7 +5,6 @@
 
 import { Metadata } from "next";
 import { ProductGrid } from "@/components/shared/ProductGrid";
-import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { productService } from "@/services/productService";
 import type { Product } from "@/types/api/product";
 
@@ -29,9 +28,9 @@ export default async function ProductsPage() {
 
   return (
     <main>
-      <section className="products py-16 px-5">
+      <section className="products py-20 px-5">
         <div className="container max-w-[1200px] mx-auto">
-          <h1 className="text-[2rem] font-bold text-[#3B2A23] text-center mb-10">
+          <h1 className="text-3xl md:text-4xl font-bold text-[#3B2A23] text-center mb-12">
             All Products
           </h1>
           <ProductGrid products={products} />

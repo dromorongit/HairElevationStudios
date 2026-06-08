@@ -15,9 +15,9 @@ export const metadata: Metadata = {
 export default function BookPage() {
   return (
     <main>
-      <section className="booking py-16 px-5">
+      <section className="booking py-20 px-5">
         <div className="container max-w-[600px] mx-auto">
-          <h1 className="text-[2rem] font-bold text-[#3B2A23] text-center mb-10">
+          <h1 className="text-3xl md:text-4xl font-bold text-[#3B2A23] text-center mb-12">
             Book an Appointment
           </h1>
           <BookForm />

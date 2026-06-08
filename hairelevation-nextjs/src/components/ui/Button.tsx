@@ -7,7 +7,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BRAND } from "@/constants/brand";
 import { buttonHoverVariants } from "@/lib/motion-variants";
 
 interface ButtonProps {

@@ -1,13 +1,13 @@
 /**
  * CartPageClient Component
  * Client component for the cart page
+ * Refined spacing and typography
  */
 
 "use client";
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
 import { CartItem } from "@/components/shared/CartItem";
 import { CartSummary } from "@/components/shared/CartSummary";
 import { Button } from "@/components/ui/Button";
@@ -53,12 +53,12 @@ export function CartPageClient() {
   if (isLoading) {
     return (
       <main>
-        <section className="cart py-16 px-5">
+        <section className="cart py-20 px-5">
           <div className="container max-w-[1200px] mx-auto">
-            <h1 className="text-[2rem] font-bold text-[#3B2A23] text-center mb-10">
+            <h1 className="text-3xl md:text-4xl font-bold text-[#3B2A23] text-center mb-12">
               Your Shopping Cart
             </h1>
-            <div className="flex justify-center items-center py-12">
+            <div className="flex justify-center items-center py-16">
               <LoadingSpinner size="lg" />
             </div>
           </div>
@@ -69,10 +69,10 @@ export function CartPageClient() {
 
   return (
     <main>
-      <section className="cart py-16 px-5">
+      <section className="cart py-20 px-5">
         <div className="container max-w-[1200px] mx-auto">
           <motion.h1
-            className="text-[2rem] font-bold text-[#3B2A23] text-center mb-10"
+            className="text-3xl md:text-4xl font-bold text-[#3B2A23] text-center mb-12"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -95,7 +95,7 @@ export function CartPageClient() {
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Cart Items */}
-              <div className="lg:col-span-2 space-y-4">
+              <div className="lg:col-span-2 space-y-6">
                 <AnimatePresence>
                   {cartItems.map((item) => (
                     <CartItem
