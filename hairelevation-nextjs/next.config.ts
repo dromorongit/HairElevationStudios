@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
   experimental: {
     // Enable optimized package imports
     optimizePackageImports: ["framer-motion"],
+    // Explicitly configure Turbopack
+    turbopack: {},
   },
 
   // Image optimization
@@ -36,38 +38,6 @@ const nextConfig: NextConfig = {
     removeConsole: process.env.NODE_ENV === "production" ? {
       exclude: ["error", "warn"],
     } : false,
-  },
-
-  // Bundle optimization
-  webpack: (config, { dev, isServer }) => {
-    // Optimize bundle size
-    if (!dev && !isServer) {
-      config.optimization = {
-        ...config.optimization,
-        splitChunks: {
-          ...config.optimization.splitChunks,
-          chunks: "all",
-          cacheGroups: {
-            ...config.optimization.splitChunks?.cacheGroups,
-            // Separate vendor chunks
-            vendor: {
-              test: /[\\/]node_modules[\\/]/,
-              name: "vendors",
-              chunks: "all",
-              priority: 10,
-            },
-            // UI components chunk
-            ui: {
-              test: /[\\/]src[\\/]components[\\/]ui/,
-              name: "ui",
-              chunks: "all",
-              priority: 20,
-            },
-          },
-        },
-      };
-    }
-    return config;
   },
 
   // Environment variables
