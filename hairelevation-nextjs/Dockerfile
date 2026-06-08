@@ -1,40 +1,28 @@
 # Turbopack + Tailwind CSS v4 support
-# Install dependencies only when needed
-FROM node:20-alpine AS base
+FROM node:20-slim AS builder
 WORKDIR /app
-ENV NEXT_TELEMETRY_DISABLED=1
 
-# Install dependencies - separate layer for better caching
-FROM base AS deps
-RUN apk add --no-cache libc6-compat
-COPY package.json package-lock.json ./
-# Force cache bust when postcss config changes
+ENV NEXT_TELEMETRY_DISABLED=1 NODE_ENV=development
+
+COPY package*.json ./
 COPY postcss.config.cjs ./
 RUN npm ci
 
-# Rebuild the source code when needed
-FROM base AS builder
-WORKDIR /app
-# Copy node_modules from deps stage
-COPY --from=deps /app/node_modules ./node_modules
-# Copy source files (this layer changes when source changes)
 COPY . .
 RUN npm run build
 
-# Production image
-FROM base AS runner
+FROM node:20-slim AS runner
 WORKDIR /app
 ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
-# Don't run production as root
-RUN apk add --no-cache dumb-init
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+RUN apt-get update && apt-get install -y --no-install-recommends dumb-init && rm -rf /var/lib/apt/lists/*
+RUN groupadd -g 1001 nodejs && useradd -u 1001 -g nodejs -m nextjs
 
-# Copy standalone output - Next.js 16 places server.js in the root
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/package.json ./package.json
 
 USER nextjs
 
