@@ -1,9 +1,9 @@
 {
   "build": {
-    "builder": "NIXPACK"
+    "builder": "DOCKERFILE"
   },
   "deploy": {
-    "startCommand": "npm start",
+    "startCommand": "node server.js",
     "healthcheckPath": "/",
     "healthcheckTimeout": 300
   }

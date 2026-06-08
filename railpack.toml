@@ -1,0 +1,10 @@
+providers = ["node"]
+
+[project]
+name = "hairelevation-nextjs"
+
+[runtime]
+path = "hairelevation-nextjs"
+
+[deploy]
+startCommand = "npm start"
