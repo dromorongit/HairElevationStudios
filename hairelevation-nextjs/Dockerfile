@@ -2,7 +2,6 @@
 # Install dependencies only when needed
 FROM node:20-alpine AS base
 WORKDIR /app
-ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
 # Install dependencies - separate layer for better caching
@@ -25,6 +24,7 @@ RUN npm run build
 # Production image
 FROM base AS runner
 WORKDIR /app
+ENV NODE_ENV=production
 
 # Don't run production as root
 RUN apk add --no-cache dumb-init
