@@ -4,9 +4,9 @@ FROM node:20-alpine AS base
 WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
-# Cache bust: 2026-06-08-turbopack-tailwind-v4-fix
+ENV NODE_OPTIONS="--experimental-specifier-resolution=node"
 
-# Install dependencies
+# Install dependencies - separate layer for better caching
 FROM base AS deps
 RUN apk add --no-cache libc6-compat
 COPY package.json package-lock.json ./
@@ -15,7 +15,9 @@ RUN npm ci
 # Rebuild the source code when needed
 FROM base AS builder
 WORKDIR /app
+# Copy node_modules from deps stage
 COPY --from=deps /app/node_modules ./node_modules
+# Copy source files (this layer changes when source changes)
 COPY . .
 RUN npm run build
 
