@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hairelevationstudios.com/sitemap.xml
+
+# Disallow admin paths
+Disallow: /admin
+Disallow: /api
+
+# Allow all other paths for optimal SEO
