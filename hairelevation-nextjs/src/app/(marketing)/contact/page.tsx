@@ -1,6 +1,6 @@
 /**
  * Contact Page
- * Replicates contact.html
+ * Refined form design and visual trust elements
  */
 
 import { Metadata } from "next";
@@ -16,119 +16,162 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <main>
-      <section className="contact py-20 px-5">
-        <div className="container max-w-[1200px] mx-auto">
-          <h1 className="text-3xl md:text-4xl font-bold text-[#3B2A23] mb-12">
-            Contact & Location
-          </h1>
+      <section className="contact py-24 px-8 bg-gradient-to-b from-white to-[#F5EFE6]">
+        <div className="container max-w-[1400px] mx-auto">
+          <div className="text-center mb-16">
+            <h1 className="text-4xl md:text-5xl font-bold text-[#3B2A23] mb-6 tracking-tight">
+              Contact & Location
+            </h1>
+            <div className="w-24 h-1 bg-gradient-to-r from-[#C8A97E] to-transparent mx-auto mb-12"></div>
+          </div>
 
-          <div className="contact-content grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+          <div className="contact-content grid grid-cols-1 lg:grid-cols-2 gap-10 mb-16">
             {/* Contact Info */}
-            <div className="contact-info bg-white rounded-xl shadow-[0_8px_20px_rgba(99,42,35,0.1)] p-8">
-              <h2 className="text-2xl font-bold text-[#3B2A23] mb-6">
+            <div className="contact-info bg-white rounded-xl shadow-[var(--shadow-card)] p-10">
+              <h2 className="text-2xl font-bold text-[#3B2A23] mb-8">
                 Get in Touch
               </h2>
-              <div className="space-y-4 text-[#666666]">
-                <p className="flex items-start gap-2">
-                  <span className="font-semibold text-[#3B2A23] min-w-[100px]">Phone/WhatsApp:</span>
-                  <a
-                    href={WHATSAPP.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#C8A97E] hover:text-[#B8956A] transition-colors"
-                  >
-                    0534057109
-                  </a>
-                </p>
-                <p className="flex items-start gap-2">
-                  <span className="font-semibold text-[#3B2A23] min-w-[100px]">Email:</span>
-                  <a
-                    href={`mailto:${BUSINESS.email}`}
-                    className="text-[#C8A97E] hover:text-[#B8956A] transition-colors"
-                  >
-                    {BUSINESS.email}
-                  </a>
-                </p>
-                <p className="flex items-start gap-2">
-                  <span className="font-semibold text-[#3B2A23] min-w-[100px]">Location:</span>
-                  <span>{BUSINESS.location}</span>
-                </p>
-                <p className="flex items-start gap-2">
-                  <span className="font-semibold text-[#3B2A23] min-w-[100px]">Hours:</span>
-                  <span>{BUSINESS.hours}</span>
-                </p>
+              <div className="space-y-5 text-[#666666]">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-[#F5EFE6] rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1-9.22-3.55 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 3.1 4.18 2 2 0 0 1 5.1 2h3C8.58 2 9 2.42 9 3v3a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2V3a2 2 0 0 1 2-2z" stroke="#C8A97E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-[#3B2A23] block mb-1">Phone/WhatsApp:</span>
+                    <a
+                      href={WHATSAPP.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#C8A97E] hover:text-[#B8956A] transition-colors text-lg"
+                    >
+                      053 405 7109
+                    </a>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-[#F5EFE6] rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#C8A97E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M22 6l-10 7L2 6" stroke="#C8A97E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-[#3B2A23] block mb-1">Email:</span>
+                    <a
+                      href={`mailto:${BUSINESS.email}`}
+                      className="text-[#C8A97E] hover:text-[#B8956A] transition-colors"
+                    >
+                      {BUSINESS.email}
+                    </a>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-[#F5EFE6] rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13 9-13 9 13 9 13" stroke="#C8A97E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <circle cx="12" cy="10" r="3" stroke="#C8A97E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-[#3B2A23] block mb-1">Location:</span>
+                    <span>{BUSINESS.location}</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-[#F5EFE6] rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="12" r="10" stroke="#C8A97E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M12 6v6l4 2" stroke="#C8A97E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-[#3B2A23] block mb-1">Hours:</span>
+                    <span>{BUSINESS.hours}</span>
+                  </div>
+                </div>
               </div>
 
-              <h3 className="text-xl font-bold text-[#3B2A23] mt-8 mb-4">
-                Follow Us
-              </h3>
-              <div className="social-icons flex gap-4">
-                {/* Instagram */}
-                <a
-                  href="https://www.instagram.com/hair_elevation_studio"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Follow us on Instagram"
-                  className="hover:opacity-80 transition-opacity"
-                >
-                  <svg
-                    width="30"
-                    height="30"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+              <div className="mt-10">
+                <h3 className="text-xl font-bold text-[#3B2A23] mb-5">Follow Us</h3>
+                <div className="social-icons flex gap-4">
+                  <a
+                    href="https://www.instagram.com/hair_elevation_studio"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Follow us on Instagram"
+                    className="w-12 h-12 bg-[#F5EFE6] rounded-full flex items-center justify-center hover:bg-[#C8A97E] transition-colors group"
                   >
-                    <path
-                      d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
-                      fill="#C8A97E"
-                    />
-                  </svg>
-                </a>
-                {/* TikTok */}
-                <a
-                  href="https://www.tiktok.com/@hair_elevation_studio"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Follow us on TikTok"
-                  className="hover:opacity-80 transition-opacity"
-                >
-                  <svg
-                    width="30"
-                    height="30"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+                    <svg
+                      width="22"
+                      height="22"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="group-hover:scale-110 transition-transform"
+                    >
+                      <path
+                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                        fill="#C8A97E"
+                      />
+                    </svg>
+                  </a>
+                  <a
+                    href="https://www.tiktok.com/@hair_elevation_studio"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Follow us on TikTok"
+                    className="w-12 h-12 bg-[#F5EFE6] rounded-full flex items-center justify-center hover:bg-[#C8A97E] transition-colors group"
                   >
-                    <path
-                      d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"
-                      fill="#C8A97E"
-                    />
-                  </svg>
-                </a>
+                    <svg
+                      width="22"
+                      height="22"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="group-hover:scale-110 transition-transform"
+                    >
+                      <path
+                        d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"
+                        fill="#C8A97E"
+                      />
+                    </svg>
+                  </a>
+                </div>
               </div>
             </div>
 
             {/* Location */}
-            <div className="location bg-white rounded-xl shadow-[0_8px_20px_rgba(99,42,35,0.1)] p-8">
-              <h2 className="text-2xl font-bold text-[#3B2A23] mb-4">
+            <div className="location bg-white rounded-xl shadow-[var(--shadow-card)] p-10">
+              <h2 className="text-2xl font-bold text-[#3B2A23] mb-6">
                 Our Location
               </h2>
-              <p className="text-[#666666] mb-4">
+              <p className="text-[#666666] mb-6 leading-relaxed">
                 We are located in the vibrant Kanda area of Accra, Ghana. Visit
                 us for personalized wig consultations and services.
               </p>
               {/* Map placeholder */}
-              <div className="map-placeholder bg-[#F5EFE6] rounded-xl p-8 text-center text-[#666666]">
+              <div className="map-placeholder bg-[#F5EFE6] rounded-xl p-12 text-center text-[#666666]">
+                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13 9-13 9 13 9 13" stroke="#C8A97E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="12" cy="10" r="3" stroke="#C8A97E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
                 <p>Map integration can be added here (e.g., Google Maps embed)</p>
               </div>
             </div>
           </div>
 
           {/* WhatsApp Channel Section */}
-          <div className="whatsapp-channel-section text-center bg-white rounded-xl shadow-[0_8px_20px_rgba(99,42,35,0.1)] p-10">
+          <div className="whatsapp-channel-section text-center bg-white rounded-xl shadow-[var(--shadow-card)] p-12">
             <h2 className="text-2xl font-bold text-[#3B2A23] mb-4">
-              Visit our WhatsApp Channel to explore more:
+              Join our WhatsApp Channel
             </h2>
+            <p className="text-[#666666] mb-8 max-w-xl mx-auto">
+              Stay connected for exclusive updates, new collections, and special offers.
+            </p>
             <Button asLink href={WHATSAPP.channel} target="_blank" rel="noopener noreferrer" size="lg">
               Hair Elevation Studio Channel
             </Button>

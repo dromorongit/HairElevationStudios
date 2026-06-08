@@ -1,6 +1,7 @@
 /**
  * CartItem Component
  * Displays a single cart item with image, details, quantity controls, and remove button
+ * Luxury presentation with refined styling
  */
 
 "use client";
@@ -27,7 +28,7 @@ export function CartItem({ item, onRemove, onUpdateQuantity }: CartItemProps) {
 
   return (
     <motion.div
-      className="cart-item flex flex-col sm:flex-row gap-4 p-4 bg-white rounded-[10px] shadow-[0_4px_8px_rgba(59,42,35,0.1)]"
+      className="cart-item flex flex-col sm:flex-row gap-5 p-6 bg-white rounded-xl shadow-[var(--shadow-card)]"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
@@ -36,7 +37,7 @@ export function CartItem({ item, onRemove, onUpdateQuantity }: CartItemProps) {
       {/* Product Image */}
       <Link
         href={`/products/${product._id}`}
-        className="relative w-full sm:w-32 h-48 sm:h-32 flex-shrink-0 rounded-[5px] overflow-hidden bg-[#F5EFE6]"
+        className="relative w-full sm:w-32 h-48 sm:h-32 flex-shrink-0 rounded-lg overflow-hidden bg-[#F5EFE6] shadow-[var(--shadow-sm)]"
       >
         <Image
           src={imageUrl}
@@ -51,13 +52,13 @@ export function CartItem({ item, onRemove, onUpdateQuantity }: CartItemProps) {
       <div className="flex-1 flex flex-col justify-between">
         <div>
           <Link href={`/products/${product._id}`}>
-            <h3 className="text-lg font-bold text-[#3B2A23] hover:text-[#C8A97E] transition-colors">
+            <h3 className="text-xl font-bold text-[#3B2A23] hover:text-[#C8A97E] transition-colors mb-3">
               {product.name}
             </h3>
           </Link>
 
           {/* Product specs */}
-          <div className="text-sm text-[#666666] mt-1 space-y-1">
+          <div className="text-sm text-[#666666] space-y-1">
             {product.length && <p>Length: {product.length}</p>}
             {product.lace && <p>Lace: {product.lace}</p>}
             {product.density && <p>Density: {product.density}</p>}
@@ -68,7 +69,7 @@ export function CartItem({ item, onRemove, onUpdateQuantity }: CartItemProps) {
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-4">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mt-5">
           {/* Quantity Controls */}
           <QuantityControls
             quantity={quantity}
@@ -78,7 +79,7 @@ export function CartItem({ item, onRemove, onUpdateQuantity }: CartItemProps) {
           />
 
           {/* Price and Remove */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-5">
             <div className="text-right">
               <PriceDisplay
                 price={product.price}
@@ -91,7 +92,7 @@ export function CartItem({ item, onRemove, onUpdateQuantity }: CartItemProps) {
             </div>
             <button
               onClick={() => onRemove(product._id)}
-              className="text-[#DC3545] hover:text-[#D32F2F] transition-colors text-sm font-medium px-3 py-1 rounded-[5px] hover:bg-[#DC3545]/10"
+              className="text-[#DC3545] hover:text-[#D32F2F] transition-colors text-sm font-medium px-4 py-2 rounded-full hover:bg-[#DC3545]/10"
               aria-label={`Remove ${product.name} from cart`}
             >
               Remove

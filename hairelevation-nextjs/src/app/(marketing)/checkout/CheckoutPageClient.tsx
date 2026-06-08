@@ -1,7 +1,7 @@
 /**
  * CheckoutPageClient Component
  * Client component for the checkout page
- * Refined spacing and typography
+ * Luxury checkout experience with refined presentation
  */
 
 "use client";
@@ -91,12 +91,12 @@ export function CheckoutPageClient() {
   if (isLoading) {
     return (
       <main>
-        <section className="checkout py-20 px-5">
-          <div className="container max-w-[1200px] mx-auto">
-            <h1 className="text-3xl md:text-4xl font-bold text-[#3B2A23] text-center mb-12">
+        <section className="checkout py-24 px-8">
+          <div className="container max-w-[1400px] mx-auto">
+            <h1 className="text-4xl md:text-5xl font-bold text-[#3B2A23] text-center mb-16 tracking-tight">
               Checkout
             </h1>
-            <div className="flex justify-center items-center py-16">
+            <div className="flex justify-center items-center py-20">
               <LoadingSpinner size="lg" />
             </div>
           </div>
@@ -107,27 +107,30 @@ export function CheckoutPageClient() {
 
   return (
     <main>
-      <section className="checkout py-20 px-5">
-        <div className="container max-w-[1200px] mx-auto">
-          <h1 className="text-3xl md:text-4xl font-bold text-[#3B2A23] text-center mb-12">
-            Checkout
-          </h1>
+      <section className="checkout py-24 px-8 bg-gradient-to-b from-white to-[#F5EFE6]">
+        <div className="container max-w-[1400px] mx-auto">
+          <div className="text-center mb-16">
+            <h1 className="text-4xl md:text-5xl font-bold text-[#3B2A23] mb-6 tracking-tight">
+              Secure Checkout
+            </h1>
+            <div className="w-24 h-1 bg-gradient-to-r from-[#C8A97E] to-transparent mx-auto mb-6"></div>
+          </div>
 
           {cartItems.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-[#666666] text-lg mb-6">Your cart is empty.</p>
-              <Button asLink href={ROUTES.products}>
+            <div className="text-center py-20 bg-white rounded-xl shadow-[var(--shadow-card)] px-10">
+              <p className="text-[#666666] text-lg mb-8">Your cart is empty.</p>
+              <Button asLink href={ROUTES.products} size="lg">
                 Browse Products
               </Button>
             </div>
           ) : (
-            <div className="checkout-content grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="checkout-content grid grid-cols-1 lg:grid-cols-2 gap-10">
               {/* Order Summary */}
-              <div className="order-summary bg-white rounded-xl shadow-[0_8px_20px_rgba(99,42,35,0.1)] p-8">
-                <h2 className="text-2xl font-bold text-[#3B2A23] mb-6">
+              <div className="order-summary bg-white rounded-xl shadow-[var(--shadow-card)] p-10">
+                <h2 className="text-2xl font-bold text-[#3B2A23] mb-8">
                   Order Summary
                 </h2>
-                <div className="space-y-5 mb-6">
+                <div className="space-y-6 mb-8">
                   {cartItems.map((item) => {
                     const imageUrl = productService.getImageUrl(
                       item.product.coverImage
@@ -139,34 +142,34 @@ export function CheckoutPageClient() {
                     return (
                       <div
                         key={item.product._id}
-                        className="flex gap-4 items-center"
+                        className="flex gap-5 items-center pb-6 border-b border-[#E8D5C4] last:border-0 last:pb-0"
                       >
-                        <div className="relative w-16 h-16 rounded-md overflow-hidden bg-[#F5EFE6] flex-shrink-0">
+                        <div className="relative w-20 h-20 rounded-lg overflow-hidden bg-[#F5EFE6] flex-shrink-0">
                           <Image
                             src={imageUrl}
                             alt={item.product.name}
                             fill
-                            sizes="64px"
+                            sizes="80px"
                             className="object-cover"
                           />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h4 className="text-sm font-semibold text-[#3B2A23] truncate">
+                          <h4 className="text-base font-semibold text-[#3B2A23] truncate">
                             {item.product.name}
                           </h4>
-                          <p className="text-xs text-[#666666]">
+                          <p className="text-sm text-[#666666] mt-1">
                             Qty: {item.quantity}
                           </p>
                         </div>
-                        <div className="text-sm font-bold text-[#3B2A23]">
+                        <div className="text-base font-bold text-[#3B2A23]">
                           GH₵{(itemPrice * item.quantity).toLocaleString()}
                         </div>
                       </div>
                     );
                   })}
                 </div>
-                <div className="border-t border-[#E8D5C4] pt-5">
-                  <h3 className="text-lg font-bold text-[#3B2A23]">
+                <div className="border-t border-[#E8D5C4] pt-6">
+                  <h3 className="text-xl font-bold text-[#3B2A23]">
                     Total:{" "}
                     <span className="text-[#C8A97E]">
                       GH₵{total.toLocaleString()}
@@ -176,11 +179,11 @@ export function CheckoutPageClient() {
               </div>
 
               {/* Checkout Form */}
-              <div className="checkout-form bg-white rounded-xl shadow-[0_8px_20px_rgba(99,42,35,0.1)] p-8">
-                <h2 className="text-2xl font-bold text-[#3B2A23] mb-6">
+              <div className="checkout-form bg-white rounded-xl shadow-[var(--shadow-card)] p-10">
+                <h2 className="text-2xl font-bold text-[#3B2A23] mb-8">
                   Shipping Information
                 </h2>
-                <form id="checkout-form" onSubmit={handleSubmit} className="space-y-6">
+                <form id="checkout-form" onSubmit={handleSubmit} className="space-y-7">
                   {/* Full Name */}
                   <div className="form-group">
                     <label
@@ -196,7 +199,7 @@ export function CheckoutPageClient() {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-md border border-[#E8D5C4] bg-[#FAF8F5] text-[#3B2A23] focus:outline-none focus:border-[#C8A97E] focus:ring-2 focus:ring-[#C8A97E]/20 transition-all"
+                      className="w-full px-5 py-4 rounded-lg border border-[#E8D5C4] bg-[#FAF8F5] text-[#3B2A23] focus:outline-none focus:border-[#C8A97E] focus:ring-2 focus:ring-[#C8A97E]/20 transition-all text-base"
                       placeholder="Enter your full name"
                     />
                   </div>
@@ -207,7 +210,7 @@ export function CheckoutPageClient() {
                       htmlFor="shipping-email"
                       className="block text-sm font-medium text-[#3B2A23] mb-2"
                     >
-                      Email
+                      Email (Optional)
                     </label>
                     <input
                       type="email"
@@ -215,7 +218,7 @@ export function CheckoutPageClient() {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-md border border-[#E8D5C4] bg-[#FAF8F5] text-[#3B2A23] focus:outline-none focus:border-[#C8A97E] focus:ring-2 focus:ring-[#C8A97E]/20 transition-all"
+                      className="w-full px-5 py-4 rounded-lg border border-[#E8D5C4] bg-[#FAF8F5] text-[#3B2A23] focus:outline-none focus:border-[#C8A97E] focus:ring-2 focus:ring-[#C8A97E]/20 transition-all text-base"
                       placeholder="Enter your email"
                     />
                   </div>
@@ -226,7 +229,7 @@ export function CheckoutPageClient() {
                       htmlFor="shipping-phone"
                       className="block text-sm font-medium text-[#3B2A23] mb-2"
                     >
-                      Phone
+                      Phone Number
                     </label>
                     <input
                       type="tel"
@@ -235,7 +238,7 @@ export function CheckoutPageClient() {
                       value={formData.phone}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-md border border-[#E8D5C4] bg-[#FAF8F5] text-[#3B2A23] focus:outline-none focus:border-[#C8A97E] focus:ring-2 focus:ring-[#C8A97E]/20 transition-all"
+                      className="w-full px-5 py-4 rounded-lg border border-[#E8D5C4] bg-[#FAF8F5] text-[#3B2A23] focus:outline-none focus:border-[#C8A97E] focus:ring-2 focus:ring-[#C8A97E]/20 transition-all text-base"
                       placeholder="Enter your phone number"
                     />
                   </div>
@@ -246,7 +249,7 @@ export function CheckoutPageClient() {
                       htmlFor="shipping-address"
                       className="block text-sm font-medium text-[#3B2A23] mb-2"
                     >
-                      Address
+                      Delivery Address
                     </label>
                     <textarea
                       id="shipping-address"
@@ -255,7 +258,7 @@ export function CheckoutPageClient() {
                       onChange={handleChange}
                       rows={3}
                       required
-                      className="w-full px-4 py-3 rounded-md border border-[#E8D5C4] bg-[#FAF8F5] text-[#3B2A23] focus:outline-none focus:border-[#C8A97E] focus:ring-2 focus:ring-[#C8A97E]/20 transition-all resize-none"
+                      className="w-full px-5 py-4 rounded-lg border border-[#E8D5C4] bg-[#FAF8F5] text-[#3B2A23] focus:outline-none focus:border-[#C8A97E] focus:ring-2 focus:ring-[#C8A97E]/20 transition-all resize-none text-base"
                       placeholder="Enter your delivery address"
                     />
                   </div>
@@ -275,7 +278,7 @@ export function CheckoutPageClient() {
                       value={formData.city}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-md border border-[#E8D5C4] bg-[#FAF8F5] text-[#3B2A23] focus:outline-none focus:border-[#C8A97E] focus:ring-2 focus:ring-[#C8A97E]/20 transition-all"
+                      className="w-full px-5 py-4 rounded-lg border border-[#E8D5C4] bg-[#FAF8F5] text-[#3B2A23] focus:outline-none focus:border-[#C8A97E] focus:ring-2 focus:ring-[#C8A97E]/20 transition-all text-base"
                       placeholder="Enter your city"
                     />
                   </div>
@@ -294,7 +297,7 @@ export function CheckoutPageClient() {
                       value={formData.notes}
                       onChange={handleChange}
                       rows={4}
-                      className="w-full px-4 py-3 rounded-md border border-[#E8D5C4] bg-[#FAF8F5] text-[#3B2A23] focus:outline-none focus:border-[#C8A97E] focus:ring-2 focus:ring-[#C8A97E]/20 transition-all resize-none"
+                      className="w-full px-5 py-4 rounded-lg border border-[#E8D5C4] bg-[#FAF8F5] text-[#3B2A23] focus:outline-none focus:border-[#C8A97E] focus:ring-2 focus:ring-[#C8A97E]/20 transition-all resize-none text-base"
                       placeholder="Any special instructions or notes for your order..."
                     />
                   </div>
@@ -313,7 +316,7 @@ export function CheckoutPageClient() {
                       value={formData.payment}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-md border border-[#E8D5C4] bg-[#FAF8F5] text-[#3B2A23] focus:outline-none focus:border-[#C8A97E] focus:ring-2 focus:ring-[#C8A97E]/20 transition-all"
+                      className="w-full px-5 py-4 rounded-lg border border-[#E8D5C4] bg-[#FAF8F5] text-[#3B2A23] focus:outline-none focus:border-[#C8A97E] focus:ring-2 focus:ring-[#C8A97E]/20 transition-all text-base"
                     >
                       <option value="">Select Payment Method</option>
                       <option value="mobile">Mobile Money</option>
@@ -328,19 +331,19 @@ export function CheckoutPageClient() {
                     className="w-full"
                     size="lg"
                   >
-                    {isSubmitting ? "Processing..." : "Place Order"}
+                    {isSubmitting ? "Processing..." : "Proceed to Payment"}
                   </Button>
-                </form>
 
-                {/* Checkout Message */}
-                {checkoutMessage && (
-                  <div
-                    id="checkout-message"
-                    className="mt-6 p-4 bg-[#28A745]/10 border border-[#28A745] rounded-xl text-[#28A745] text-center"
-                  >
-                    {checkoutMessage}
-                  </div>
-                )}
+                  {/* Checkout Message */}
+                  {checkoutMessage && (
+                    <div
+                      id="checkout-message"
+                      className="mt-4 p-4 bg-[#28A745]/10 border border-[#28A745] rounded-lg text-[#28A745] text-center"
+                    >
+                      {checkoutMessage}
+                    </div>
+                  )}
+                </form>
               </div>
             </div>
           )}

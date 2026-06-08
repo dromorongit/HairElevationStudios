@@ -1,6 +1,7 @@
 /**
  * SizeSelector Component
  * Allows users to select product size with accessible radio buttons
+ * Luxury presentation with refined styling
  */
 
 "use client";
@@ -8,7 +9,7 @@
 import { motion } from "framer-motion";
 
 interface SizeSelectorProps {
-  sizes: ("Small" | "Medium" | "Large")[];
+  sizes: string[];
   selectedSize: string;
   onSizeChange: (size: string) => void;
   disabled?: boolean;
@@ -36,11 +37,11 @@ export function SizeSelector({
               <label
                 className={`
                   relative flex items-center justify-center
-                  w-20 h-12 rounded-[5px] border-2 cursor-pointer
+                  w-20 h-12 rounded-full border-2 cursor-pointer
                   transition-all duration-200
                   ${
                     selectedSize === size
-                      ? "border-[#C8A97E] bg-[#F5EFE6]"
+                      ? "border-[#C8A97E] bg-gradient-to-r from-[#F5EFE6] to-[#FAF8F5]"
                       : "border-[#E8D5C4] bg-white hover:border-[#C8A97E]"
                   }
                   ${disabled ? "opacity-50 cursor-not-allowed" : ""}
@@ -60,7 +61,7 @@ export function SizeSelector({
                 {selectedSize === size && (
                   <motion.div
                     layoutId="size-indicator"
-                    className="absolute inset-0 border-2 border-[#C8A97E] rounded-[5px] pointer-events-none"
+                    className="absolute inset-0 border-2 border-[#C8A97E] rounded-full pointer-events-none"
                     initial={false}
                     transition={{ type: "spring", duration: 0.3 }}
                   />

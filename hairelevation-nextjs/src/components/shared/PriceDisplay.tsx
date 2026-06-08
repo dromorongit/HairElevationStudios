@@ -1,9 +1,8 @@
 /**
  * PriceDisplay Component
  * Displays product price with sale/promo pricing
+ * Luxury presentation with refined typography
  */
-
-import { BRAND } from "@/constants/brand";
 
 interface PriceDisplayProps {
   price: number;
@@ -27,17 +26,17 @@ export function PriceDisplay({
   const displayPrice = onSale && promoPrice ? promoPrice : price;
 
   return (
-    <div className="price-container flex items-center gap-2 flex-wrap">
+    <div className="price-container flex items-center gap-3 flex-wrap">
       {onSale && promoPrice && (
         <span
-          className={`original-price text-[${BRAND.colors.grayLight}] line-through ${sizeStyles[size]}`}
+          className={`original-price text-[#999999] line-through ${sizeStyles[size]}`}
         >
           GH₵{price.toLocaleString()}
         </span>
       )}
       <span
         className={`font-bold ${
-          onSale ? `text-[${BRAND.colors.saleRed}]` : `text-[${BRAND.colors.black}]`
+          onSale ? "text-[#D32F2F]" : "text-[#3B2A23]"
         } ${sizeStyles[size]}`}
       >
         GH₵{displayPrice.toLocaleString()}

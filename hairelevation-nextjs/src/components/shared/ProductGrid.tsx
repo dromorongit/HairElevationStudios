@@ -1,7 +1,7 @@
 /**
  * ProductGrid Component
  * Responsive grid of product cards
- * Enhanced with luxury motion and staggered reveals
+ * Luxury spacing with refined presentation
  */
 
 "use client";
@@ -25,7 +25,7 @@ export function ProductGrid({
 }: ProductGridProps) {
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center py-12">
+      <div className="flex justify-center items-center py-16">
         <LoadingSpinner size="lg" />
       </div>
     );
@@ -33,7 +33,7 @@ export function ProductGrid({
 
   if (!products || products.length === 0) {
     return (
-      <div className="text-center py-12 text-[#666666]">
+      <div className="text-center py-16 text-[#666666]">
         <p>{emptyMessage}</p>
       </div>
     );
@@ -41,7 +41,7 @@ export function ProductGrid({
 
   return (
     <motion.div
-      className="product-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+      className="product-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10"
       variants={collectionGridVariants}
       initial="hidden"
       animate="visible"

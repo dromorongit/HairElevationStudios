@@ -1,7 +1,7 @@
 /**
  * Header Component
  * Site header with logo, navigation, cart icon, and hamburger menu
- * Refined for luxury-grade experience
+ * Luxury-grade experience with refined navigation
  */
 
 "use client";
@@ -31,12 +31,13 @@ export function Header() {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMenuOpen(false);
   }, [pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -55,58 +56,60 @@ export function Header() {
 
   const navLinks = [
     { href: ROUTES.home, label: "Home" },
-    { href: ROUTES.about, label: "About" },
+    { href: ROUTES.about, label: "Our Story" },
     { href: ROUTES.collections, label: "Collections" },
+    { href: ROUTES.products, label: "Products" },
     { href: ROUTES.services, label: "Services" },
-    { href: ROUTES.book, label: "Book Appointment" },
     { href: ROUTES.contact, label: "Contact" },
   ];
 
   return (
     <header className={`
-      header bg-gradient-to-r from-[#3B2A23]/95 to-[#2A1F1A]/95 
-      backdrop-blur-md text-[#F5EFE6] sticky top-0 z-50 
-      transition-all duration-300
-      ${isScrolled ? "shadow-[0_4px_20px_rgba(59,42,35,0.3)]" : "border-b border-[#C8A97E]/20"}
+      header bg-white/95 backdrop-blur-md text-[#3B2A23] sticky top-0 z-50 
+      transition-all duration-500 border-b border-[#C8A97E]/10
+      ${isScrolled ? "shadow-[var(--shadow-header)]" : "shadow-[var(--shadow-sm)]"}
     `}>
-      <div className="container max-w-[1200px] mx-auto px-5">
+      <div className="container max-w-[1400px] mx-auto px-8">
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center justify-between py-4">
+        <nav className="hidden lg:flex items-center justify-between py-6">
           {/* Left: Logo */}
           <div className="logo">
             <Link href={ROUTES.home} className="flex items-center">
-              <span className="text-2xl font-bold text-[#F5EFE6] tracking-wide hover:text-[#C8A97E] transition-colors">
-                HES
+              <span className="text-3xl font-bold text-[#3B2A23] tracking-tight hover:text-[#C8A97E] transition-colors">
+                Hair Elevation Studio
               </span>
             </Link>
           </div>
 
           {/* Center: Navigation Links */}
-          <ul className="nav-list flex items-center gap-10 list-none">
-            {navLinks.slice(0, 5).map((link) => (
+          <ul className="nav-list flex items-center gap-12 list-none">
+            {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="text-[#F5EFE6] font-medium text-sm uppercase tracking-wider relative group"
+                  className={`text-[#3B2A23] font-medium text-sm uppercase tracking-wider relative py-2 transition-colors
+                    ${pathname === link.href ? "text-[#C8A97E]" : "hover:text-[#C8A97E]"}`}
                 >
                   {link.label}
-                  <span className="absolute bottom-[-6px] left-0 w-0 h-[2px] bg-[#C8A97E] transition-all duration-300 group-hover:w-full" />
+                  {pathname === link.href && (
+                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#C8A97E] to-[#A67C52]" />
+                  )}
                 </Link>
               </li>
             ))}
           </ul>
 
           {/* Right: Cart and CTA */}
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-8">
             {/* Cart Icon */}
-            <Link href={ROUTES.cart} aria-label="Shopping Cart" className="relative">
+            <Link href={ROUTES.cart} aria-label="Shopping Cart" className="relative group">
               <svg
                 width="22"
                 height="22"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="hover:text-[#C8A97E] transition-colors"
+                className="text-[#3B2A23] group-hover:text-[#C8A97E] transition-colors"
               >
                 <circle cx="9" cy="21" r="1" stroke="currentColor" strokeWidth="2" />
                 <circle cx="20" cy="21" r="1" stroke="currentColor" strokeWidth="2" />
@@ -119,7 +122,7 @@ export function Header() {
                 />
               </svg>
               {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-[#C8A97E] text-[#3B2A23] rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
+                <span className="absolute -top-2 -right-2 bg-[#C8A97E] text-[#3B2A23] rounded-full min-w-5 h-5 flex items-center justify-center text-xs font-bold px-1">
                   {cartCount}
                 </span>
               )}
@@ -128,35 +131,35 @@ export function Header() {
             {/* CTA Button */}
             <Link
               href={ROUTES.book}
-              className="btn-book inline-flex items-center px-8 py-3 bg-gradient-to-r from-[#C8A97E] via-[#B8956A] to-[#A67C52] text-[#3B2A23] font-semibold uppercase tracking-wider rounded-full shadow-[0_6px_20px_rgba(200,169,126,0.4)] hover:shadow-[0_8px_25px_rgba(200,169,126,0.5)] hover:-translate-y-[2px] transition-all duration-300 text-sm"
+              className="inline-flex items-center px-8 py-3 bg-gradient-to-r from-[#C8A97E] via-[#B8956A] to-[#A67C52] text-[#3B2A23] font-semibold uppercase tracking-wider rounded-full shadow-[0_6px_20px_rgba(200,169,126,0.4)] hover:shadow-[0_10px_30px_rgba(200,169,126,0.5)] hover:-translate-y-1 transition-all duration-300 text-sm"
             >
-              Book Now
+              Book Appointment
             </Link>
           </div>
         </nav>
 
-        {/* Mobile Header */}
-        <div className="md:hidden flex justify-between items-center py-4">
+        {/* Tablet Navigation */}
+        <nav className="hidden md:flex lg:hidden items-center justify-between py-5">
           {/* Logo */}
           <div className="logo">
             <Link href={ROUTES.home} className="flex items-center">
-              <span className="text-xl font-bold text-[#F5EFE6] tracking-wide">
+              <span className="text-2xl font-bold text-[#3B2A23] tracking-tight">
                 HES
               </span>
             </Link>
           </div>
 
           {/* Cart and Hamburger */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-5">
             {/* Cart Icon */}
             <Link href={ROUTES.cart} aria-label="Shopping Cart" className="relative p-2">
               <svg
-                width="20"
-                height="20"
+                width="22"
+                height="22"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="text-[#F5EFE6]"
+                className="text-[#3B2A23]"
               >
                 <circle cx="9" cy="21" r="1" stroke="currentColor" strokeWidth="2" />
                 <circle cx="20" cy="21" r="1" stroke="currentColor" strokeWidth="2" />
@@ -182,30 +185,85 @@ export function Header() {
               aria-label="Toggle menu"
               aria-expanded={isMenuOpen}
             >
-              <span className={`w-6 h-0.5 bg-[#F5EFE6] mb-1.5 transition-all duration-300 rounded ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`} />
-              <span className={`w-6 h-0.5 bg-[#F5EFE6] mb-1.5 transition-all duration-300 rounded ${isMenuOpen ? "opacity-0" : ""}`} />
-              <span className={`w-6 h-0.5 bg-[#F5EFE6] transition-all duration-300 rounded ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+              <span className={`w-6 h-0.5 bg-[#3B2A23] mb-1.5 transition-all duration-300 rounded ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`} />
+              <span className={`w-6 h-0.5 bg-[#3B2A23] mb-1.5 transition-all duration-300 rounded ${isMenuOpen ? "opacity-0" : ""}`} />
+              <span className={`w-6 h-0.5 bg-[#3B2A23] transition-all duration-300 rounded ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+            </button>
+          </div>
+        </nav>
+
+        {/* Mobile Header */}
+        <div className="md:hidden flex justify-between items-center py-5">
+          {/* Logo */}
+          <div className="logo">
+            <Link href={ROUTES.home} className="flex items-center">
+              <span className="text-xl font-bold text-[#3B2A23] tracking-tight">
+                HES
+              </span>
+            </Link>
+          </div>
+
+          {/* Cart and Hamburger */}
+          <div className="flex items-center gap-4">
+            {/* Cart Icon */}
+            <Link href={ROUTES.cart} aria-label="Shopping Cart" className="relative p-2">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="text-[#3B2A23]"
+              >
+                <circle cx="9" cy="21" r="1" stroke="currentColor" strokeWidth="2" />
+                <circle cx="20" cy="21" r="1" stroke="currentColor" strokeWidth="2" />
+                <path
+                  d="M1 1h4l2.68 13.39c.2 1 1 1.73 2 1.73h9.72c1 0 1.8-.73 2-1.73L23 6H6"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-[#C8A97E] text-[#3B2A23] rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold">
+                  {cartCount}
+                </span>
+              )}
+            </Link>
+
+            {/* Hamburger Menu */}
+            <button
+              className={`hamburger flex flex-col cursor-pointer p-2 ${isMenuOpen ? "active" : ""}`}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle menu"
+              aria-expanded={isMenuOpen}
+            >
+              <span className={`w-6 h-0.5 bg-[#3B2A23] mb-1.5 transition-all duration-300 rounded ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`} />
+              <span className={`w-6 h-0.5 bg-[#3B2A23] mb-1.5 transition-all duration-300 rounded ${isMenuOpen ? "opacity-0" : ""}`} />
+              <span className={`w-6 h-0.5 bg-[#3B2A23] transition-all duration-300 rounded ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
             </button>
           </div>
         </div>
 
         {/* Mobile Full-Screen Menu Overlay */}
         <div
-          className={`fixed inset-0 bg-gradient-to-b from-[#3B2A23] to-[#2A1F1A] z-40 flex flex-col items-center justify-center transition-all duration-300 md:hidden ${
+          className={`fixed inset-0 bg-white z-40 flex flex-col items-center justify-center transition-all duration-500 md:hidden ${
             isMenuOpen
               ? "opacity-100 pointer-events-auto"
               : "opacity-0 pointer-events-none"
           }`}
         >
-          <nav className="flex flex-col items-center gap-8 mb-12">
+          <nav className="flex flex-col items-center gap-10 mb-12">
             {navLinks.map((link, index) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-[#F5EFE6] text-2xl font-medium hover:text-[#C8A97E] transition-colors"
+                className={`text-[#3B2A23] text-2xl font-medium hover:text-[#C8A97E] transition-colors tracking-tight
+                  ${pathname === link.href ? "text-[#C8A97E]" : ""}`}
                 style={{
                   animation: isMenuOpen
-                    ? `fadeInUp 0.3s ease forwards ${index * 0.05}s`
+                    ? `fadeInUp 0.4s ease forwards ${index * 0.07}s`
                     : "none",
                 }}
                 onClick={() => setIsMenuOpen(false)}
@@ -215,15 +273,24 @@ export function Header() {
             ))}
           </nav>
 
+          {/* CTA in Mobile Menu */}
+          <Link
+            href={ROUTES.book}
+            className="inline-flex items-center px-8 py-3 bg-gradient-to-r from-[#C8A97E] via-[#B8956A] to-[#A67C52] text-[#3B2A23] font-semibold uppercase tracking-wider rounded-full shadow-[0_6px_20px_rgba(200,169,126,0.4)] mb-8"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Book Appointment
+          </Link>
+
           {/* Social icons in mobile menu */}
-          <div className="mt-8">
+          <div className="mt-6">
             <SocialLinks />
           </div>
 
           {/* Close hint */}
           <button
             onClick={() => setIsMenuOpen(false)}
-            className="absolute top-6 right-6 text-[#F5EFE6]/60 hover:text-[#F5EFE6] transition-colors"
+            className="absolute top-8 right-8 text-[#3B2A23]/60 hover:text-[#3B2A23] transition-colors p-2"
             aria-label="Close menu"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
