@@ -1,8 +1,10 @@
+# Turbopack + Tailwind CSS v4 support
 # Install dependencies only when needed
 FROM node:20-alpine AS base
 WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
+# Cache bust: 2026-06-08-turbopack-tailwind-v4-fix
 
 # Install dependencies
 FROM base AS deps
