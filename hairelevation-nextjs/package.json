@@ -2,6 +2,9 @@
   "name": "hairelevation-nextjs",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -15,10 +18,10 @@
     "react-dom": "19.2.4"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "postcss-import": "^16",
     "postcss": "^8",
     "tailwindcss": "^4",
+    "@tailwindcss/postcss": "^4",
+    "postcss-import": "^16",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
