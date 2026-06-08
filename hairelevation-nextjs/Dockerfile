@@ -4,12 +4,13 @@ FROM node:20-alpine AS base
 WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
-ENV NODE_OPTIONS="--experimental-specifier-resolution=node"
 
 # Install dependencies - separate layer for better caching
 FROM base AS deps
 RUN apk add --no-cache libc6-compat
 COPY package.json package-lock.json ./
+# Force cache bust when postcss config changes
+COPY postcss.config.cjs ./
 RUN npm ci
 
 # Rebuild the source code when needed
