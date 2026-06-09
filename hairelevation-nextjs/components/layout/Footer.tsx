@@ -6,7 +6,7 @@ import { Instagram, Send, MessageCircle } from 'lucide-react';
 
 export function Footer() {
   return (
-    <footer className="bg-[#0A0704] text-[var(--text-primary)]">
+    <footer className="bg-[var(--gradient-brown)] text-[var(--text-primary)]">
       <div className="w-full h-1 bg-[var(--gradient-gold)]" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

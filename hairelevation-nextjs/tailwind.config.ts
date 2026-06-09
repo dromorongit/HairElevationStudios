@@ -27,8 +27,8 @@ export default {
           'text-muted': 'rgba(245, 239, 230, 0.6)',
           border: 'rgba(200, 169, 126, 0.2)',
           'border-strong': 'rgba(200, 169, 126, 0.4)',
-          overlay: 'rgba(26, 18, 8, 0.95)',
-          'overlay-light': 'rgba(26, 18, 8, 0.6)',
+          overlay: 'rgba(59, 42, 35, 0.95)',
+          'overlay-light': 'rgba(59, 42, 35, 0.6)',
         },
       },
       fontFamily: {

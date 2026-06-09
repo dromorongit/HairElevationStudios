@@ -28,7 +28,7 @@ This document catalogs all reusable UI structures identified in the Hair Elevati
 | **CSS Class** | `.footer` |
 | **Pages** | All 13 HTML pages |
 | **Structure** | 3-column grid: Contact Us | Follow Us | WhatsApp Channel + Bottom bar |
-| **Key Styles** | `background: linear-gradient(135deg, #3B2A23, #2A1F1A)`, gold top border |
+| **Key Styles** | `background: linear-gradient(135deg, #3B2A23, #2A1E18)`, gold top border |
 | **React Component** | `components/layout/Footer.tsx` |
 | **Sub-components** | `FooterContact`, `SocialIcons`, `WhatsAppChannelBanner`, `DeveloperCredits` |
 

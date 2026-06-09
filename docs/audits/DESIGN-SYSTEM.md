@@ -14,7 +14,7 @@
 --color-cream-light:    #F0E6D8;   /* Body gradient end */
 --color-cream-mid:      #E8D5C4;   /* Body gradient mid, form borders */
 --color-dark:           #3B2A23;   /* Header/footer bg, headings on white */
---color-dark-deep:      #2A1F1A;   /* Footer gradient end */
+--color-dark-deep:      #2A1E18;   /* Footer gradient end */
 --color-off-white:      #FAF8F5;   /* Form input background */
 --color-white:          #FFFFFF;   /* Card backgrounds */
 
@@ -413,7 +413,7 @@ All cards share this pattern:
 | Body background | 135deg | `#F5EFE6 → #E8D5C4 → #F0E6D8` | Page background |
 | Button gradient | 135deg | `#C8A97E → #B8956A → #A67C52` | Primary buttons |
 | Header background | — | `rgba(59, 42, 35, 0.95)` | Sticky header |
-| Footer background | 135deg | `#3B2A23 → #2A1F1A` | Footer |
+| Footer background | 135deg | `#3B2A23 → #2A1E18` | Footer |
 | WhatsApp float | 135deg | `#25D366 → #20B954 → #128C7E` | Floating button |
 | WhatsApp channel | 135deg | `#25D366 → #20B954` | Channel banner |
 | Hero overlay | — | `rgba(200, 169, 126, 0.4)` | Hero section |
@@ -432,7 +432,7 @@ export const BRAND = {
     creamLight: '#F0E6D8',
     creamMid: '#E8D5C4',
     dark: '#3B2A23',
-    darkDeep: '#2A1F1A',
+    darkDeep: '#2A1E18',
     offWhite: '#FAF8F5',
     white: '#FFFFFF',
     gold: '#C8A97E',
