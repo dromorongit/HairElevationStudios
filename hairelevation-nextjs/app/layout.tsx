@@ -5,6 +5,7 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { ScrollToTop } from '@/components/shared/ScrollToTop';
 import { NavigationProgress } from '@/components/shared/NavigationProgress';
+import { FloatingWhatsApp } from '@/components/shared/FloatingWhatsApp';
 
 const playfairDisplay = Playfair_Display({
   variable: '--font-playfair',
@@ -19,8 +20,12 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'Hair Elevation Studio — Premium Wigs',
-  description: 'Premium wig brand based in Accra, Ghana. Elevate your style with our luxury wig collection.',
+  title: 'Hair Elevation Studio — Premium Wigs Accra',
+  description: "Handcrafted luxury wigs in Accra, Ghana. Shop The Bridal Crowns, Everyday Crown, Queen's Curls and Signature Pixies collections.",
+  icons: {
+    icon: '/assets/images/HESLOGO.PNG',
+    apple: '/assets/images/HESLOGO.PNG',
+  },
 };
 
 export default function RootLayout({
@@ -38,6 +43,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <ScrollToTop />
+        <FloatingWhatsApp />
       </body>
     </html>
   );

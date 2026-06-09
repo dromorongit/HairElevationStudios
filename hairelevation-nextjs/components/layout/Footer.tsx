@@ -1,8 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import Image from 'next/image';
-import { Instagram, Send, MessageCircle } from 'lucide-react';
+import { BsInstagram, BsTiktok, BsWhatsapp } from 'react-icons/bs';
 
 export function Footer() {
   return (
@@ -12,12 +11,10 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <Image
-              src="/HESLOGO.PNG"
+            <img
+              src="/assets/images/HESLOGO.PNG"
               alt="Hair Elevation Studio"
-              width={140}
-              height={48}
-              className="h-12 w-auto brightness-125 mb-4"
+              className="h-12 w-auto object-contain mb-4"
             />
             <p className="text-lg font-heading font-bold mb-2 text-[var(--text-primary)]">Elevate Your Style</p>
             <p className="text-sm font-body text-[var(--text-muted)] max-w-xs">
@@ -85,25 +82,31 @@ export function Footer() {
 
             <div className="flex gap-3 mt-4">
               <Link
-                href="https://instagram.com"
-                className="w-10 h-10 rounded-full bg-[var(--bg-secondary)] border border-[var(--brand-gold)] flex items-center justify-center hover:bg-[var(--brand-gold)] transition-colors"
+                href="https://instagram.com/hair_elevation_studio"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full border border-[rgba(200,169,126,0.3)] flex items-center justify-center text-[#C8A97E] hover:bg-[#C8A97E] hover:text-[#3B2A23] transition-colors duration-200"
                 aria-label="Instagram"
               >
-                <Instagram className="w-5 h-5 text-[var(--brand-gold)]" />
+                <BsInstagram className="w-5 h-5" />
               </Link>
               <Link
-                href="https://tiktok.com"
-                className="w-10 h-10 rounded-full bg-[var(--bg-secondary)] border border-[var(--brand-gold)] flex items-center justify-center hover:bg-[var(--brand-gold)] transition-colors"
+                href="https://tiktok.com/@hair_elevation_studio"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full border border-[rgba(200,169,126,0.3)] flex items-center justify-center text-[#C8A97E] hover:bg-[#C8A97E] hover:text-[#3B2A23] transition-colors duration-200"
                 aria-label="TikTok"
               >
-                <Send className="w-5 h-5 text-[var(--brand-gold)]" />
+                <BsTiktok className="w-5 h-5" />
               </Link>
               <Link
-                href="https://whatsapp.com"
-                className="w-10 h-10 rounded-full bg-[var(--bg-secondary)] border border-[var(--brand-gold)] flex items-center justify-center hover:bg-[var(--brand-gold)] transition-colors"
+                href="https://wa.me/233534057109"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full border border-[rgba(200,169,126,0.3)] flex items-center justify-center text-[#C8A97E] hover:bg-[#C8A97E] hover:text-[#3B2A23] transition-colors duration-200"
                 aria-label="WhatsApp"
               >
-                <MessageCircle className="w-5 h-5 text-[var(--brand-gold)]" />
+                <BsWhatsapp className="w-5 h-5" />
               </Link>
             </div>
           </div>

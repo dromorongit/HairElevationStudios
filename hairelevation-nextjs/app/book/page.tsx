@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from 'react';
-import { Send } from 'lucide-react';
 import { GoldButton } from '@/components/shared/GoldButton';
+import { BsInstagram, BsTiktok, BsCursor } from 'react-icons/bs';
 
 interface BookingFormData {
   name: string;
@@ -238,7 +238,7 @@ Notes: ${formData.notes || 'None'}`;
                   )}
 
                   <GoldButton type="submit" size="lg" className="w-full">
-                    <Send className="w-4 h-4 mr-2" />
+                    <BsCursor className="w-4 h-4 mr-2" />
                     Send Booking Request
                   </GoldButton>
                 </form>
@@ -301,28 +301,24 @@ Notes: ${formData.notes || 'None'}`;
                   </ul>
                 </div>
 
-                <div className="flex gap-4">
+<div className="flex gap-4">
                   <a
                     href="https://instagram.com/hair_elevation_studio"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full border border-[var(--brand-gold)] text-[var(--brand-gold)] hover:bg-[var(--brand-gold)] transition-colors flex items-center justify-center"
+                    className="w-10 h-10 rounded-full border border-[rgba(200,169,126,0.3)] text-[var(--brand-gold)] hover:bg-[var(--brand-gold)] hover:text-[#3B2A23] transition-colors duration-200 flex items-center justify-center"
                     aria-label="Instagram"
                   >
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.9.3 2.4.5.6.2 1 .5 1.5 1s.8.9 1 1.5c.2.5.4 1.2.5 2.4.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.9-.5 2.4-.2.6-.5 1-1 1.5s-.9.8-1.5 1c-.5.2-1.2.4-2.4.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.9-.3-2.4-.5-.6-.2-1-.5-1.5-1s-.8-.9-1-1.5c-.2-.5-.4-1.2-.5-2.4C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.9.5-2.4.2-.6.5-1 1-1.5s.9-.8 1.5-1c.5-.2 1.2-.4 2.4-.5 1.3-.1 1.7-.1 4.9-.1m0-2.2C8.7 0 8.3 0 7 .1 5.7.2 4.7.4 3.8.8c-.9.4-1.7 1-2.5 1.8C.6 3.4 0 4.2 0 5.1c-.2.9-.3 1.9-.3 4.9s0 3.9.1 5.1c0 .9.2 1.8.5 2.7.4.9.8 1.7 1.5 2.4.7.8 1.5 1.4 2.4 1.8.9.4 1.9.6 2.7.7 1.9.1 4.2.1 7 .1h.1c.1 0 .1 0 .1 0s.1 0 .1 0c2.9 0 3.3 0 4.9-.1 1.2-.1 2.3-.3 3.2-.6.9-.3 1.7-.9 2.4-1.8.8-.8 1.4-1.6 1.8-2.7.4-.9.6-1.9.7-2.7.1-1.3.1-1.7.1-4.9.1s-3.9 0-5.1-.1c-.9 0-1.8-.2-2.7-.5-.9-.3-1.7-.8-2.4-1.5-.8-.7-1.4-1.5-1.8-2.4C2.9 8.5 2.5 7.6 2.3 6.7 2.1 5.8 2 4.9 2 4.9 2 2.1 2 1.7 2 0v-.1C2 1.7 2 1.3 2.1.5c.2-.9.6-1.8 1.3-2.7.4-.8 1-1.4 1.8-1.8.9-.4 1.9-.6 2.7-.7h.1c.1 0 .1 0 .1 0s.1 0 .1 0c1.6 0 2.1 0 4.9.1h.1c2.8 0 3.2 0 4.9-.1.9 0 1.9.2 2.7.5.9.3 1.7.9 2.4 1.8.8.8 1.4 1.6 1.8 2.7.4.9.2 1.8.4 2.7.7 1.9.1 4.2.1 4.9.1s.1 0 .1 0" />
-                    </svg>
+                    <BsInstagram className="w-5 h-5" />
                   </a>
                   <a
                     href="https://tiktok.com/@hair_elevation_studio"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full border border-[var(--brand-gold)] text-[var(--brand-gold)] hover:bg-[var(--brand-gold)] transition-colors flex items-center justify-center"
+                    className="w-10 h-10 rounded-full border border-[rgba(200,169,126,0.3)] text-[var(--brand-gold)] hover:bg-[var(--brand-gold)] hover:text-[#3B2A23] transition-colors duration-200 flex items-center justify-center"
                     aria-label="TikTok"
                   >
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12.525.02c1.563-.02 3.125-.015 4.688-.02v4.65h-4.688V19.5c0 1.562.288 3.122.855 4.704.567 1.582 1.737 2.784 3.31 3.351 1.573.567 3.15.683 4.723.683h.06c1.573 0 3.15-.116 4.723-.683 1.573-.567 2.743-1.77 3.31-3.351.567-1.582.855-3.142.855-4.704V7.67c2.482-.18 4.97-.477 7.44-1.104v-.41c0-1.562-.288-3.122-.855-4.704-.567-1.582-1.737-2.784-3.31-3.351-1.573-.567-3.15-.683-4.723-.683h-.06C15.925.02 14.365.12 12.8.47v4.54h.225z" />
-                    </svg>
+                    <BsTiktok className="w-5 h-5" />
                   </a>
                 </div>
               </div>

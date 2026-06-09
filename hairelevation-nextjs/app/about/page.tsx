@@ -1,8 +1,8 @@
 "use client";
 
-import { Award, Heart, MapPin } from 'lucide-react';
 import { GoldButton } from '@/components/shared/GoldButton';
 import { OutlineButton } from '@/components/shared/OutlineButton';
+import { BsTrophy, BsHeartFill, BsGeoAlt } from 'react-icons/bs';
 
 export default function AboutPage() {
   return (
@@ -85,7 +85,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             <div className="bg-[rgba(200,169,126,0.05)] rounded-xl border border-[var(--border-gold)] p-8 text-center">
               <div className="w-16 h-16 rounded-full bg-[var(--gradient-gold)] flex items-center justify-center mx-auto mb-6">
-                <Award className="w-7 h-7 text-[var(--bg-primary)]" />
+                <BsTrophy className="w-7 h-7 text-[var(--bg-primary)]" />
               </div>
               <h3 className="text-xl font-heading font-bold text-[var(--text-primary)] mb-4">Quality First</h3>
               <p className="text-sm font-body text-[var(--text-muted)]">
@@ -95,7 +95,7 @@ export default function AboutPage() {
 
             <div className="bg-[rgba(200,169,126,0.05)] rounded-xl border border-[var(--border-gold)] p-8 text-center">
               <div className="w-16 h-16 rounded-full bg-[var(--gradient-gold)] flex items-center justify-center mx-auto mb-6">
-                <Heart className="w-7 h-7 text-[var(--bg-primary)]" />
+                <BsHeartFill className="w-7 h-7 text-[var(--bg-primary)]" />
               </div>
               <h3 className="text-xl font-heading font-bold text-[var(--text-primary)] mb-4">Customer Love</h3>
               <p className="text-sm font-body text-[var(--text-muted)]">
@@ -105,7 +105,7 @@ export default function AboutPage() {
 
             <div className="bg-[rgba(200,169,126,0.05)] rounded-xl border border-[var(--border-gold)] p-8 text-center">
               <div className="w-16 h-16 rounded-full bg-[var(--gradient-gold)] flex items-center justify-center mx-auto mb-6">
-                <MapPin className="w-7 h-7 text-[var(--bg-primary)]" />
+                <BsGeoAlt className="w-7 h-7 text-[var(--bg-primary)]" />
               </div>
               <h3 className="text-xl font-heading font-bold text-[var(--text-primary)] mb-4">Ghana Pride</h3>
               <p className="text-sm font-body text-[var(--text-muted)]">

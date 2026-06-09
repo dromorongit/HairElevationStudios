@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { ChevronUp } from 'lucide-react';
+import { BsChevronUp } from 'react-icons/bs';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export function ScrollToTop() {
@@ -32,7 +32,7 @@ export function ScrollToTop() {
           className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-[var(--gradient-gold)] text-[var(--bg-primary)] flex items-center justify-center shadow-[0_8px_32px_rgba(0,0,0,0.4)] hover:shadow-[0_0_20px_rgba(200,169,126,0.3)] transition-all duration-300"
           aria-label="Scroll to top"
         >
-          <ChevronUp className="w-6 h-6" />
+          <BsChevronUp className="w-6 h-6" />
         </motion.button>
       )}
     </AnimatePresence>

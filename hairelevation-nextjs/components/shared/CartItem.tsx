@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { Minus, Plus, Trash2 } from 'lucide-react';
+import { BsDash, BsPlus, BsTrash } from 'react-icons/bs';
 import { ICartItem } from '@/lib/types';
 import { formatPrice, truncateText, toArray } from '@/lib/utils';
 import { useCartStore } from '@/store/cartStore';
@@ -64,7 +64,7 @@ export function CartItem({ item }: CartItemProps) {
             disabled={quantity <= 1}
             className="w-9 h-9 rounded-full border border-[var(--brand-gold)] flex items-center justify-center text-[var(--brand-gold)] hover:bg-[var(--brand-gold)]/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
-            <Minus className="w-4 h-4" />
+            <BsDash className="w-4 h-4" />
           </button>
           <span className="w-8 text-center font-body text-base text-[var(--text-primary)]">
             {quantity}
@@ -73,7 +73,7 @@ export function CartItem({ item }: CartItemProps) {
             onClick={() => updateQuantity(product._id, quantity + 1)}
             className="w-9 h-9 rounded-full border border-[var(--brand-gold)] flex items-center justify-center text-[var(--brand-gold)] hover:bg-[var(--brand-gold)]/10 transition-colors"
           >
-            <Plus className="w-4 h-4" />
+            <BsPlus className="w-4 h-4" />
           </button>
 
           <button
@@ -81,7 +81,7 @@ export function CartItem({ item }: CartItemProps) {
             className="ml-1 p-2 rounded-full text-[var(--text-muted)] hover:text-red-400 transition-colors"
             aria-label="Remove from cart"
           >
-            <Trash2 className="w-4 h-4" />
+            <BsTrash className="w-4 h-4" />
           </button>
         </div>
 

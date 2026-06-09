@@ -1,9 +1,9 @@
 "use client";
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { useState, useEffect, useRef } from 'react';
-import { ShoppingBag, Heart, Menu, X, Search } from 'lucide-react';
+import { BsHandbag, BsHeart, BsHeartFill, BsSearch } from 'react-icons/bs';
+import { HiOutlineMenuAlt3, HiX } from 'react-icons/hi';
 import { useCart } from '@/hooks/useCart';
 import { useWishlist } from '@/hooks/useWishlist';
 import { usePathname } from 'next/navigation';
@@ -85,12 +85,10 @@ export function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link href="/" className="flex items-center">
-              <Image
-                src="/HESLOGO.PNG"
+              <img
+                src="/assets/images/HESLOGO.PNG"
                 alt="Hair Elevation Studio"
-                width={140}
-                height={40}
-                className="h-10 w-auto brightness-125"
+                className="h-10 w-auto object-contain"
               />
             </Link>
 
@@ -119,11 +117,11 @@ export function Navbar() {
                 className="p-2 text-[var(--brand-gold)] hover:text-[var(--brand-gold)] transition-colors"
                 aria-label="Search"
               >
-                <Search className="w-5 h-5" />
+                <BsSearch className="w-4 h-4" />
               </button>
 
               <Link href="/cart" className="relative p-2">
-                <ShoppingBag className="w-5 h-5 text-[var(--brand-gold)]" />
+                <BsHandbag className="w-5 h-5 text-[var(--brand-gold)]" />
                 {cartCount > 0 && (
                   <span className="absolute -top-1 -right-1 bg-[var(--brand-gold)] text-[var(--bg-primary)] text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium">
                     {cartCount}
@@ -131,7 +129,11 @@ export function Navbar() {
                 )}
               </Link>
               <Link href="/wishlist" className="relative p-2">
-                <Heart className="w-5 h-5 text-[var(--brand-gold)]" />
+                {wishlistItems.length > 0 ? (
+                  <BsHeartFill className="w-5 h-5 text-[#C8A97E]" />
+                ) : (
+                  <BsHeart className="w-5 h-5 text-[var(--brand-gold)]" />
+                )}
                 {wishlistItems.length > 0 && (
                   <span className="absolute -top-1 -right-1 bg-[var(--brand-gold)] text-[var(--bg-primary)] text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium">
                     {wishlistItems.length}
@@ -144,7 +146,7 @@ export function Navbar() {
                 className="md:hidden p-2 text-[var(--brand-gold)]"
                 aria-label="Open menu"
               >
-                <Menu className="w-5 h-5" />
+                <HiOutlineMenuAlt3 className="w-5 h-5" />
               </button>
             </div>
           </div>
@@ -167,12 +169,12 @@ export function Navbar() {
                     className="w-full px-4 py-2 pl-10 rounded-full border border-[var(--brand-gold)] bg-[var(--bg-secondary)] text-[var(--text-primary)] font-body text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-gold)]"
                     autoFocus
                   />
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--brand-gold)]/50" />
+                  <BsSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--brand-gold)]/50" />
                   <button
                     onClick={() => setSearchOpen(false)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-[var(--brand-gold)]/50 hover:text-[var(--brand-gold)]"
                   >
-                    <X className="w-4 h-4" />
+                    <HiX className="w-4 h-4" />
                   </button>
 
                   {searchQuery && (
@@ -230,7 +232,7 @@ export function Navbar() {
                 className="p-2 text-[var(--brand-gold)]"
                 aria-label="Close menu"
               >
-                <X className="w-6 h-6" />
+                <HiX className="w-6 h-6" />
               </button>
             </div>
             <div className="flex flex-col items-center justify-center space-y-8 text-3xl flex-1">

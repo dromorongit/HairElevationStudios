@@ -1,8 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import Image from 'next/image';
-import { Heart } from 'lucide-react';
+import { BsHeart, BsHeartFill } from 'react-icons/bs';
 import { IProduct } from '@/lib/types';
 import { cn, formatPrice, truncateText, toArray } from '@/lib/utils';
 import { motion } from 'framer-motion';
@@ -51,19 +50,15 @@ export function ProductCard({ product }: ProductCardProps) {
                 className="absolute top-2 right-2 w-7 h-7 rounded-full bg-[rgba(59,42,35,0.7)] backdrop-blur-sm flex items-center justify-center hover:bg-[var(--brand-gold)] transition-colors"
                 aria-label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
               >
-                <Heart
-                  className={cn(
-                    'w-3.5 h-3.5 transition-colors',
-                    inWishlist ? 'fill-[var(--brand-gold)] text-[var(--brand-gold)]' : 'text-[rgba(245,239,230,0.7)]'
-                  )}
-                />
+                {inWishlist ? (
+                  <BsHeartFill className="w-3.5 h-3.5 text-[var(--brand-gold)]" />
+                ) : (
+                  <BsHeart className="w-3.5 h-3.5 text-[rgba(245,239,230,0.7)]" />
+                )}
               </button>
-              <Image
-                src={product.coverImage}
-                alt={product.name}
-                fill
-                className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                loading="lazy"
+              <div
+                style={{ backgroundImage: `url(${product.coverImage})` }}
+                className="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-[rgba(59,42,35,0.8)] to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>

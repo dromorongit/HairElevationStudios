@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Minus, Plus, Heart, PackageX, Link as LinkIcon } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import { getProductById, getAllProducts } from '@/lib/api';
 import { IProduct } from '@/lib/types';
@@ -17,6 +16,7 @@ import { RelatedProducts } from '@/components/shared/RelatedProducts';
 import { ToastProvider, useToast } from '@/components/shared/Toast';
 import { useCart } from '@/hooks/useCart';
 import { useWishlist } from '@/hooks/useWishlist';
+import { BsHeart, BsHeartFill, BsWhatsapp, BsLink, BsDash, BsPlus } from 'react-icons/bs';
 
 interface ProductInfoProps {
   product: IProduct;
@@ -180,7 +180,7 @@ function ProductInfo({ product }: ProductInfoProps) {
               disabled={quantity <= 1}
               className="w-10 h-10 rounded-full border border-[var(--brand-gold)] flex items-center justify-center text-[var(--brand-gold)] hover:bg-[var(--brand-gold)]/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
-              <Minus className="w-4 h-4" />
+              <BsDash className="w-4 h-4" />
             </button>
             <span className="w-12 text-center font-body text-lg text-[var(--text-primary)]">
               {quantity}
@@ -190,7 +190,7 @@ function ProductInfo({ product }: ProductInfoProps) {
               disabled={quantity >= (product.stock || 10)}
               className="w-10 h-10 rounded-full border border-[var(--brand-gold)] flex items-center justify-center text-[var(--brand-gold)] hover:bg-[var(--brand-gold)]/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
-              <Plus className="w-4 h-4" />
+              <BsPlus className="w-4 h-4" />
             </button>
           </div>
           {product.stock > 0 && product.stock <= 5 && (
@@ -223,12 +223,11 @@ function ProductInfo({ product }: ProductInfoProps) {
           size="lg"
           onClick={handleWishlistToggle}
         >
-          <Heart
-            className={cn(
-              'w-4 h-4 mr-2',
-              inWishlist ? 'fill-[var(--brand-gold)] text-[var(--brand-gold)]' : 'text-[var(--brand-gold)]'
-            )}
-          />
+          {inWishlist ? (
+            <BsHeartFill className="w-4 h-4 mr-2 text-[var(--brand-gold)]" />
+          ) : (
+            <BsHeart className="w-4 h-4 mr-2 text-[var(--brand-gold)]" />
+          )}
           {inWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
         </OutlineButton>
       </motion.div>
@@ -276,16 +275,14 @@ function ProductInfo({ product }: ProductInfoProps) {
           className="p-2 rounded-full hover:bg-[var(--brand-gold)]/10 transition-colors"
           aria-label="Share on WhatsApp"
         >
-          <svg className="w-4 h-4 text-[var(--brand-gold)]" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12.001 2C6.962 2 2.908 5.563 2.014 9.998L2 10c-.076.617-.115 1.6-.115 2s.039 1.383.115 2l.014.002c.894 4.435 4.948 7.998 10.014 7.998 2.691 0 5.17-1.002 6.941-2.578.3-.25.382-.666.192-1-.19-.333-.566-.452-.903-.263A9.96 9.96 0 0 1 12 22c-5.523 0-10-4.477-10-10s4.477-10 10-10c5.523 0 10 4.477 10 10 0 .62-.054 1.35-.157 2.07-.056.386-.4.65-.753.65-.082 0-.163-.012-.242-.036a9.97 9.97 0 0 1-7.56-1.22 9.97 9.97 0 0 1-1.84-1.58c-.14-.22-.41-.31-.62-.17-.21.14-.32.43-.27.73.17.89.5 1.72.98 2.47" />
-          </svg>
+          <BsWhatsapp className="w-4 h-4 text-[var(--brand-gold)]" />
         </button>
         <button
           onClick={handleCopyLink}
           className="p-2 rounded-full hover:bg-[var(--brand-gold)]/10 transition-colors"
           aria-label="Copy link"
         >
-          <LinkIcon className="w-4 h-4 text-[var(--brand-gold)]" />
+          <BsLink className="w-4 h-4 text-[var(--brand-gold)]" />
         </button>
       </motion.div>
     </motion.div>
@@ -331,7 +328,9 @@ export default function ProductPage() {
       <ToastProvider>
         <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center">
           <div className="text-center">
-            <PackageX className="w-16 h-16 text-[var(--brand-gold)] mx-auto mb-4" />
+            <svg className="w-16 h-16 text-[var(--brand-gold)] mx-auto mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m8-1V7a2 2 0 00-2-2H6a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v10z" />
+            </svg>
             <h1 className="text-3xl font-heading font-bold text-[var(--text-primary)] mb-2">
               Product Not Found
             </h1>

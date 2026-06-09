@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { Scissors, Sparkles, Star } from 'lucide-react';
 import { GoldButton } from '@/components/shared/GoldButton';
+import { BsScissors, BsStar } from 'react-icons/bs';
+import { BiSparkles } from 'react-icons/bi';
 
 interface ServiceCardProps {
   icon: React.ReactNode;
@@ -58,7 +59,7 @@ export default function ServicesPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             <ServiceCard
-              icon={<Scissors className="w-6 h-6 text-[var(--bg-primary)]" />}
+              icon={<BsScissors className="w-6 h-6 text-[var(--bg-primary)]" />}
               title="Custom Wig Making"
               description="Bespoke wigs crafted to your exact measurements, preferences, and style vision. Every strand placed with intention."
               features={[
@@ -69,7 +70,7 @@ export default function ServicesPage() {
               ]}
             />
             <ServiceCard
-              icon={<Sparkles className="w-6 h-6 text-[var(--bg-primary)]" />}
+              icon={<BiSparkles className="w-6 h-6 text-[var(--bg-primary)]" />}
               title="Wig Revamp & Maintenance"
               description="Restore and refresh your wigs to their original glory. From deep conditioning to full restyling."
               features={[
@@ -80,7 +81,7 @@ export default function ServicesPage() {
               ]}
             />
             <ServiceCard
-              icon={<Star className="w-6 h-6 text-[var(--bg-primary)]" />}
+              icon={<BsStar className="w-6 h-6 text-[var(--bg-primary)]" />}
               title="Wig Installation & Sew-in"
               description="Professional installation for a flawless, natural look that lasts. Frontal, closure and full sew-in available."
               features={[
