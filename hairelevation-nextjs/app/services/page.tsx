@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { GoldButton } from '@/components/shared/GoldButton';
 import { BsScissors, BsStar } from 'react-icons/bs';
-import { BiSparkles } from 'react-icons/bi';
+import { BiBrush } from 'react-icons/bi';
 
 interface ServiceCardProps {
   icon: React.ReactNode;
@@ -70,7 +70,7 @@ export default function ServicesPage() {
               ]}
             />
             <ServiceCard
-              icon={<BiSparkles className="w-6 h-6 text-[var(--bg-primary)]" />}
+              icon={<BiBrush className="w-6 h-6 text-[var(--bg-primary)]" />}
               title="Wig Revamp & Maintenance"
               description="Restore and refresh your wigs to their original glory. From deep conditioning to full restyling."
               features={[
