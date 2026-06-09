@@ -4,7 +4,15 @@ import { useCartStore } from '@/store/cartStore';
 import { formatPrice, truncateText } from '@/lib/utils';
 
 export function OrderSummary() {
-  const { items, cartTotal } = useCartStore();
+  const items = useCartStore(state => state.items);
+  const cartTotal = useCartStore(state => state.cartTotal);
+  
+  const subtotal = items.reduce((sum, item) => {
+    const price = item.product.onSale && item.product.promoPrice 
+      ? item.product.promoPrice 
+      : item.product.price;
+    return sum + (price * item.quantity);
+  }, 0);
 
   return (
     <div className="bg-brand-warm-white rounded-2xl border border-ui-border p-6">
@@ -33,7 +41,7 @@ export function OrderSummary() {
       <div className="border-t border-brand-gold/20 pt-4 space-y-3">
         <div className="flex justify-between text-sm font-body">
           <span className="text-ui-text-secondary">Subtotal</span>
-          <span className="text-brand-brown">{formatPrice(cartTotal)}</span>
+          <span className="text-brand-brown">{formatPrice(subtotal)}</span>
         </div>
         
         <div className="flex justify-between text-sm font-body">
@@ -45,7 +53,7 @@ export function OrderSummary() {
           <div className="flex justify-between items-center">
             <span className="text-lg font-heading font-bold text-brand-brown">Total</span>
             <span className="text-xl font-bold text-brand-gold">
-              {formatPrice(cartTotal)}
+              {formatPrice(subtotal)}
             </span>
           </div>
         </div>

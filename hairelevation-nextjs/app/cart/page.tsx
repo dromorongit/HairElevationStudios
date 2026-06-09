@@ -17,7 +17,9 @@ declare global {
 }
 
 function CartContent() {
-  const { items, cartTotal, clearCart } = useCartStore();
+  const items = useCartStore(state => state.items);
+  const cartTotal = useCartStore(state => state.cartTotal);
+  const clearCart = useCartStore(state => state.clearCart);
   const { showToast } = useToast();
   
   const [formData, setFormData] = useState<CheckoutFormData>({
