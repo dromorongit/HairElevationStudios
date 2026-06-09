@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+:root {
+  --brand-gold: #C8A97E;
+  --brand-gold-dark: #B8956A;
+  --brand-gold-deeper: #A67C52;
+  --brand-gold-light: rgba(200, 169, 126, 0.15);
+  --brand-brown: #3B2A23;
+  --brand-brown-dark: #2A1E18;
+  --brand-cream: #F5EFE6;
+  --brand-warm-white: #FAF8F5;
+
+  --ui-text-primary: #3B2A23;
+  --ui-text-secondary: #7A6055;
+  --ui-text-light: #F5EFE6;
+  --ui-border: rgba(200, 169, 126, 0.2);
+  --ui-border-strong: rgba(200, 169, 126, 0.5);
+  --ui-overlay: rgba(59, 42, 35, 0.95);
+  --ui-overlay-light: rgba(59, 42, 35, 0.6);
+
+  --gradient-gold: linear-gradient(135deg, #C8A97E 0%, #B8956A 50%, #A67C52 100%);
+  --gradient-brown: linear-gradient(135deg, #3B2A23 0%, #2A1E18 100%);
+  --gradient-overlay: linear-gradient(rgba(59,42,35,0.5), rgba(59,42,35,0.7));
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--brand-warm-white);
+  color: var(--ui-text-primary);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+}
+
+@layer base {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--brand-cream);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--brand-gold);
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--brand-gold-dark);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}

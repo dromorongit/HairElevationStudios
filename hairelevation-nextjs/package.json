@@ -1,10 +1,7 @@
 {
-  "name": "hairelevation-nextjs",
+  "name": "hair-elevation-studio-frontend",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-    "node": ">=18"
-  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -12,21 +9,25 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "framer-motion": "^12.40.0",
-    "next": "16.2.6",
-    "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "axios": "^1.6.0",
+    "clsx": "^2.0.0",
+    "framer-motion": "^11.0.0",
+    "lucide-react": "^0.400.0",
+    "next": "15.5.19",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "tailwind-merge": "^2.0.0",
+    "zustand": "^4.5.0"
   },
   "devDependencies": {
-    "postcss": "^8",
-    "tailwindcss": "^4",
+    "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
-    "postcss-import": "^16",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.6",
-    "typescript": "^5"
+    "eslint-config-next": "15.5.19",
+    "tailwindcss": "^4",
+    "typescript": "^5.8.2"
   }
 }
