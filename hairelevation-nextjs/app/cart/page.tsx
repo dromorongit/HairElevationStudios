@@ -18,7 +18,6 @@ declare global {
 
 function CartContent() {
   const items = useCartStore(state => state.items);
-  const cartTotal = useCartStore(state => state.cartTotal);
   const clearCart = useCartStore(state => state.clearCart);
   const { showToast } = useToast();
   

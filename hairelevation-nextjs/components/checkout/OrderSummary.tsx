@@ -5,7 +5,6 @@ import { formatPrice, truncateText } from '@/lib/utils';
 
 export function OrderSummary() {
   const items = useCartStore(state => state.items);
-  const cartTotal = useCartStore(state => state.cartTotal);
   
   const subtotal = items.reduce((sum, item) => {
     const price = item.product.onSale && item.product.promoPrice 

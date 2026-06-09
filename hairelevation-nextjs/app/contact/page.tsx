@@ -68,6 +68,9 @@ ${formData.message}`;
       {/* Page Header */}
       <section className="py-20 bg-brand-brown">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-sm text-brand-gold/80 font-body uppercase tracking-wider mb-4">
+            Home / Contact
+          </p>
           <h1 className="text-4xl md:text-5xl font-heading font-bold text-brand-cream mb-4">
             Contact Us
           </h1>

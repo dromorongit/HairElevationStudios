@@ -5,7 +5,6 @@ import { Heart } from 'lucide-react';
 import { useWishlistStore } from '@/store/wishlistStore';
 import { GoldButton } from '@/components/shared/GoldButton';
 import { ProductCard } from '@/components/shared/ProductCard';
-import { IProduct } from '@/lib/types';
 
 export default function WishlistPage() {
   const items = useWishlistStore(state => state.items);

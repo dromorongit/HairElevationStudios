@@ -185,10 +185,9 @@ export function Navbar() {
                             onClick={closeSearch}
                             className="flex items-center gap-3 p-3 hover:bg-brand-brown/50 transition-colors first:rounded-t-2xl last:rounded-b-2xl"
                           >
-                            <img
-                              src={product.coverImage}
-                              alt={product.name}
-                              className="w-10 h-10 rounded-lg object-cover"
+                            <div
+                              style={{ backgroundImage: `url(${product.coverImage})` }}
+                              className="w-10 h-10 rounded-lg bg-cover bg-center"
                             />
                             <div>
                               <p className="text-sm font-heading text-brand-cream">{product.name}</p>
@@ -205,7 +204,7 @@ export function Navbar() {
                         ))
                       ) : (
                         <p className="text-center py-4 text-sm font-body text-brand-cream/60">
-                          No products found for "{searchQuery}"
+                          No products found for &ldquo;{searchQuery}&rdquo;
                         </p>
                       )}
                     </div>

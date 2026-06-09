@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { Send } from 'lucide-react';
 import { GoldButton } from '@/components/shared/GoldButton';
-import { OutlineButton } from '@/components/shared/OutlineButton';
 
 interface BookingFormData {
   name: string;

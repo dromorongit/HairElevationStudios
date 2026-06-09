@@ -28,9 +28,9 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12">{/* Watermark Quote - hidden on mobile */}
             <div className="hidden lg:block relative">
-              <p className="text-8xl font-heading italic text-brand-gold/10 absolute top-0 left-0 -z-10">
-                "Elevate Every Strand"
-              </p>
+<p className="text-8xl font-heading italic text-brand-gold/10 absolute top-0 left-0 -z-10">
+              &ldquo;Elevate Every Strand&rdquo;
+            </p>
             </div>
 
             <div className="lg:pl-12">

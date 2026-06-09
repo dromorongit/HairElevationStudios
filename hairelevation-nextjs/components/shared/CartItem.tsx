@@ -24,11 +24,10 @@ export function CartItem({ item }: CartItemProps) {
       exit={{ opacity: 0, x: -40 }}
       transition={{ duration: 0.3 }}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={product.coverImage}
-        alt={product.name}
-        className="w-20 h-20 rounded-xl object-cover flex-shrink-0"
+      <div
+        style={{ backgroundImage: `url(${product.coverImage})` }}
+        className="w-20 h-20 rounded-xl bg-cover bg-center flex-shrink-0"
+        aria-label={product.name}
       />
       
       <div className="flex-1 min-w-0">
