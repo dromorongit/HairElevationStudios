@@ -111,30 +111,42 @@ function CartContent() {
   };
 
   const handlePaymentSuccess = (ref: string) => {
-    setPaymentRef(ref);
+    const currentItems = useCartStore.getState().items;
     
+    const orderLines = currentItems.map(item => {
+      const price = item.product.onSale && item.product.promoPrice 
+        ? item.product.promoPrice 
+        : item.product.price;
+      const sizeText = item.selectedSize ? ` (${item.selectedSize})` : '';
+      return `- ${item.quantity}x ${item.product.name}${sizeText} — GHS ${(price * item.quantity).toFixed(2)}`;
+    }).join('\n');
+
+    const total = currentItems.reduce((sum, item) => {
+      const price = item.product.onSale && item.product.promoPrice 
+        ? item.product.promoPrice 
+        : item.product.price;
+      return sum + price * item.quantity;
+    }, 0);
+
     const message = `🛍️ NEW ORDER — Hair Elevation Studio
 
 👤 Customer Details:
 Name: ${formData.name}
 Phone: ${formData.phone}
-Location/Address: ${formData.location}
+Location: ${formData.location}
 
 🛒 Order Items:
-${items.map(item => {
-  const price = item.product.onSale && item.product.promoPrice 
-    ? item.product.promoPrice 
-    : item.product.price;
-  return `- ${item.quantity}x ${item.product.name}${item.selectedSize ? ' (' + item.selectedSize + ')' : ''} — GHS ${price}`;
-}).join('\n')}
+${orderLines}
 
-💰 Total: GHS ${cartTotal.toFixed(2)}
+💰 Total: GHS ${total.toFixed(2)}
 
-Payment Reference: ${ref}
+📋 Payment Reference: ${ref}
 
 ✅ Payment confirmed via Paystack`;
 
-    window.open('https://wa.me/233534057109?text=' + encodeURIComponent(message), '_blank');
+    const whatsappUrl = `https://wa.me/233534057109?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+    setPaymentRef(ref);
     setShowSuccess(true);
     setIsProcessing(false);
   };
