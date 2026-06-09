@@ -3,6 +3,9 @@ import { Playfair_Display, DM_Sans } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
+import { ScrollToTop } from '@/components/shared/ScrollToTop';
+import { NavigationProgress } from '@/components/shared/NavigationProgress';
+import { motion } from 'framer-motion';
 
 const playfairDisplay = Playfair_Display({
   variable: '--font-playfair',
@@ -29,11 +32,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${playfairDisplay.variable} ${dmSans.variable} antialiased flex flex-col min-h-screen`}>
+        <NavigationProgress />
         <Navbar />
-        <main className="flex-1">
+        <motion.main
+          className="flex-1"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
           {children}
-        </main>
+        </motion.main>
         <Footer />
+        <ScrollToTop />
       </body>
     </html>
   );

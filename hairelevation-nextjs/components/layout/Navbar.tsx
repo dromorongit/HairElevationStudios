@@ -2,10 +2,14 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
-import { ShoppingBag, Heart, Menu, X } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { ShoppingBag, Heart, Menu, X, Search } from 'lucide-react';
 import { useCart } from '@/hooks/useCart';
 import { useWishlist } from '@/hooks/useWishlist';
+import { usePathname } from 'next/navigation';
+import { AnimatePresence, motion } from 'framer-motion';
+import { getAllProducts } from '@/lib/api';
+import { IProduct } from '@/lib/types';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -18,8 +22,62 @@ const navLinks = [
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<IProduct[]>([]);
+  const [allProducts, setAllProducts] = useState<IProduct[]>([]);
+  const [productsLoaded, setProductsLoaded] = useState(false);
   const { cartCount } = useCart();
   const { items: wishlistItems } = useWishlist();
+  const pathname = usePathname();
+  const searchRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!productsLoaded) {
+      getAllProducts().then(setAllProducts).then(() => setProductsLoaded(true));
+    }
+  }, [productsLoaded]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+        setSearchOpen(false);
+        setSearchQuery('');
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setSearchOpen(false);
+        setSearchQuery('');
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, []);
+
+  useEffect(() => {
+    if (searchQuery && allProducts.length > 0) {
+      const filtered = allProducts.filter(product =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (product.texture && product.texture.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (product.lace && product.lace.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (product.collections && product.collections.some(c => c.toLowerCase().includes(searchQuery.toLowerCase())))
+      );
+      setSearchResults(filtered);
+    } else {
+      setSearchResults([]);
+    }
+  }, [searchQuery, allProducts]);
+
+  const closeSearch = () => {
+    setSearchOpen(false);
+    setSearchQuery('');
+  };
 
   return (
     <>
@@ -36,22 +94,36 @@ export function Navbar() {
               />
             </Link>
 
-            <div className="hidden md:flex items-center space-x-8">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="relative text-ui-text-light font-medium hover:text-brand-gold transition-colors"
-                >
-                  {link.label}
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-gold transition-all duration-300 hover:w-full" />
-                </Link>
-              ))}
-            </div>
+            {!searchOpen && (
+              <div className="hidden md:flex items-center space-x-8">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`relative text-sm font-medium transition-colors ${
+                      pathname === link.href ? 'text-brand-gold' : 'text-ui-text-light'
+                    }`}
+                  >
+                    {link.label}
+                    <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-brand-gold transition-transform duration-300 ${
+                      pathname === link.href ? 'scale-x-100' : 'scale-x-0'
+                    }`} />
+                  </Link>
+                ))}
+              </div>
+            )}
 
             <div className="flex items-center space-x-4">
+              <button
+                onClick={() => setSearchOpen(!searchOpen)}
+                className="p-2 text-ui-text-light hover:text-brand-gold transition-colors"
+                aria-label="Search"
+              >
+                <Search className="w-5 h-5" />
+              </button>
+
               <Link href="/cart" className="relative p-2">
-                <ShoppingBag className="w-6 h-6 text-ui-text-light" />
+                <ShoppingBag className="w-5 h-5 text-ui-text-light" />
                 {cartCount > 0 && (
                   <span className="absolute -top-1 -right-1 bg-brand-gold text-brand-brown text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium">
                     {cartCount}
@@ -59,7 +131,7 @@ export function Navbar() {
                 )}
               </Link>
               <Link href="/wishlist" className="relative p-2">
-                <Heart className="w-6 h-6 text-ui-text-light" />
+                <Heart className="w-5 h-5 text-ui-text-light" />
                 {wishlistItems.length > 0 && (
                   <span className="absolute -top-1 -right-1 bg-brand-gold text-brand-brown text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium">
                     {wishlistItems.length}
@@ -72,10 +144,76 @@ export function Navbar() {
                 className="md:hidden p-2 text-ui-text-light"
                 aria-label="Open menu"
               >
-                <Menu className="w-6 h-6" />
+                <Menu className="w-5 h-5" />
               </button>
             </div>
           </div>
+
+          <AnimatePresence>
+            {searchOpen && (
+              <motion.div
+                ref={searchRef}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="absolute top-full left-0 right-0 bg-ui-overlay backdrop-blur-md border-b border-ui-border p-4"
+              >
+                <div className="max-w-7xl mx-auto relative">
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search wigs..."
+                    className="w-full px-4 py-2 pl-10 rounded-full border border-brand-gold bg-[rgba(255,255,255,0.08)] text-brand-cream font-body text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold"
+                    autoFocus
+                  />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-gold/50" />
+                  <button
+                    onClick={() => setSearchOpen(false)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-brand-gold/50 hover:text-brand-gold"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+
+                  {searchQuery && (
+                    <div className="absolute top-full left-0 right-0 mt-2 max-h-80 overflow-y-auto bg-[rgba(42,30,24,0.98)] backdrop-blur-md border border-brand-gold rounded-2xl shadow-xl z-50">
+                      {searchResults.length > 0 ? (
+                        searchResults.map((product) => (
+                          <Link
+                            key={product._id}
+                            href={`/products/${product._id}`}
+                            onClick={closeSearch}
+                            className="flex items-center gap-3 p-3 hover:bg-brand-brown/50 transition-colors first:rounded-t-2xl last:rounded-b-2xl"
+                          >
+                            <img
+                              src={product.coverImage}
+                              alt={product.name}
+                              className="w-10 h-10 rounded-lg object-cover"
+                            />
+                            <div>
+                              <p className="text-sm font-heading text-brand-cream">{product.name}</p>
+                              {product.collections && (
+                                <p className="text-xs text-brand-gold">
+                                  {typeof product.collections === 'string' ? product.collections : product.collections[0]}
+                                </p>
+                              )}
+                            </div>
+                            <span className="ml-auto text-sm font-body text-brand-gold">
+                              GHS {product.price.toFixed(2)}
+                            </span>
+                          </Link>
+                        ))
+                      ) : (
+                        <p className="text-center py-4 text-sm font-body text-brand-cream/60">
+                          No products found for "{searchQuery}"
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </nav>
 
@@ -96,7 +234,9 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-ui-text-light hover:text-brand-gold transition-colors"
+                className={`hover:text-brand-gold transition-colors ${
+                  pathname === link.href ? 'text-brand-gold' : 'text-ui-text-light'
+                }`}
               >
                 {link.label}
               </Link>
