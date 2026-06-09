@@ -1,7 +1,173 @@
+"use client";
+
+import { useState, useRef } from 'react';
+import { ShoppingBag } from 'lucide-react';
+import { useCartStore } from '@/store/cartStore';
+import { GoldButton } from '@/components/shared/GoldButton';
+import { CartItem } from '@/components/shared/CartItem';
+import { OrderSummary } from '@/components/checkout/OrderSummary';
+import { CheckoutForm, CheckoutFormData } from '@/components/checkout/CheckoutForm';
+import { PaystackButton, PaystackButtonRef } from '@/components/checkout/PaystackButton';
+import { OrderSuccessModal } from '@/components/checkout/OrderSuccessModal';
+import { ToastProvider, useToast } from '@/components/shared/Toast';
+
+function CartContent() {
+  const { items, cartTotal, clearCart } = useCartStore();
+  const { showToast } = useToast();
+  const paystackRef = useRef<PaystackButtonRef>(null);
+  
+  const [formData, setFormData] = useState<CheckoutFormData>({
+    name: '',
+    email: '',
+    phone: '',
+    location: '',
+    notes: '',
+  });
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [paymentRef, setPaymentRef] = useState('');
+
+  const handleFormSubmit = () => {
+    setIsProcessing(true);
+    setTimeout(() => {
+      paystackRef.current?.initiatePayment();
+    }, 0);
+  };
+
+  const handlePaymentSuccess = (ref: string) => {
+    setPaymentRef(ref);
+    
+    const message = `🛍️ NEW ORDER — Hair Elevation Studio
+
+👤 Customer Details:
+Name: ${formData.name}
+Phone: ${formData.phone}
+Location/Address: ${formData.location}
+
+🛒 Order Items:
+${items.map(item => {
+  const price = item.product.onSale && item.product.promoPrice 
+    ? item.product.promoPrice 
+    : item.product.price;
+  return `- ${item.quantity}x ${item.product.name}${item.selectedSize ? ' (' + item.selectedSize + ')' : ''} — GHS ${price}`;
+}).join('\n')}
+
+💰 Total: GHS ${cartTotal.toFixed(2)}
+
+Payment Reference: ${ref}
+
+✅ Payment confirmed via Paystack`;
+
+    window.open('https://wa.me/233534057109?text=' + encodeURIComponent(message), '_blank');
+    setShowSuccess(true);
+    setIsProcessing(false);
+  };
+
+  const handlePaymentCancel = () => {
+    setIsProcessing(false);
+    showToast('Payment cancelled');
+  };
+
+  const handleClearCart = () => {
+    if (confirm('Are you sure you want to clear your cart?')) {
+      clearCart();
+    }
+  };
+
+  if (items.length === 0) {
+    return (
+      <div className="min-h-screen bg-brand-warm-white flex items-center justify-center">
+        <div className="text-center px-4">
+          <ShoppingBag className="w-24 h-24 text-brand-gold mx-auto mb-6" />
+          <h1 className="text-4xl font-heading font-bold text-brand-brown mb-4">
+            Your Cart is Empty
+          </h1>
+          <p className="text-lg text-ui-text-secondary font-body mb-8">
+            Discover our premium wig collections and find your perfect piece.
+          </p>
+          <GoldButton href="/collections">Shop Collections</GoldButton>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <PaystackButton
+        ref={paystackRef}
+        formData={formData}
+        onSuccess={handlePaymentSuccess}
+        onCancel={handlePaymentCancel}
+        amount={cartTotal}
+        disabled={isProcessing}
+      />
+      
+      <OrderSuccessModal
+        isOpen={showSuccess}
+        onClose={() => setShowSuccess(false)}
+        paymentRef={paymentRef}
+        customerName={formData.name}
+      />
+
+      <div className="min-h-screen bg-brand-warm-white">
+        <section className="py-16 bg-brand-brown">
+          <div className="max-w-7xl mx-auto px-6 text-center">
+            <p className="text-xs text-brand-gold/80 font-body uppercase tracking-wider mb-4">
+              Home / Cart
+            </p>
+            <h1 className="text-4xl md:text-5xl font-heading font-bold text-brand-cream mb-4">
+              Your Cart
+            </h1>
+            <p className="text-lg text-brand-gold/80 font-body">
+              {items.length} items
+            </p>
+          </div>
+        </section>
+
+        <main className="py-8 px-6 max-w-7xl mx-auto">
+          <div className="flex flex-col lg:grid lg:grid-cols-5 gap-8">
+            <div className="lg:col-span-3">
+              <h2 className="text-2xl font-heading font-bold text-brand-brown mb-6 relative">
+                Order Items
+                <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-[var(--gradient-gold)]"></span>
+              </h2>
+              
+              <div className="space-y-4">
+                {items.map((item) => (
+                  <CartItem key={item.product._id} item={item} />
+                ))}
+              </div>
+              
+              <button
+                onClick={handleClearCart}
+                className="mt-6 text-sm text-rose-600 font-body hover:underline"
+              >
+                Clear Cart
+              </button>
+            </div>
+            
+            <div className="lg:col-span-2">
+              <div className="sticky top-24">
+                <OrderSummary />
+                <CheckoutForm 
+                  formData={formData} 
+                  onChange={setFormData} 
+                  onSubmit={handleFormSubmit} 
+                  isLoading={isProcessing} 
+                />
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </>
+  );
+}
+
 export default function CartPage() {
   return (
-    <div className="min-h-screen bg-brand-warm-white flex items-center justify-center">
-      <h1 className="text-4xl font-heading text-brand-brown">Cart — Coming Soon</h1>
-    </div>
+    <ToastProvider>
+      <CartContent />
+    </ToastProvider>
   );
 }
