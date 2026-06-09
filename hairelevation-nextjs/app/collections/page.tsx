@@ -10,7 +10,7 @@ import { ProductCard } from '@/components/shared/ProductCard';
 import { GoldButton } from '@/components/shared/GoldButton';
 import { cn, toArray } from '@/lib/utils';
 
-const collectionOptions = ['All', 'The Bridal Crowns', 'The Everyday Crown', "The Queen's Curls", 'The Signature Pixies'];
+const collectionOptions = ['All', 'Straight', 'Wavy/Layers/Bouncy', 'Curly', 'Pixie Cut'];
 const sortOptions = ['Default', 'Price: Low to High', 'Price: High to Low', 'Newest First'];
 
 function CollectionsContent() {

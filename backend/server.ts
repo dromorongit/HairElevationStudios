@@ -179,20 +179,20 @@ app.get('/admin', (req, res) => {
                 width: auto;
                 height: auto;
                 object-fit: contain;
-                filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+                filter: brightness-0 invert drop-shadow(0 4px 8px rgba(0,0,0,0.15));
                 transition: all 0.3s ease;
                 animation: logoGlow 2s ease-in-out infinite alternate;
             }
             .logo img:hover {
                 transform: scale(1.05);
-                filter: drop-shadow(0 6px 12px rgba(0,0,0,0.2));
+                filter: brightness-0 invert drop-shadow(0 6px 12px rgba(0,0,0,0.2));
             }
             @keyframes logoGlow {
                 from {
-                    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+                    filter: brightness-0 invert drop-shadow(0 4px 8px rgba(0,0,0,0.15));
                 }
                 to {
-                    filter: drop-shadow(0 4px 8px rgba(102, 126, 234, 0.3));
+                    filter: brightness-0 invert drop-shadow(0 4px 8px rgba(102, 126, 234, 0.3));
                 }
             }
         </style>
@@ -534,20 +534,20 @@ app.get('/', (req, res) => {
                 width: auto;
                 height: auto;
                 object-fit: contain;
-                filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+                filter: brightness-0 invert drop-shadow(0 4px 8px rgba(0,0,0,0.15));
                 transition: all 0.3s ease;
                 animation: logoGlow 2s ease-in-out infinite alternate;
             }
             .logo img:hover {
                 transform: scale(1.05);
-                filter: drop-shadow(0 6px 12px rgba(0,0,0,0.2));
+                filter: brightness-0 invert drop-shadow(0 6px 12px rgba(0,0,0,0.2));
             }
             @keyframes logoGlow {
                 from {
-                    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+                    filter: brightness-0 invert drop-shadow(0 4px 8px rgba(0,0,0,0.15));
                 }
                 to {
-                    filter: drop-shadow(0 4px 8px rgba(102, 126, 234, 0.3));
+                    filter: brightness-0 invert drop-shadow(0 4px 8px rgba(102, 126, 234, 0.3));
                 }
             }
         </style>

@@ -10,17 +10,17 @@ import { ProductCard } from '@/components/shared/ProductCard';
 import { SectionHeading } from '@/components/shared/SectionHeading';
 
 const collectionImages: Record<string, string> = {
-  'The Bridal Crowns': '/assets/images/bridalcrowns.jpg',
-  'The Everyday Crown': '/assets/images/everydaycrown.jpg',
-  "The Queen's Curls": '/assets/images/queenscurls.jpg',
-  'The Signature Pixies': '/assets/images/signaturepixies.jpg',
+  'Straight': '/assets/images/bridalcrowns.jpg',
+  'Wavy/Layers/Bouncy': '/assets/images/everydaycrown.jpg',
+  'Curly': '/assets/images/queenscurls.jpg',
+  'Pixie Cut': '/assets/images/signaturepixies.jpg',
 };
 
 const collections = [
-  { name: 'The Bridal Crowns', description: 'Timeless elegance for your most important day', emoji: '👑' },
-  { name: 'The Everyday Crown', description: 'Effortless beauty crafted for daily wear', emoji: '✨' },
-  { name: 'The Queen\'s Curls', description: 'Bold, voluminous curls for the fearless queen', emoji: '🌀' },
-  { name: 'The Signature Pixies', description: 'Sharp, chic pixie cuts for the bold statement', emoji: '💫' },
+  { name: 'Straight', description: 'Timeless elegance for your most important day', emoji: '👑' },
+  { name: 'Wavy/Layers/Bouncy', description: 'Effortless beauty crafted for daily wear', emoji: '✨' },
+  { name: 'Curly', description: 'Bold, voluminous curls for the fearless queen', emoji: '🌀' },
+  { name: 'Pixie Cut', description: 'Sharp, chic pixie cuts for the bold statement', emoji: '💫' },
 ];
 
 const services = [

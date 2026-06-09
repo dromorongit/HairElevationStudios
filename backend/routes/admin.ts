@@ -63,13 +63,13 @@ router.get('/dashboard', (req: Request, res: Response) => {
                 width: auto;
                 height: auto;
                 object-fit: contain;
-                filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+                filter: brightness-0 invert drop-shadow(0 4px 8px rgba(0,0,0,0.2));
                 transition: all 0.3s ease;
                 animation: dashboardLogoGlow 3s ease-in-out infinite alternate;
             }
             .header .logo:hover {
                 transform: scale(1.05);
-                filter: drop-shadow(0 6px 12px rgba(0,0,0,0.3));
+                filter: brightness-0 invert drop-shadow(0 6px 12px rgba(0,0,0,0.3));
             }
             @keyframes dashboardLogoGlow {
                 from {
@@ -413,10 +413,10 @@ router.get('/dashboard', (req: Request, res: Response) => {
                                 <div class="form-group">
                                     <label>Collections</label>
                                     <div class="checkbox-group">
-                                        <label><input type="checkbox" name="collections" value="The Bridal Crowns"> The Bridal Crowns</label>
-                                        <label><input type="checkbox" name="collections" value="The Everyday Crown"> The Everyday Crown</label>
-                                        <label><input type="checkbox" name="collections" value="The Queen's Curls"> The Queen's Curls</label>
-                                        <label><input type="checkbox" name="collections" value="The Signature Pixies"> The Signature Pixies</label>
+                                        <label><input type="checkbox" name="collections" value="Straight"> Straight</label>
+                                        <label><input type="checkbox" name="collections" value="Wavy/Layers/Bouncy"> Wavy/Layers/Bouncy</label>
+                                        <label><input type="checkbox" name="collections" value="Curly"> Curly</label>
+                                        <label><input type="checkbox" name="collections" value="Pixie Cut"> Pixie Cut</label>
                                     </div>
                                 </div>
                                 <div class="form-group">

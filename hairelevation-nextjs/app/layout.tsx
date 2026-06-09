@@ -21,7 +21,7 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: 'Hair Elevation Studio — Premium Wigs Accra',
-  description: "Handcrafted luxury wigs in Accra, Ghana. Shop The Bridal Crowns, Everyday Crown, Queen's Curls and Signature Pixies collections.",
+  description: "Handcrafted luxury wigs in Accra, Ghana. Shop Straight, Wavy/Layers/Bouncy, Curly and Pixie Cut collections.",
   icons: {
     icon: '/assets/images/HESLOGO.PNG',
     apple: '/assets/images/HESLOGO.PNG',

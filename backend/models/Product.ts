@@ -38,7 +38,7 @@ const ProductSchema: Schema = new Schema({
   onSale: { type: Boolean, default: false },
   promoPrice: { type: Number },
   featured: { type: Boolean, default: false },
-  collections: { type: [String], enum: ['The Bridal Crowns', 'The Everyday Crown', 'The Queen\'s Curls', 'The Signature Pixies'] },
+  collections: { type: [String], enum: ['Straight', 'Wavy/Layers/Bouncy', 'Curly', 'Pixie Cut'] },
   coverImage: { type: String, required: true },
   additionalImages: { type: [String], default: [] },
   videos: { type: [String], default: [] },
