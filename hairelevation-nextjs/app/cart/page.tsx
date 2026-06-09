@@ -49,10 +49,22 @@ function CartContent() {
       return;
     }
 
+    const amount = items.reduce((sum, item) => {
+      const price = item.product.onSale && item.product.promoPrice 
+        ? item.product.promoPrice 
+        : item.product.price;
+      return sum + (price * item.quantity);
+    }, 0);
+
+    if (amount <= 0) {
+      setIsProcessing(false);
+      return;
+    }
+
     const handler = window.PaystackPop.setup({
       key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || '',
       email: data.email,
-      amount: Math.round(cartTotal * 100),
+      amount: Math.round(amount * 100),
       currency: 'GHS',
       ref: 'HES-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
       metadata: {
