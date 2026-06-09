@@ -24,6 +24,7 @@ export function CartItem({ item }: CartItemProps) {
       exit={{ opacity: 0, x: -40 }}
       transition={{ duration: 0.3 }}
     >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={product.coverImage}
         alt={product.name}

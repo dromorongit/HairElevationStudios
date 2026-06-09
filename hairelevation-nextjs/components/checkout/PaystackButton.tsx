@@ -5,7 +5,17 @@ import { CheckoutFormData } from './CheckoutForm';
 
 declare global {
   interface Window {
-    PaystackPop: any;
+    PaystackPop: {
+      setup: (options: {
+        key: string;
+        email: string;
+        amount: number;
+        currency: string;
+        ref: string;
+        onSuccess: (response: { reference: string }) => void;
+        onCancel: () => void;
+      }) => void;
+    };
   }
 }
 
@@ -44,7 +54,7 @@ export const PaystackButton = forwardRef<PaystackButtonRef, PaystackButtonProps>
           amount: Math.round(amount * 100),
           currency: 'GHS',
           ref: ref_id,
-          onSuccess: (response: any) => {
+          onSuccess: (response: { reference: string }) => {
             onSuccess(response.reference || ref_id);
           },
           onCancel: () => {
