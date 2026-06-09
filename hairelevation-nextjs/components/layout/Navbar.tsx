@@ -88,7 +88,7 @@ export function Navbar() {
               <img
                 src="/assets/images/HESLOGO.PNG"
                 alt="Hair Elevation Studio"
-                className="h-10 w-auto object-contain"
+                className="h-10 w-auto object-contain filter brightness-0 invert"
               />
             </Link>
 
