@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import { Lock } from 'lucide-react';
 import { GoldButton } from '@/components/shared/GoldButton';
 
 export interface CheckoutFormData {
@@ -158,9 +159,7 @@ export function CheckoutForm({ formData, onChange, onSubmit, isLoading }: Checko
           {isLoading ? (
             <div className="w-5 h-5 border-2 border-brand-brown border-t-transparent rounded-full animate-spin mr-2" />
           ) : (
-            <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z" />
-            </svg>
+            <Lock className="w-4 h-4 mr-2" />
           )}
           Proceed to Payment
         </GoldButton>

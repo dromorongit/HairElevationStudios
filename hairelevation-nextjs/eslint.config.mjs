@@ -21,7 +21,7 @@ const eslintConfig = [
     ],
   },
   {
-    files: ["components/checkout/PaystackButton.tsx"],
+    files: ["app/cart/page.tsx"],
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
     },

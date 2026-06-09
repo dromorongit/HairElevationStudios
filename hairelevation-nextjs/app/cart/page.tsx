@@ -1,20 +1,24 @@
 "use client";
 
-import { useState, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { ShoppingBag } from 'lucide-react';
 import { useCartStore } from '@/store/cartStore';
 import { GoldButton } from '@/components/shared/GoldButton';
 import { CartItem } from '@/components/shared/CartItem';
 import { OrderSummary } from '@/components/checkout/OrderSummary';
 import { CheckoutForm, CheckoutFormData } from '@/components/checkout/CheckoutForm';
-import { PaystackButton, PaystackButtonRef } from '@/components/checkout/PaystackButton';
 import { OrderSuccessModal } from '@/components/checkout/OrderSuccessModal';
 import { ToastProvider, useToast } from '@/components/shared/Toast';
+
+declare global {
+  interface Window {
+    PaystackPop: any;
+  }
+}
 
 function CartContent() {
   const { items, cartTotal, clearCart } = useCartStore();
   const { showToast } = useToast();
-  const paystackRef = useRef<PaystackButtonRef>(null);
   
   const [formData, setFormData] = useState<CheckoutFormData>({
     name: '',
@@ -27,11 +31,69 @@ function CartContent() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [paymentRef, setPaymentRef] = useState('');
 
+  useEffect(() => {
+    if (!document.querySelector('script[src*="paystack.co"]')) {
+      const script = document.createElement('script');
+      script.src = 'https://js.paystack.co/v1/inline.js';
+      script.async = true;
+      document.head.appendChild(script);
+    }
+  }, []);
+
+  const openPaystack = (data: CheckoutFormData) => {
+    if (!window.PaystackPop) {
+      showToast('Payment gateway not available. Please try again.');
+      setIsProcessing(false);
+      return;
+    }
+
+    const handler = window.PaystackPop.setup({
+      key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || '',
+      email: data.email,
+      amount: Math.round(cartTotal * 100),
+      currency: 'GHS',
+      ref: 'HES-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+      metadata: {
+        custom_fields: [
+          {
+            display_name: 'Customer Name',
+            variable_name: 'customer_name',
+            value: data.name,
+          },
+          {
+            display_name: 'Phone',
+            variable_name: 'phone',
+            value: data.phone,
+          },
+        ],
+      },
+      onClose: () => {
+        setIsProcessing(false);
+      },
+      callback: (response: { reference: string }) => {
+        handlePaymentSuccess(response.reference);
+      },
+    });
+    handler.openIframe();
+  };
+
   const handleFormSubmit = () => {
-    setIsProcessing(true);
-    setTimeout(() => {
-      paystackRef.current?.initiatePayment();
-    }, 0);
+    let attempts = 0;
+    const maxAttempts = 10;
+    
+    const pollPaystack = () => {
+      if (window.PaystackPop) {
+        setIsProcessing(true);
+        openPaystack(formData);
+      } else if (attempts < maxAttempts) {
+        attempts++;
+        setTimeout(pollPaystack, 300);
+      } else {
+        showToast('Payment gateway not available. Please try again.');
+      }
+    };
+    
+    pollPaystack();
   };
 
   const handlePaymentSuccess = (ref: string) => {
@@ -63,11 +125,6 @@ Payment Reference: ${ref}
     setIsProcessing(false);
   };
 
-  const handlePaymentCancel = () => {
-    setIsProcessing(false);
-    showToast('Payment cancelled');
-  };
-
   const handleClearCart = () => {
     if (confirm('Are you sure you want to clear your cart?')) {
       clearCart();
@@ -93,15 +150,6 @@ Payment Reference: ${ref}
 
   return (
     <>
-      <PaystackButton
-        ref={paystackRef}
-        formData={formData}
-        onSuccess={handlePaymentSuccess}
-        onCancel={handlePaymentCancel}
-        amount={cartTotal}
-        disabled={isProcessing}
-      />
-      
       <OrderSuccessModal
         isOpen={showSuccess}
         onClose={() => setShowSuccess(false)}
