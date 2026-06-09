@@ -20,7 +20,7 @@ function CartContent() {
   const items = useCartStore(state => state.items);
   const clearCart = useCartStore(state => state.clearCart);
   const { showToast } = useToast();
-  
+
   const [formData, setFormData] = useState<CheckoutFormData>({
     name: '',
     email: '',
@@ -59,8 +59,8 @@ function CartContent() {
     }
 
     const amount = items.reduce((sum, item) => {
-      const price = item.product.onSale && item.product.promoPrice 
-        ? item.product.promoPrice 
+      const price = item.product.onSale && item.product.promoPrice
+        ? item.product.promoPrice
         : item.product.price;
       return sum + (price * item.quantity);
     }, 0);
@@ -103,7 +103,7 @@ function CartContent() {
   const handleFormSubmit = () => {
     let attempts = 0;
     const maxAttempts = 10;
-    
+
     const pollPaystack = () => {
       if (window.PaystackPop) {
         setIsProcessing(true);
@@ -115,24 +115,24 @@ function CartContent() {
         showToast('Payment gateway not available. Please try again.');
       }
     };
-    
+
     pollPaystack();
   };
 
   const handlePaymentSuccess = (ref: string) => {
     const currentItems = useCartStore.getState().items;
-    
+
     const orderLines = currentItems.map(item => {
-      const price = item.product.onSale && item.product.promoPrice 
-        ? item.product.promoPrice 
+      const price = item.product.onSale && item.product.promoPrice
+        ? item.product.promoPrice
         : item.product.price;
       const sizeText = item.selectedSize ? ` (${item.selectedSize})` : '';
       return `- ${item.quantity}x ${item.product.name}${sizeText} — GHS ${(price * item.quantity).toFixed(2)}`;
     }).join('\n');
 
     const total = currentItems.reduce((sum, item) => {
-      const price = item.product.onSale && item.product.promoPrice 
-        ? item.product.promoPrice 
+      const price = item.product.onSale && item.product.promoPrice
+        ? item.product.promoPrice
         : item.product.price;
       return sum + price * item.quantity;
     }, 0);
@@ -168,13 +168,13 @@ ${orderLines}
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-brand-warm-white flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center">
         <div className="text-center px-4">
-          <ShoppingBag className="w-24 h-24 text-brand-gold mx-auto mb-6" />
-          <h1 className="text-4xl font-heading font-bold text-brand-brown mb-4">
+          <ShoppingBag className="w-24 h-24 text-[var(--brand-gold)] mx-auto mb-6" />
+          <h1 className="text-4xl font-heading font-bold text-[var(--text-primary)] mb-4">
             Your Cart is Empty
           </h1>
-          <p className="text-lg text-ui-text-secondary font-body mb-8">
+          <p className="text-lg text-[var(--text-muted)] font-body mb-8">
             Discover our premium wig collections and find your perfect piece.
           </p>
           <GoldButton href="/collections">Shop Collections</GoldButton>
@@ -193,51 +193,51 @@ ${orderLines}
         whatsappUrl={whatsappUrl}
       />
 
-      <div className="min-h-screen bg-brand-warm-white">
-        <section className="py-16 bg-brand-brown">
-          <div className="max-w-7xl mx-auto px-6 text-center">
-            <p className="text-xs text-brand-gold/80 font-body uppercase tracking-wider mb-4">
+      <div className="min-h-screen bg-[var(--bg-primary)]">
+        <section className="py-16 bg-[var(--bg-primary)]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p className="text-xs font-body uppercase tracking-wider text-[var(--brand-gold)] mb-4">
               Home / Cart
             </p>
-            <h1 className="text-4xl md:text-5xl font-heading font-bold text-brand-cream mb-4">
+            <h1 className="text-4xl lg:text-5xl font-heading font-bold text-[var(--text-primary)] mb-4">
               Your Cart
             </h1>
-            <p className="text-lg text-brand-gold/80 font-body">
+            <p className="text-lg text-[var(--brand-gold)]/80 font-body">
               {items.length} items
             </p>
           </div>
         </section>
 
-        <main className="py-8 px-6 max-w-7xl mx-auto">
+        <main className="py-8 px-4 sm:px-6 max-w-7xl mx-auto">
           <div className="flex flex-col lg:grid lg:grid-cols-5 gap-8">
             <div className="lg:col-span-3">
-              <h2 className="text-2xl font-heading font-bold text-brand-brown mb-6 relative">
+              <h2 className="text-2xl font-heading font-bold text-[var(--text-primary)] mb-6 relative">
                 Order Items
-                <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-[var(--gradient-gold)]"></span>
+                <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-[var(--gradient-gold)]" />
               </h2>
-              
+
               <div className="space-y-4">
                 {items.map((item) => (
                   <CartItem key={item.product._id} item={item} />
                 ))}
               </div>
-              
+
               <button
                 onClick={handleClearCart}
-                className="mt-6 text-sm text-rose-600 font-body hover:underline"
+                className="mt-6 text-sm text-rose-400 font-body hover:underline"
               >
                 Clear Cart
               </button>
             </div>
-            
+
             <div className="lg:col-span-2">
-              <div className="sticky top-24">
+              <div className="lg:sticky lg:top-24">
                 <OrderSummary />
-                <CheckoutForm 
-                  formData={formData} 
-                  onChange={setFormData} 
-                  onSubmit={handleFormSubmit} 
-                  isLoading={isProcessing} 
+                <CheckoutForm
+                  formData={formData}
+                  onChange={setFormData}
+                  onSubmit={handleFormSubmit}
+                  isLoading={isProcessing}
                 />
               </div>
             </div>

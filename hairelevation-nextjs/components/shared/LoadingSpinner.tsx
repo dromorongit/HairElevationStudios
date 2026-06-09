@@ -25,7 +25,7 @@ export function LoadingSpinner({ size = 'md', fullPage = false, className }: Loa
 
   if (fullPage) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-brand-warm-white">
+      <div className="flex items-center justify-center min-h-screen bg-[var(--bg-primary)]">
         {spinner}
       </div>
     );

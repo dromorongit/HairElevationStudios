@@ -72,7 +72,7 @@ function ProductInfo({ product }: ProductInfoProps) {
       transition={{ duration: 0.5, staggerChildren: 0.1 }}
     >
       <motion.div
-        className="flex items-center gap-2 mb-4"
+        className="flex items-center gap-2 mb-4 flex-wrap"
         initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.4, delay: 0.1 }}
@@ -85,7 +85,7 @@ function ProductInfo({ product }: ProductInfoProps) {
             {toArray(product.collections).map((collection, index) => (
               <span
                 key={index}
-                className="text-xs px-3 py-1 border border-brand-gold rounded-pill text-brand-brown font-body"
+                className="text-[10px] px-3 py-1 border border-[var(--brand-gold)] rounded-full text-[var(--text-primary)] font-body uppercase tracking-wider"
               >
                 {collection}
               </span>
@@ -95,7 +95,7 @@ function ProductInfo({ product }: ProductInfoProps) {
       </motion.div>
 
       <motion.h1
-        className="text-3xl md:text-4xl font-heading font-bold text-brand-brown mt-3 mb-4"
+        className="text-2xl md:text-4xl font-heading font-bold text-[var(--text-primary)] mt-3 mb-4"
         initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.4, delay: 0.2 }}
@@ -111,25 +111,25 @@ function ProductInfo({ product }: ProductInfoProps) {
       >
         {product.onSale && product.promoPrice ? (
           <div className="flex items-baseline gap-3">
-            <span className="text-2xl font-bold text-brand-gold">
+            <span className="text-2xl md:text-3xl font-bold text-[var(--brand-gold)]">
               {formatPrice(product.promoPrice)}
             </span>
-            <span className="text-lg text-ui-text-secondary line-through">
+            <span className="text-base md:text-lg text-[var(--text-muted)] line-through">
               {formatPrice(product.price)}
             </span>
-            <span className="text-xs bg-brand-gold text-brand-brown px-2 py-1 rounded-pill font-medium">
+            <span className="text-xs bg-[var(--brand-gold)] text-[var(--bg-primary)] px-2 py-1 rounded-full font-body font-medium">
               Save GHS {(product.price - product.promoPrice).toFixed(2)}
             </span>
           </div>
         ) : (
-          <span className="text-2xl font-bold text-brand-gold">
+          <span className="text-2xl md:text-3xl font-bold text-[var(--brand-gold)]">
             {formatPrice(product.price)}
           </span>
         )}
       </motion.div>
 
       <motion.div
-        className="border-b border-brand-gold/20 mb-6"
+        className="border-b border-[var(--border-gold)] mb-6"
         initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.4, delay: 0.4 }}
@@ -142,7 +142,7 @@ function ProductInfo({ product }: ProductInfoProps) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.4, delay: 0.5 }}
         >
-          <label className="block text-sm font-medium text-brand-brown mb-3 font-body">
+          <label className="block text-sm font-medium text-[var(--text-primary)] mb-3 font-body">
             Select Size
           </label>
           <div className="flex flex-wrap gap-2">
@@ -151,10 +151,10 @@ function ProductInfo({ product }: ProductInfoProps) {
                 key={size}
                 onClick={() => setSelectedSize(size)}
                 className={cn(
-                  'px-4 py-2 rounded-pill text-sm font-medium transition-all',
+                  'px-4 py-2 rounded-full text-sm font-medium transition-all font-body uppercase tracking-wider',
                   selectedSize === size
-                    ? 'bg-[var(--gradient-gold)] text-brand-brown'
-                    : 'bg-brand-warm-white border border-brand-gold text-brand-brown hover:bg-brand-gold-light'
+                    ? 'bg-[var(--gradient-gold)] text-[var(--bg-primary)]'
+                    : 'bg-[var(--bg-secondary)] border border-[var(--brand-gold)] text-[var(--text-primary)] hover:bg-[var(--brand-gold)]/10'
                 )}
               >
                 {size}
@@ -170,7 +170,7 @@ function ProductInfo({ product }: ProductInfoProps) {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.4, delay: 0.6 }}
       >
-        <label className="block text-sm font-medium text-brand-brown mb-3 font-body">
+        <label className="block text-sm font-medium text-[var(--text-primary)] mb-3 font-body">
           Quantity
         </label>
         <div className="flex items-center gap-4">
@@ -178,23 +178,23 @@ function ProductInfo({ product }: ProductInfoProps) {
             <button
               onClick={() => handleQuantityChange(-1)}
               disabled={quantity <= 1}
-              className="w-10 h-10 rounded-full border border-brand-gold flex items-center justify-center text-brand-gold hover:bg-brand-gold-light disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-10 h-10 rounded-full border border-[var(--brand-gold)] flex items-center justify-center text-[var(--brand-gold)] hover:bg-[var(--brand-gold)]/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               <Minus className="w-4 h-4" />
             </button>
-            <span className="w-12 text-center font-heading text-lg text-brand-brown">
+            <span className="w-12 text-center font-body text-lg text-[var(--text-primary)]">
               {quantity}
             </span>
             <button
               onClick={() => handleQuantityChange(1)}
               disabled={quantity >= (product.stock || 10)}
-              className="w-10 h-10 rounded-full border border-brand-gold flex items-center justify-center text-brand-gold hover:bg-brand-gold-light disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-10 h-10 rounded-full border border-[var(--brand-gold)] flex items-center justify-center text-[var(--brand-gold)] hover:bg-[var(--brand-gold)]/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               <Plus className="w-4 h-4" />
             </button>
           </div>
           {product.stock > 0 && product.stock <= 5 && (
-            <span className="text-sm text-brand-gold font-body">
+            <span className="text-sm text-[var(--brand-gold)] font-body">
               Only {product.stock} left
             </span>
           )}
@@ -226,7 +226,7 @@ function ProductInfo({ product }: ProductInfoProps) {
           <Heart
             className={cn(
               'w-4 h-4 mr-2',
-              inWishlist ? 'fill-brand-gold text-brand-gold' : 'text-brand-gold'
+              inWishlist ? 'fill-[var(--brand-gold)] text-[var(--brand-gold)]' : 'text-[var(--brand-gold)]'
             )}
           />
           {inWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
@@ -234,7 +234,7 @@ function ProductInfo({ product }: ProductInfoProps) {
       </motion.div>
 
       <motion.div
-        className="border-b border-brand-gold/20 my-6"
+        className="border-b border-[var(--border-gold)] my-6"
         initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.4, delay: 0.8 }}
@@ -255,10 +255,10 @@ function ProductInfo({ product }: ProductInfoProps) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.4, delay: 1.0 }}
         >
-          <h3 className="text-lg font-heading font-semibold text-brand-brown mb-2">
+          <h3 className="text-lg font-heading font-semibold text-[var(--text-primary)] mb-2">
             Description
           </h3>
-          <p className="text-sm text-ui-text-secondary font-body leading-relaxed">
+          <p className="text-sm text-[var(--text-muted)] font-body leading-relaxed">
             {product.description}
           </p>
         </motion.div>
@@ -270,22 +270,22 @@ function ProductInfo({ product }: ProductInfoProps) {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.4, delay: 1.1 }}
       >
-        <span className="text-sm text-ui-text-secondary font-body">Share:</span>
+        <span className="text-sm text-[var(--text-muted)] font-body">Share:</span>
         <button
           onClick={handleWhatsAppShare}
-          className="p-2 rounded-full hover:bg-brand-gold-light transition-colors"
+          className="p-2 rounded-full hover:bg-[var(--brand-gold)]/10 transition-colors"
           aria-label="Share on WhatsApp"
         >
-          <svg className="w-4 h-4 text-brand-brown" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12.001 2C6.962 2 2.908 5.563 2.014 9.998L2 10c-.076.617-.115 1.6-.115 2s.039 1.383.115 2l.014.002c.894 4.435 4.948 7.998 10.014 7.998 2.691 0 5.17-1.002 6.941-2.578.3-.25.382-.666.192-1-.19-.333-.566-.452-.903-.263A9.96 9.96 0 0 1 12 22c-5.523 0-10-4.477-10-10s4.477-10 10-10c5.523 0 10 4.477 10 10 0 .62-.054 1.35-.157 2.07-.056.386-.4.65-.753.65-.082 0-.163-.012-.242-.036a9.97 9.97 0 0 1-7.56-1.22 9.97 9.97 0 0 1-1.84-1.58c-.14-.22-.41-.31-.62-.17-.21.14-.32.43-.27.73.17.89.5 1.72.98 2.47.19.31.11.69-.19.88-.3.19-.7.26-1.1.19-.69-.14-1.37-.35-2-.6-.3-.1-.54-.39-.54-.7v-2c0-.31.24-.59.54-.7 2.14-.79 4.77-1.2 7.46-.89v-2c0-.62.5-1 1-1s1 .38 1 1V12zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z" />
+          <svg className="w-4 h-4 text-[var(--brand-gold)]" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.001 2C6.962 2 2.908 5.563 2.014 9.998L2 10c-.076.617-.115 1.6-.115 2s.039 1.383.115 2l.014.002c.894 4.435 4.948 7.998 10.014 7.998 2.691 0 5.17-1.002 6.941-2.578.3-.25.382-.666.192-1-.19-.333-.566-.452-.903-.263A9.96 9.96 0 0 1 12 22c-5.523 0-10-4.477-10-10s4.477-10 10-10c5.523 0 10 4.477 10 10 0 .62-.054 1.35-.157 2.07-.056.386-.4.65-.753.65-.082 0-.163-.012-.242-.036a9.97 9.97 0 0 1-7.56-1.22 9.97 9.97 0 0 1-1.84-1.58c-.14-.22-.41-.31-.62-.17-.21.14-.32.43-.27.73.17.89.5 1.72.98 2.47" />
           </svg>
         </button>
         <button
           onClick={handleCopyLink}
-          className="p-2 rounded-full hover:bg-brand-gold-light transition-colors"
+          className="p-2 rounded-full hover:bg-[var(--brand-gold)]/10 transition-colors"
           aria-label="Copy link"
         >
-          <LinkIcon className="w-4 h-4 text-brand-brown" />
+          <LinkIcon className="w-4 h-4 text-[var(--brand-gold)]" />
         </button>
       </motion.div>
     </motion.div>
@@ -329,13 +329,13 @@ export default function ProductPage() {
   if (!product) {
     return (
       <ToastProvider>
-        <div className="min-h-screen bg-brand-warm-white flex items-center justify-center">
+        <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center">
           <div className="text-center">
-            <PackageX className="w-16 h-16 text-brand-gold mx-auto mb-4" />
-            <h1 className="text-3xl font-heading font-bold text-brand-brown mb-2">
+            <PackageX className="w-16 h-16 text-[var(--brand-gold)] mx-auto mb-4" />
+            <h1 className="text-3xl font-heading font-bold text-[var(--text-primary)] mb-2">
               Product Not Found
             </h1>
-            <p className="text-ui-text-secondary font-body mb-6">
+            <p className="text-[var(--text-muted)] font-body mb-6">
               This product may have been removed or is no longer available.
             </p>
             <GoldButton href="/collections">Back to Collections</GoldButton>
@@ -347,16 +347,16 @@ export default function ProductPage() {
 
   return (
     <ToastProvider>
-      <div className="min-h-screen bg-brand-warm-white">
-        <nav className="pt-8 pb-4 px-6 max-w-7xl mx-auto">
-          <p className="text-xs text-ui-text-secondary font-body">
-            Home <span className="text-brand-gold">/</span> Collections{' '}
-            <span className="text-brand-gold">/</span> {product.name}
+      <div className="min-h-screen bg-[var(--bg-primary)]">
+        <nav className="pt-6 pb-4 px-4 sm:px-6 max-w-7xl mx-auto">
+          <p className="text-xs font-body text-[var(--text-muted)]">
+            Home <span className="text-[var(--brand-gold)]">/</span> Collections{' '}
+            <span className="text-[var(--brand-gold)]">/</span> <span className="text-[var(--text-primary)]">{product.name}</span>
           </p>
         </nav>
 
-        <main className="py-8 px-6 max-w-7xl mx-auto">
-          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-16">
+        <main className="py-6 px-4 sm:px-6 max-w-7xl mx-auto">
+          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 md:gap-12">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}

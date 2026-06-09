@@ -41,8 +41,8 @@ export function ToastProvider({ children }: ToastProviderProps) {
             exit={{ x: 100, opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="bg-brand-cream border-l-4 border-brand-gold rounded-xl shadow-card px-6 py-4">
-              <p className="text-brand-brown font-body text-sm">{message}</p>
+            <div className="bg-[var(--bg-secondary)] border-l-4 border-[var(--brand-gold)] rounded-xl px-6 py-4 shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+              <p className="text-[var(--text-primary)] font-body text-sm">{message}</p>
             </div>
           </motion.div>
         )}

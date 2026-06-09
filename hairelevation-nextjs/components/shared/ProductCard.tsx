@@ -1,12 +1,10 @@
 "use client";
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { Heart } from 'lucide-react';
 import { IProduct } from '@/lib/types';
 import { cn, formatPrice, truncateText, toArray } from '@/lib/utils';
-import { GoldButton } from './GoldButton';
-import { Badge } from './Badge';
+import { motion } from 'framer-motion';
 import { useCart } from '@/hooks/useCart';
 import { useWishlist } from '@/hooks/useWishlist';
 
@@ -21,92 +19,90 @@ export function ProductCard({ product }: ProductCardProps) {
 
   return (
     <Link href={`/products/${product._id}`} className="block">
-      <div className="group bg-brand-warm-white rounded-card border border-ui-border shadow-card hover:shadow-card_hover transition-all duration-300 hover:-translate-y-1 cursor-pointer">
-        <div className="relative aspect-[3/4] overflow-hidden rounded-t-card">
+      <motion.div
+        className="group bg-[var(--bg-secondary)] rounded-xl border border-[var(--border-gold)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_12px_32px_rgba(0,0,0,0.5)] hover:border-[rgba(200,169,126,0.3)] h-full flex flex-col overflow-hidden"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.4 }}
+      >
+        <div className="relative aspect-[4/5] overflow-hidden rounded-t-xl">
           {!product.inStock && (
-            <div className="absolute top-3 left-3 z-10">
-              <Badge variant="outOfStock" />
+            <div className="absolute top-2 left-2 z-10">
+              <span className="text-[10px] px-2 py-0.5 rounded-full font-medium uppercase tracking-wider bg-[rgba(255,255,255,0.1)] text-[rgba(245,239,230,0.6)]">
+                Out of Stock
+              </span>
             </div>
           )}
           {product.onSale && product.inStock && (
-            <div className="absolute top-3 left-3 z-10">
-              <Badge variant="sale" />
+            <div className="absolute top-2 left-2 z-10">
+              <span className="text-[10px] px-2 py-0.5 rounded-full font-medium uppercase tracking-wider bg-[var(--brand-gold)] text-[var(--bg-primary)]">
+                Sale
+              </span>
             </div>
           )}
-          <Image
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleWishlist(product);
+            }}
+            className="absolute top-2 right-2 w-7 h-7 rounded-full bg-[rgba(26,18,8,0.7)] backdrop-blur-sm flex items-center justify-center hover:bg-[var(--brand-gold)] transition-colors"
+            aria-label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
+          >
+            <Heart
+              className={cn(
+                'w-3.5 h-3.5 transition-colors',
+                inWishlist ? 'fill-[var(--brand-gold)] text-[var(--brand-gold)]' : 'text-[rgba(245,239,230,0.7)]'
+              )}
+            />
+          </button>
+          <img
             src={product.coverImage}
             alt={product.name}
-            fill
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
           />
+          <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-[rgba(26,18,8,0.8)] to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
 
-        <div className="p-4">
-          <h3 className="text-xl font-heading font-bold text-brand-brown mb-2">
+        <div className="flex flex-col flex-1 px-3 pt-2 pb-3">
+          <h3 className="text-[13px] font-medium text-[var(--text-primary)] truncate mb-1 font-body">
             {truncateText(product.name, 30)}
           </h3>
 
           {toArray(product.collections).length > 0 && (
-            <div className="flex flex-wrap gap-1 mb-3">
-              {toArray(product.collections).slice(0, 2).map((collection, index) => (
-                <span
-                  key={index}
-                  className="text-xs px-2 py-1 bg-brand-gold-light text-brand-brown rounded-pill"
-                >
-                  {collection}
-                </span>
-              ))}
-            </div>
+            <p className="text-[11px] text-[var(--text-gold)] uppercase tracking-wider truncate mb-2 font-body">
+              {toArray(product.collections)[0]}
+            </p>
           )}
 
-          <div className="mb-4">
-            {product.onSale && product.promoPrice ? (
-              <div className="flex items-baseline gap-2">
-                <span className="text-lg font-bold text-brand-gold">
-                  {formatPrice(product.promoPrice)}
-                </span>
-                <span className="text-sm text-ui-text-secondary line-through">
+          <div className="mt-auto">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-[14px] font-bold text-[var(--brand-gold)] font-body">
+                {formatPrice(product.onSale && product.promoPrice ? product.promoPrice : product.price)}
+              </span>
+              {product.onSale && product.promoPrice && (
+                <span className="text-[11px] line-through text-[var(--text-muted)]">
                   {formatPrice(product.price)}
                 </span>
-              </div>
-            ) : (
-              <span className="text-lg font-bold text-brand-gold">
-                {formatPrice(product.price)}
-              </span>
-            )}
-          </div>
+              )}
+            </div>
 
-          <div className="flex items-center justify-between">
-            <GoldButton
-              size="sm"
+            <button
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 addItem(product);
               }}
               disabled={!product.inStock}
+              className="w-full h-9 rounded-full border border-[var(--brand-gold)] text-[var(--text-primary)] font-body text-[12px] uppercase tracking-widest bg-transparent hover:bg-[var(--brand-gold)] hover:text-[var(--bg-primary)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Add to Cart
-            </GoldButton>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                toggleWishlist(product);
-              }}
-              className="p-2 rounded-full hover:bg-brand-gold-light transition-colors"
-              aria-label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
-            >
-              <Heart
-                className={cn(
-                  'w-5 h-5 transition-colors',
-                  inWishlist ? 'fill-brand-gold text-brand-gold' : 'text-brand-brown'
-                )}
-              />
             </button>
           </div>
         </div>
-      </div>
+      </motion.div>
     </Link>
   );
 }

@@ -26,7 +26,7 @@ export function VideoPlayer({
   };
 
   return (
-    <div className={cn('relative rounded-2xl overflow-hidden border border-brand-gold/50', className)}>
+    <div className={cn('relative rounded-xl overflow-hidden border border-[var(--border-gold)]', className)}>
       <video
         src={src}
         poster={poster}
@@ -39,11 +39,11 @@ export function VideoPlayer({
       
       {showOverlay && (
         <div
-          className="absolute inset-0 flex items-center justify-center cursor-pointer bg-brand-brown/60"
+          className="absolute inset-0 flex items-center justify-center cursor-pointer bg-[rgba(26,18,8,0.6)]"
           onClick={handlePlay}
         >
-          <div className="w-16 h-16 rounded-full bg-brand-gold/90 flex items-center justify-center hover:bg-brand-gold transition-colors">
-            <Play className="w-8 h-8 text-brand-brown ml-1" />
+          <div className="w-16 h-16 rounded-full bg-[var(--brand-gold)] flex items-center justify-center hover:bg-[var(--brand-gold)] transition-colors">
+            <Play className="w-8 h-8 text-[var(--bg-primary)] ml-1" />
           </div>
         </div>
       )}

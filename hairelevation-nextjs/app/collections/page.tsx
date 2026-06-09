@@ -86,23 +86,23 @@ function CollectionsContent() {
   return (
     <>
       {/* Page Header */}
-      <section className="py-20 bg-brand-brown">
+      <section className="py-16 md:py-20 bg-[var(--bg-primary)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-sm text-brand-gold/80 font-body uppercase tracking-wider mb-4">
+          <p className="text-[11px] font-body uppercase tracking-wider text-[var(--brand-gold)] mb-4">
             Home / Collections
           </p>
-          <h1 className="text-4xl md:text-5xl font-heading font-bold text-brand-cream mb-4">
+          <h1 className="text-4xl lg:text-6xl font-heading font-bold text-[var(--text-primary)] mb-4">
             Our Collections
           </h1>
           <div className="w-16 h-0.5 bg-[var(--gradient-gold)] mx-auto mb-4" />
-          <p className="text-lg text-brand-cream/80 font-body max-w-2xl mx-auto">
+          <p className="text-lg font-body text-[var(--text-muted)] max-w-2xl mx-auto">
             Discover our premium wig collections crafted for every queen.
           </p>
         </div>
       </section>
 
       {/* Filter Bar */}
-      <section className="sticky top-16 z-40 bg-brand-warm-white py-4 border-b border-brand-gold/20">
+      <section className="sticky top-16 z-40 bg-[var(--bg-primary)] py-4 border-b border-[var(--border-gold)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             {/* Collection Tabs */}
@@ -113,10 +113,10 @@ function CollectionsContent() {
                     key={option}
                     onClick={() => setSelectedCollection(option)}
                     className={cn(
-                      'px-4 py-2 rounded-pill text-sm font-medium whitespace-nowrap transition-all',
+                      'px-4 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-all font-body uppercase tracking-wider',
                       selectedCollection === option
-                        ? 'bg-[var(--gradient-gold)] text-brand-brown'
-                        : 'bg-transparent text-ui-text-secondary border border-brand-gold/30 hover:border-brand-gold/50'
+                        ? 'bg-[var(--gradient-gold)] text-[var(--bg-primary)]'
+                        : 'bg-transparent text-[var(--brand-gold)] border border-[var(--brand-gold)] hover:border-[rgba(200,169,126,0.5)]'
                     )}
                   >
                     {option}
@@ -127,17 +127,17 @@ function CollectionsContent() {
 
             {/* Toggle Filters and Sort */}
             <div className="flex items-center gap-3">
-              <span className="text-sm text-ui-text-secondary font-body">
-                {filteredProducts.length} products found
+              <span className="text-xs font-body text-[var(--text-muted)]">
+                {filteredProducts.length} products
               </span>
 
               <button
                 onClick={() => setOnSale(!onSale)}
                 className={cn(
-                  'px-3 py-1.5 rounded-pill text-sm font-medium transition-all',
+                  'px-3 py-1.5 rounded-full text-xs font-medium transition-all font-body uppercase tracking-wider',
                   onSale
-                    ? 'bg-brand-gold text-brand-brown'
-                    : 'bg-transparent border border-brand-gold/50 text-brand-gold'
+                    ? 'bg-[var(--brand-gold)] text-[var(--bg-primary)]'
+                    : 'bg-transparent border border-[var(--brand-gold)] text-[var(--brand-gold)]'
                 )}
               >
                 On Sale
@@ -146,10 +146,10 @@ function CollectionsContent() {
               <button
                 onClick={() => setInStock(!inStock)}
                 className={cn(
-                  'px-3 py-1.5 rounded-pill text-sm font-medium transition-all',
+                  'px-3 py-1.5 rounded-full text-xs font-medium transition-all font-body uppercase tracking-wider',
                   inStock
-                    ? 'bg-brand-gold text-brand-brown'
-                    : 'bg-transparent border border-brand-gold/50 text-brand-gold'
+                    ? 'bg-[var(--brand-gold)] text-[var(--bg-primary)]'
+                    : 'bg-transparent border border-[var(--brand-gold)] text-[var(--brand-gold)]'
                 )}
               >
                 In Stock
@@ -158,10 +158,10 @@ function CollectionsContent() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-3 py-1.5 rounded-pill text-sm font-medium bg-transparent border border-brand-gold/50 text-brand-gold focus:outline-none focus:border-brand-gold"
+                className="px-3 py-1.5 rounded-full text-xs font-medium bg-[var(--bg-secondary)] border border-[var(--brand-gold)] text-[var(--brand-gold)] font-body focus:outline-none"
               >
                 {sortOptions.map(option => (
-                  <option key={option} value={option} className="bg-brand-brown">
+                  <option key={option} value={option} className="bg-[var(--bg-primary)] font-body">
                     {option}
                   </option>
                 ))}
@@ -172,21 +172,21 @@ function CollectionsContent() {
       </section>
 
       {/* Products Grid */}
-      <section className="py-12 bg-brand-warm-white">
+      <section className="py-12 bg-[var(--bg-primary)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatePresence mode="wait">
             {loading ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
                 {Array.from({ length: 8 }).map((_, i) => (
                   <div
                     key={i}
-                    className="bg-brand-warm-white rounded-card border border-ui-border shadow-card animate-pulse"
+                    className="bg-[var(--bg-secondary)] rounded-xl border border-[var(--border-gold)] animate-pulse"
                   >
-                    <div className="aspect-[3/4] bg-gradient-to-r from-brand-gold/20 via-brand-gold/10 to-brand-gold/20 rounded-t-card" />
-                    <div className="p-4">
-                      <div className="h-6 bg-brand-gold/20 rounded mb-2" />
-                      <div className="h-4 bg-brand-gold/15 rounded mb-4 w-2/3" />
-                      <div className="h-10 bg-brand-gold/20 rounded" />
+                    <div className="aspect-[4/5] bg-gradient-to-r from-[var(--brand-gold)]/20 via-[var(--brand-gold)]/10 to-[var(--brand-gold)]/20 rounded-t-xl" />
+                    <div className="p-3">
+                      <div className="h-5 bg-[var(--brand-gold)]/20 rounded mb-2" />
+                      <div className="h-3 bg-[var(--brand-gold)]/15 rounded mb-3 w-2/3" />
+                      <div className="h-8 bg-[var(--brand-gold)]/20 rounded" />
                     </div>
                   </div>
                 ))}
@@ -199,15 +199,15 @@ function CollectionsContent() {
                 exit={{ opacity: 0, y: -20 }}
               >
                 <div className="text-6xl mb-4">✨</div>
-                <h3 className="text-2xl font-heading text-brand-brown mb-4">No products found</h3>
-                <p className="text-ui-text-secondary font-body mb-6">
+                <h3 className="text-2xl font-heading text-[var(--text-primary)] mb-4">No products found</h3>
+                <p className="text-sm font-body text-[var(--text-muted)] mb-6">
                   Try adjusting your filters to discover more options.
                 </p>
                 <GoldButton onClick={clearFilters}>Clear Filters</GoldButton>
               </motion.div>
             ) : (
               <motion.div
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6"
                 initial="initial"
                 animate="animate"
                 exit="exit"
@@ -244,8 +244,8 @@ function CollectionsContent() {
 export default function CollectionsPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-brand-warm-white flex items-center justify-center">
-        <div className="w-12 h-12 border-2 border-brand-gold border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center">
+        <div className="w-12 h-12 border-2 border-[var(--brand-gold)] border-t-transparent rounded-full animate-spin" />
       </div>
     }>
       <CollectionsContent />

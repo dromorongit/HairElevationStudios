@@ -20,29 +20,29 @@ export default function WishlistPage() {
     return (
       <>
         {/* Page Header */}
-        <section className="py-20 bg-brand-brown">
+        <section className="py-16 md:py-20 bg-[var(--bg-primary)]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p className="text-sm text-brand-gold/80 font-body uppercase tracking-wider mb-4">
+            <p className="text-xs font-body uppercase tracking-wider text-[var(--brand-gold)] mb-4">
               Home / Wishlist
             </p>
-            <h1 className="text-4xl md:text-5xl font-heading font-bold text-brand-cream mb-4">
+            <h1 className="text-4xl lg:text-5xl font-heading font-bold text-[var(--text-primary)] mb-4">
               Your Wishlist
             </h1>
-            <p className="text-lg text-brand-gold/80 font-body">
+            <p className="text-lg font-body text-[var(--text-muted)]">
               0 saved pieces
             </p>
           </div>
         </section>
 
         {/* Empty State */}
-        <section className="py-20 bg-brand-warm-white">
+        <section className="py-16 bg-[var(--bg-secondary)]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
-              <Heart className="w-24 h-24 text-brand-gold mx-auto mb-6" />
-              <h2 className="text-4xl font-heading font-bold text-brand-brown mb-4">
+              <Heart className="w-24 h-24 text-[var(--brand-gold)] mx-auto mb-6" />
+              <h2 className="text-3xl font-heading font-bold text-[var(--text-primary)] mb-4">
                 Your Wishlist is Empty
               </h2>
-              <p className="text-lg text-ui-text-secondary font-body mb-8 max-w-md mx-auto">
+              <p className="text-lg font-body text-[var(--text-muted)] mb-8 max-w-md mx-auto">
                 Save your favourite pieces and come back to them anytime.
               </p>
               <GoldButton href="/collections">
@@ -58,26 +58,26 @@ export default function WishlistPage() {
   return (
     <>
       {/* Page Header */}
-      <section className="py-20 bg-brand-brown">
+      <section className="py-16 md:py-20 bg-[var(--bg-primary)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-sm text-brand-gold/80 font-body uppercase tracking-wider mb-4">
+          <p className="text-xs font-body uppercase tracking-wider text-[var(--brand-gold)] mb-4">
             Home / Wishlist
           </p>
-          <h1 className="text-4xl md:text-5xl font-heading font-bold text-brand-cream mb-4">
+          <h1 className="text-4xl lg:text-5xl font-heading font-bold text-[var(--text-primary)] mb-4">
             Your Wishlist
           </h1>
-          <p className="text-lg text-brand-gold/80 font-body">
+          <p className="text-lg font-body text-[var(--text-muted)]">
             {items.length} saved pieces
           </p>
         </div>
       </section>
 
       {/* Wishlist Grid */}
-      <section className="py-12 bg-brand-warm-white">
+      <section className="py-12 bg-[var(--bg-secondary)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatePresence mode="wait">
             <div
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+              className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6"
             >
               {items.map((item) => (
                 <motion.div
@@ -97,7 +97,7 @@ export default function WishlistPage() {
           <div className="mt-12 text-center">
             <button
               onClick={handleClearWishlist}
-              className="px-6 py-3 rounded-pill text-sm font-medium border border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-brand-brown transition-colors"
+              className="px-6 py-3 rounded-full text-sm font-medium border border-[var(--brand-gold)] text-[var(--brand-gold)] hover:bg-[var(--brand-gold)] hover:text-[var(--bg-primary)] transition-colors font-body"
             >
               Clear Wishlist
             </button>

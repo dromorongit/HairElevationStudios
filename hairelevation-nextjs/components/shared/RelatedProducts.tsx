@@ -13,7 +13,7 @@ interface RelatedProductsProps {
 
 export function RelatedProducts({ currentProduct, allProducts }: RelatedProductsProps) {
   const relatedProducts = allProducts
-    .filter((product) => 
+    .filter((product) =>
       product._id !== currentProduct._id &&
       toArray(product.collections).some((collection) =>
         toArray(currentProduct.collections).includes(collection)
@@ -26,15 +26,16 @@ export function RelatedProducts({ currentProduct, allProducts }: RelatedProducts
   }
 
   return (
-    <section className="py-16 px-6 max-w-7xl mx-auto">
+    <section className="py-16 px-4 sm:px-6 max-w-7xl mx-auto">
       <SectionHeading
+        label="Related"
         title="You May Also Love"
         subtitle="More pieces from our collection"
         align="center"
       />
-      
+
       <motion.div
-        className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12"
+        className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mt-12"
         initial="initial"
         whileInView="animate"
         viewport={{ once: true }}

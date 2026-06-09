@@ -9,10 +9,10 @@ interface BadgeProps {
 }
 
 const variantClasses = {
-  sale: 'bg-brand-gold text-brand-brown',
-  outOfStock: 'bg-brand-brown text-brand-cream',
-  featured: 'bg-brand-brown-dark text-brand-gold',
-  new: 'bg-brand-cream text-brand-brown border border-brand-gold',
+  sale: 'bg-[var(--brand-gold)] text-[var(--bg-primary)]',
+  outOfStock: 'bg-[rgba(255,255,255,0.1)] text-[var(--text-muted)]',
+  featured: 'border border-[var(--brand-gold)] text-[var(--brand-gold)] bg-transparent',
+  new: 'bg-[var(--bg-card)] text-[var(--brand-gold)] border border-[var(--border-gold)]',
 };
 
 export function Badge({ variant = 'new', label, className }: BadgeProps) {
@@ -26,7 +26,7 @@ export function Badge({ variant = 'new', label, className }: BadgeProps) {
   return (
     <span
       className={cn(
-        'inline-block px-3 py-1 rounded-pill text-xs font-medium',
+        'inline-block px-2 py-0.5 rounded-full font-body uppercase tracking-wider text-[10px]',
         variantClasses[variant],
         className
       )}
