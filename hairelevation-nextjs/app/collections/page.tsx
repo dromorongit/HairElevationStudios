@@ -8,7 +8,7 @@ import { getAllProducts } from '@/lib/api';
 import { IProduct } from '@/lib/types';
 import { ProductCard } from '@/components/shared/ProductCard';
 import { GoldButton } from '@/components/shared/GoldButton';
-import { cn } from '@/lib/utils';
+import { cn, toArray } from '@/lib/utils';
 
 const collectionOptions = ['All', 'The Bridal Crowns', 'The Everyday Crown', "The Queen's Curls", 'The Signature Pixies'];
 const sortOptions = ['Default', 'Price: Low to High', 'Price: High to Low', 'Newest First'];
@@ -44,7 +44,7 @@ function CollectionsContent() {
 
     if (selectedCollection !== 'All') {
       result = result.filter(product =>
-        product.collections?.includes(selectedCollection)
+        toArray(product.collections).includes(selectedCollection)
       );
     }
 

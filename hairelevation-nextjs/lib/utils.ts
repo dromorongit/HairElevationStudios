@@ -13,3 +13,9 @@ export function truncateText(text: string, maxLength: number): string {
   if (text.length <= maxLength) return text;
   return text.slice(0, maxLength) + '...';
 }
+
+export function toArray<T>(value: T | T[] | undefined | null): T[] {
+  if (!value) return [];
+  if (Array.isArray(value)) return value;
+  return [value];
+}

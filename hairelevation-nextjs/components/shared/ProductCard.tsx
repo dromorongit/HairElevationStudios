@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Heart } from 'lucide-react';
 import { IProduct } from '@/lib/types';
-import { cn, formatPrice, truncateText } from '@/lib/utils';
+import { cn, formatPrice, truncateText, toArray } from '@/lib/utils';
 import { GoldButton } from './GoldButton';
 import { Badge } from './Badge';
 import { useCart } from '@/hooks/useCart';
@@ -46,9 +46,9 @@ export function ProductCard({ product }: ProductCardProps) {
             {truncateText(product.name, 30)}
           </h3>
 
-          {product.collections && product.collections.length > 0 && (
+          {toArray(product.collections).length > 0 && (
             <div className="flex flex-wrap gap-1 mb-3">
-              {product.collections.slice(0, 2).map((collection, index) => (
+              {toArray(product.collections).slice(0, 2).map((collection, index) => (
                 <span
                   key={index}
                   className="text-xs px-2 py-1 bg-brand-gold-light text-brand-brown rounded-pill"

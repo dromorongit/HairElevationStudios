@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { IProduct } from '@/lib/types';
+import { toArray } from '@/lib/utils';
 import { ProductCard } from './ProductCard';
 import { SectionHeading } from './SectionHeading';
 
@@ -14,8 +15,8 @@ export function RelatedProducts({ currentProduct, allProducts }: RelatedProducts
   const relatedProducts = allProducts
     .filter((product) => 
       product._id !== currentProduct._id &&
-      product.collections?.some((collection) =>
-        currentProduct.collections?.includes(collection)
+      toArray(product.collections).some((collection) =>
+        toArray(currentProduct.collections).includes(collection)
       )
     )
     .slice(0, 4);

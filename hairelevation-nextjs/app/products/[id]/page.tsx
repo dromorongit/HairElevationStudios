@@ -6,7 +6,7 @@ import { Minus, Plus, Heart, PackageX, Link as LinkIcon } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import { getProductById, getAllProducts } from '@/lib/api';
 import { IProduct } from '@/lib/types';
-import { cn, formatPrice } from '@/lib/utils';
+import { cn, formatPrice, toArray } from '@/lib/utils';
 import { LoadingSpinner } from '@/components/shared/LoadingSpinner';
 import { Badge } from '@/components/shared/Badge';
 import { GoldButton } from '@/components/shared/GoldButton';
@@ -62,7 +62,7 @@ function ProductInfo({ product }: ProductInfoProps) {
     }
   };
 
-  const sizeOptions = product.size || [];
+  const sizeOptions = toArray(product.size);
 
   return (
     <motion.div
@@ -80,9 +80,9 @@ function ProductInfo({ product }: ProductInfoProps) {
         {product.featured && <Badge variant="featured" />}
         {product.onSale && product.inStock && <Badge variant="sale" />}
         {!product.inStock && <Badge variant="outOfStock" />}
-        {product.collections && product.collections.length > 0 && (
+        {toArray(product.collections).length > 0 && (
           <>
-            {product.collections.map((collection, index) => (
+            {toArray(product.collections).map((collection, index) => (
               <span
                 key={index}
                 className="text-xs px-3 py-1 border border-brand-gold rounded-pill text-brand-brown font-body"

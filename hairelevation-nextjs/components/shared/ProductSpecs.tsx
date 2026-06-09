@@ -1,7 +1,7 @@
 "use client";
 
 import { IProduct } from '@/lib/types';
-import { cn } from '@/lib/utils';
+import { cn, toArray } from '@/lib/utils';
 
 interface ProductSpecsProps {
   product: IProduct;
@@ -15,7 +15,7 @@ export function ProductSpecs({ product, className }: ProductSpecsProps) {
     { label: 'Density', value: product.density },
     { label: 'Texture', value: product.texture },
     { label: 'Quality', value: product.quality },
-    { label: 'Color', value: product.color?.join(', ') },
+    { label: 'Color', value: toArray(product.color).join(', ') },
     { label: 'Stock Status', value: product.inStock ? 'In Stock' : 'Out of Stock' },
   ];
 
