@@ -1,23 +1,21 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 export function NavigationProgress() {
-  const [isLoading, setIsLoading] = useState(false);
-  const pathname = usePathname();
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    setIsLoading(true);
-    const timeout = setTimeout(() => setIsLoading(false), 500);
-    return () => clearTimeout(timeout);
-  }, [pathname]);
+    setProgress(0);
+    const timer = setTimeout(() => setProgress(100), 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <motion.div
       initial={{ width: '0%' }}
-      animate={{ width: isLoading ? '100%' : '0%' }}
+      animate={{ width: `${progress}%` }}
       transition={{ duration: 0.5, ease: 'easeInOut' }}
       className="fixed top-0 left-0 h-0.5 bg-[var(--gradient-gold)] z-50"
     />

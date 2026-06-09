@@ -5,7 +5,6 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { ScrollToTop } from '@/components/shared/ScrollToTop';
 import { NavigationProgress } from '@/components/shared/NavigationProgress';
-import { motion } from 'framer-motion';
 
 const playfairDisplay = Playfair_Display({
   variable: '--font-playfair',
@@ -34,14 +33,9 @@ export default function RootLayout({
       <body className={`${playfairDisplay.variable} ${dmSans.variable} antialiased flex flex-col min-h-screen`}>
         <NavigationProgress />
         <Navbar />
-        <motion.main
-          className="flex-1"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
-        >
+        <main className="flex-1">
           {children}
-        </motion.main>
+        </main>
         <Footer />
         <ScrollToTop />
       </body>

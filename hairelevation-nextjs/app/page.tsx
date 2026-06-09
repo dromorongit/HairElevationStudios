@@ -18,9 +18,9 @@ const collections = [
 ];
 
 const services = [
-  { title: 'Custom Wig Making', description: 'Bespoke wigs crafted to your exact measurements, preferences, and style vision.', icon: 'Scissors' },
-  { title: 'Wig Revamp & Maintenance', description: 'Restore and refresh your wigs to their original glory with our expert care services.', icon: 'Sparkles' },
-  { title: 'Wig Installation & Sew-in', description: 'Professional installation for a flawless, natural look that lasts.', icon: 'Star' },
+  { title: 'Custom Wig Making', description: 'Bespoke wigs crafted to your exact measurements, preferences, and style vision.', icon: 'scissors' },
+  { title: 'Wig Revamp & Maintenance', description: 'Restore and refresh your wigs to their original glory with our expert care services.', icon: 'sparkles' },
+  { title: 'Wig Installation & Sew-in', description: 'Professional installation for a flawless, natural look that lasts.', icon: 'star' },
 ];
 
 const fadeInUp = {
@@ -260,9 +260,9 @@ export default function HomePage() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <div className="w-12 h-12 bg-brand-gold rounded-full flex items-center justify-center mb-4">
-                  {service.icon === 'Scissors' && <span className="text-brand-brown text-xl">✂️</span>}
-                  {service.icon === 'Sparkles' && <span className="text-brand-brown text-xl">✨</span>}
-                  {service.icon === 'Star' && <span className="text-brand-brown text-xl">⭐</span>}
+                  {service.icon === 'scissors' && <span className="text-brand-brown text-xl">✂️</span>}
+                  {service.icon === 'sparkles' && <span className="text-brand-brown text-xl">✨</span>}
+                  {service.icon === 'star' && <span className="text-brand-brown text-xl">⭐</span>}
                 </div>
                 <h3 className="text-xl font-heading font-bold text-brand-brown mb-3">{service.title}</h3>
                 <p className="text-ui-text-secondary font-body mb-6">{service.description}</p>
