@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, X, Play } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { VideoPlayer } from './VideoPlayer';
+import Image from 'next/image';
 
 interface ImageGalleryProps {
   images: string[];
@@ -88,10 +89,11 @@ export function ImageGallery({ images, videos, productName, className }: ImageGa
           </span>
 
           {activeItem.type === 'image' ? (
-            <img
+            <Image
               src={activeItem.src}
               alt={`${productName} - image ${activeIndex + 1}`}
-              className="w-full h-full object-cover object-top"
+              fill
+              className="object-cover object-top"
               loading="lazy"
             />
           ) : (
@@ -119,14 +121,15 @@ export function ImageGallery({ images, videos, productName, className }: ImageGa
                   index === activeIndex ? 'border-[var(--brand-gold)]' : 'border-transparent'
                 )}
               >
-                {item.type === 'image' ? (
-                  <img
-                    src={item.src}
-                    alt={`Thumbnail ${index + 1}`}
-                    className="w-full h-full object-cover object-top"
-                    loading="lazy"
-                  />
-                ) : (
+{item.type === 'image' ? (
+                   <Image
+                     src={item.src}
+                     alt={`Thumbnail ${index + 1}`}
+                     fill
+                     className="object-cover object-top"
+                     loading="lazy"
+                   />
+                 ) : (
                   <div className="w-full h-full bg-[var(--bg-secondary)] flex items-center justify-center">
                     <Play className="w-6 h-6 text-[var(--brand-gold)]" />
                   </div>
@@ -167,14 +170,15 @@ export function ImageGallery({ images, videos, productName, className }: ImageGa
               <ChevronRight className="w-6 h-6 text-[var(--brand-gold)]" />
             </button>
 
-            <div className="relative max-w-5xl max-h-[80vh] w-full">
-              {mediaItems[lightboxIndex].type === 'image' ? (
-                <img
-                  src={mediaItems[lightboxIndex].src}
-                  alt={`${productName} - image ${lightboxIndex + 1}`}
-                  className="object-contain w-full h-full rounded-xl"
-                />
-              ) : (
+<div className="relative max-w-5xl max-h-[80vh] w-full">
+                {mediaItems[lightboxIndex].type === 'image' ? (
+                  <Image
+                    src={mediaItems[lightboxIndex].src}
+                    alt={`${productName} - image ${lightboxIndex + 1}`}
+                    fill
+                    className="object-contain rounded-xl"
+                  />
+                ) : (
                 <VideoPlayer
                   src={mediaItems[lightboxIndex].src}
                   className="w-full"

@@ -39,7 +39,7 @@ export function VideoPlayer({
       
       {showOverlay && (
         <div
-          className="absolute inset-0 flex items-center justify-center cursor-pointer bg-[rgba(26,18,8,0.6)]"
+          className="absolute inset-0 flex items-center justify-center cursor-pointer bg-[rgba(59,42,35,0.6)]"
           onClick={handlePlay}
         >
           <div className="w-16 h-16 rounded-full bg-[var(--brand-gold)] flex items-center justify-center hover:bg-[var(--brand-gold)] transition-colors">

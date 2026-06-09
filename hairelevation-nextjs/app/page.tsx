@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { getFeaturedProducts } from '@/lib/api';
 import { IProduct } from '@/lib/types';
 import { GoldButton } from '@/components/shared/GoldButton';
@@ -124,23 +125,24 @@ export default function HomePage() {
             >
               <div className="relative">
                 <div className="absolute -inset-4 rounded-xl border border-[var(--border-gold-strong)]" />
-                <div className="relative bg-[rgba(26,18,8,0.85)] backdrop-blur-md rounded-xl border border-[var(--border-gold)] p-4">
-                  <div className="relative aspect-[4/5] rounded-xl overflow-hidden">
-                    {loading ? (
-                      <div className="absolute inset-0 bg-gradient-to-r from-[var(--brand-gold)]/20 via-[var(--brand-gold)]/10 to-[var(--brand-gold)]/20 animate-pulse" />
-                    ) : featuredProducts.length > 0 ? (
-                      <>
-                        <img
-                          src={featuredProducts[0].coverImage}
-                          alt={featuredProducts[0].name}
-                          className="w-full h-full object-cover object-top"
-                          loading="lazy"
-                        />
-                        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[rgba(26,18,8,0.6)] to-transparent pointer-events-none" />
-                      </>
-                    ) : null}
+                <div className="relative bg-[rgba(59,42,35,0.85)] backdrop-blur-md rounded-xl border border-[var(--border-gold)] p-4">
+<div className="relative aspect-[4/5] rounded-xl overflow-hidden">
+                      {loading ? (
+                        <div className="absolute inset-0 bg-gradient-to-r from-[var(--brand-gold)]/20 via-[var(--brand-gold)]/10 to-[var(--brand-gold)]/20 animate-pulse" />
+                      ) : featuredProducts.length > 0 ? (
+                        <>
+                          <Image
+                            src={featuredProducts[0].coverImage}
+                            alt={featuredProducts[0].name}
+                            fill
+                            className="object-cover object-top"
+                            loading="lazy"
+                          />
+                          <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[rgba(59,42,35,0.6)] to-transparent pointer-events-none" />
+                        </>
+                      ) : null}
                     {!loading && featuredProducts.length > 0 && (
-                      <div className="absolute bottom-3 left-3 bg-[rgba(26,18,8,0.85)] backdrop-blur-md border border-[var(--border-gold)] rounded-xl px-4 py-2">
+                      <div className="absolute bottom-3 left-3 bg-[rgba(59,42,35,0.85)] backdrop-blur-md border border-[var(--border-gold)] rounded-xl px-4 py-2">
                         <p className="font-heading font-bold text-sm text-[var(--text-primary)] mb-1">
                           {featuredProducts[0].name}
                         </p>
@@ -220,7 +222,7 @@ export default function HomePage() {
               <motion.a
                 key={collection.name}
                 href={`/collections?collection=${encodeURIComponent(collection.name)}`}
-                className="bg-[var(--bg-primary)] rounded-xl border border-[var(--border-gold)] p-6 md:p-8 transition-all duration-300 hover:border-[rgba(200,169,126,0.4)] hover:bg-[rgba(26,18,8,0.5)] hover:-translate-y-1.5 hover:shadow-[0_12px_40px_rgba(0,0,0,0.5)]"
+                className="bg-[var(--bg-primary)] rounded-xl border border-[var(--border-gold)] p-6 md:p-8 transition-all duration-300 hover:border-[rgba(200,169,126,0.4)] hover:bg-[rgba(42,30,24,0.5)] hover:-translate-y-1.5 hover:shadow-[0_12px_40px_rgba(0,0,0,0.5)]"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

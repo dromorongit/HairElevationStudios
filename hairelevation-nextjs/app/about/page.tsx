@@ -30,7 +30,7 @@ export default function AboutPage() {
             {/* Watermark Quote - hidden on mobile */}
             <div className="hidden lg:block relative">
               <p className="text-8xl font-heading italic text-[var(--brand-gold)]/15 absolute top-0 left-0 -z-10">
-                "Elevate Every Strand"
+                &ldquo;Elevate Every Strand&rdquo;
               </p>
             </div>
 

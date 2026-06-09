@@ -204,7 +204,7 @@ export function Navbar() {
                         ))
                       ) : (
                         <p className="text-center py-4 text-sm font-body text-[var(--text-muted)]">
-                          No products found for "{searchQuery}"
+                          No products found for &ldquo;{searchQuery}&rdquo;
                         </p>
                       )}
                     </div>

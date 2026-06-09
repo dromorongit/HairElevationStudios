@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Heart } from 'lucide-react';
 import { IProduct } from '@/lib/types';
 import { cn, formatPrice, truncateText, toArray } from '@/lib/utils';
@@ -26,45 +27,46 @@ export function ProductCard({ product }: ProductCardProps) {
         viewport={{ once: true }}
         transition={{ duration: 0.4 }}
       >
-        <div className="relative aspect-[4/5] overflow-hidden rounded-t-xl">
-          {!product.inStock && (
-            <div className="absolute top-2 left-2 z-10">
-              <span className="text-[10px] px-2 py-0.5 rounded-full font-medium uppercase tracking-wider bg-[rgba(255,255,255,0.1)] text-[rgba(245,239,230,0.6)]">
-                Out of Stock
-              </span>
-            </div>
-          )}
-          {product.onSale && product.inStock && (
-            <div className="absolute top-2 left-2 z-10">
-              <span className="text-[10px] px-2 py-0.5 rounded-full font-medium uppercase tracking-wider bg-[var(--brand-gold)] text-[var(--bg-primary)]">
-                Sale
-              </span>
-            </div>
-          )}
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              toggleWishlist(product);
-            }}
-            className="absolute top-2 right-2 w-7 h-7 rounded-full bg-[rgba(26,18,8,0.7)] backdrop-blur-sm flex items-center justify-center hover:bg-[var(--brand-gold)] transition-colors"
-            aria-label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
-          >
-            <Heart
-              className={cn(
-                'w-3.5 h-3.5 transition-colors',
-                inWishlist ? 'fill-[var(--brand-gold)] text-[var(--brand-gold)]' : 'text-[rgba(245,239,230,0.7)]'
+<div className="relative aspect-[4/5] overflow-hidden rounded-t-xl">
+              {!product.inStock && (
+                <div className="absolute top-2 left-2 z-10">
+                  <span className="text-[10px] px-2 py-0.5 rounded-full font-medium uppercase tracking-wider bg-[rgba(255,255,255,0.1)] text-[rgba(245,239,230,0.6)]">
+                    Out of Stock
+                  </span>
+                </div>
               )}
-            />
-          </button>
-          <img
-            src={product.coverImage}
-            alt={product.name}
-            className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-            loading="lazy"
-          />
-          <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-[rgba(26,18,8,0.8)] to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        </div>
+              {product.onSale && product.inStock && (
+                <div className="absolute top-2 left-2 z-10">
+                  <span className="text-[10px] px-2 py-0.5 rounded-full font-medium uppercase tracking-wider bg-[var(--brand-gold)] text-[var(--bg-primary)]">
+                    Sale
+                  </span>
+                </div>
+              )}
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  toggleWishlist(product);
+                }}
+                className="absolute top-2 right-2 w-7 h-7 rounded-full bg-[rgba(59,42,35,0.7)] backdrop-blur-sm flex items-center justify-center hover:bg-[var(--brand-gold)] transition-colors"
+                aria-label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
+              >
+                <Heart
+                  className={cn(
+                    'w-3.5 h-3.5 transition-colors',
+                    inWishlist ? 'fill-[var(--brand-gold)] text-[var(--brand-gold)]' : 'text-[rgba(245,239,230,0.7)]'
+                  )}
+                />
+              </button>
+              <Image
+                src={product.coverImage}
+                alt={product.name}
+                fill
+                className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-[rgba(59,42,35,0.8)] to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </div>
 
         <div className="flex flex-col flex-1 px-3 pt-2 pb-3">
           <h3 className="text-[13px] font-medium text-[var(--text-primary)] truncate mb-1 font-body">
