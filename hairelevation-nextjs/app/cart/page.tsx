@@ -32,6 +32,7 @@ function CartContent() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [paymentRef, setPaymentRef] = useState('');
+  const [whatsappUrl, setWhatsappUrl] = useState('');
 
   useEffect(() => {
     if (!document.querySelector('script[src*="paystack.co"]')) {
@@ -41,6 +42,15 @@ function CartContent() {
       document.head.appendChild(script);
     }
   }, []);
+
+  useEffect(() => {
+    if (showSuccess && whatsappUrl) {
+      const timer = setTimeout(() => {
+        window.open(whatsappUrl, '_blank');
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [showSuccess, whatsappUrl]);
 
   const openPaystack = (data: CheckoutFormData) => {
     if (!window.PaystackPop) {
@@ -144,8 +154,8 @@ ${orderLines}
 
 ✅ Payment confirmed via Paystack`;
 
-    const whatsappUrl = `https://wa.me/233534057109?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+    const builtWhatsappUrl = `https://wa.me/233534057109?text=${encodeURIComponent(message)}`;
+    setWhatsappUrl(builtWhatsappUrl);
     setPaymentRef(ref);
     setShowSuccess(true);
     setIsProcessing(false);
@@ -181,6 +191,7 @@ ${orderLines}
         onClose={() => setShowSuccess(false)}
         paymentRef={paymentRef}
         customerName={formData.name}
+        whatsappUrl={whatsappUrl}
       />
 
       <div className="min-h-screen bg-brand-warm-white">

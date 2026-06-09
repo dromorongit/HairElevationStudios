@@ -9,9 +9,10 @@ interface OrderSuccessModalProps {
   onClose: () => void;
   paymentRef: string;
   customerName: string;
+  whatsappUrl: string;
 }
 
-export function OrderSuccessModal({ isOpen, onClose, paymentRef, customerName }: OrderSuccessModalProps) {
+export function OrderSuccessModal({ isOpen, onClose, paymentRef, customerName, whatsappUrl }: OrderSuccessModalProps) {
   const { clearCart } = useCartStore();
 
   const handleContinueShopping = () => {
@@ -20,7 +21,7 @@ export function OrderSuccessModal({ isOpen, onClose, paymentRef, customerName }:
   };
 
   const handleResendWhatsApp = () => {
-    window.open('https://wa.me/233534057109', '_blank');
+    window.open(whatsappUrl, '_blank');
   };
 
   if (!isOpen) return null;
@@ -46,6 +47,12 @@ export function OrderSuccessModal({ isOpen, onClose, paymentRef, customerName }:
         <p className="text-base text-ui-text-secondary font-body text-center mb-6 leading-relaxed">
           Thank you {customerName}! Your payment was successful. Your order details have been sent to our WhatsApp — we will confirm your order and delivery shortly.
         </p>
+
+        <div className="bg-brand-gold/10 border border-brand-gold/30 rounded-xl px-4 py-3 mb-6">
+          <p className="text-[13px] font-body text-brand-gold">
+            📲 WhatsApp is opening automatically to submit your order. If it did not open, tap Resend WhatsApp below.
+          </p>
+        </div>
         
         <div className="bg-brand-cream rounded-xl px-4 py-2 mb-6">
           <p className="text-sm font-mono text-brand-gold text-center">
