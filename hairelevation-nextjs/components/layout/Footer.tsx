@@ -14,7 +14,7 @@ export function Footer() {
             <img
               src="/assets/images/HESLOGO.PNG"
               alt="Hair Elevation Studio"
-              className="h-10 sm:h-12 w-auto max-w-[160px] object-contain mb-3 sm:mb-4 filter brightness-0 invert"
+              className="h-10 sm:h-12 w-auto max-w-[160px] object-contain mb-3 sm:mb-4 filter brightness-0 invert flex-shrink-0"
             />
             <p className="text-lg font-heading font-bold mb-1 sm:mb-2 text-[var(--text-primary)] break-words">Elevate Your Style</p>
             <p className="text-sm font-body text-[var(--text-muted)] max-w-xs break-words">
