@@ -89,6 +89,7 @@ export function Navbar() {
                 src="/assets/images/HESLOGO.PNG"
                 alt="Hair Elevation Studio"
                 className="h-12 w-auto max-w-[160px] object-contain filter brightness-0 invert"
+                style={{ height: '48px', width: 'auto' }}
               />
             </Link>
 
