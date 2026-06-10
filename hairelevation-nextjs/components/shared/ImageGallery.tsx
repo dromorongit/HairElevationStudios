@@ -74,17 +74,17 @@ export function ImageGallery({ images, videos, productName, className }: ImageGa
 
   const activeItem = mediaItems[activeIndex];
 
-  return (
+return (
     <>
-      <div className={cn('flex flex-col gap-4', className)}>
+      <div className={cn('flex flex-col gap-3 md:gap-4 overflow-x-hidden', className)}>
         <motion.div
-          className="relative aspect-[4/5] rounded-xl overflow-hidden cursor-pointer bg-[var(--bg-secondary)] border border-[var(--brand-gold)]/20"
+          className="relative aspect-[4/5] rounded-xl overflow-hidden cursor-pointer bg-[var(--bg-secondary)] border border-[var(--brand-gold)]/20 w-full"
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
           onClick={() => openLightbox(activeIndex)}
         >
-          <span className="absolute top-2 right-2 z-10 text-xs bg-[var(--bg-primary)]/80 text-[var(--text-primary)] px-2 py-1 rounded-full font-body">
+          <span className="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 z-10 text-[10px] sm:text-xs bg-[var(--bg-primary)]/80 text-[var(--text-primary)] px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full font-body">
             {activeIndex + 1} / {mediaItems.length}
           </span>
 
@@ -104,34 +104,34 @@ export function ImageGallery({ images, videos, productName, className }: ImageGa
                 muted
               />
               <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                <Play className="w-12 h-12 text-[var(--brand-gold)]/80" />
+                <Play className="w-10 h-10 sm:w-12 sm:h-12 text-[var(--brand-gold)]/80" />
               </div>
             </div>
           )}
         </motion.div>
 
         {mediaItems.length > 1 && (
-          <div className="flex gap-2 overflow-x-auto pb-2">
+          <div className="flex gap-1.5 md:gap-2 overflow-x-auto pb-1 scrollbar-hide">
             {mediaItems.map((item, index) => (
               <button
                 key={index}
                 onClick={() => setActiveIndex(index)}
                 className={cn(
-                  'relative w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden cursor-pointer border-2 flex-shrink-0',
+                  'relative w-14 h-14 md:w-20 md:h-20 rounded-lg overflow-hidden cursor-pointer border-2 flex-shrink-0',
                   index === activeIndex ? 'border-[var(--brand-gold)]' : 'border-transparent'
                 )}
               >
 {item.type === 'image' ? (
-                   <Image
-                     src={item.src}
-                     alt={`Thumbnail ${index + 1}`}
-                     fill
-                     className="object-cover object-top"
-                     loading="lazy"
-                   />
-                 ) : (
+                  <Image
+                    src={item.src}
+                    alt={`Thumbnail ${index + 1}`}
+                    fill
+                    className="object-cover object-top"
+                    loading="lazy"
+                  />
+                ) : (
                   <div className="w-full h-full bg-[var(--bg-secondary)] flex items-center justify-center">
-                    <Play className="w-6 h-6 text-[var(--brand-gold)]" />
+                    <Play className="w-5 h-5 md:w-6 md:h-6 text-[var(--brand-gold)]" />
                   </div>
                 )}
               </button>
@@ -143,7 +143,7 @@ export function ImageGallery({ images, videos, productName, className }: ImageGa
       <AnimatePresence>
         {lightboxOpen && (
           <motion.div
-            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
+            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center overflow-x-hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -151,34 +151,34 @@ export function ImageGallery({ images, videos, productName, className }: ImageGa
           >
             <button
               onClick={closeLightbox}
-              className="absolute top-6 right-6 text-[var(--brand-gold)] hover:text-[var(--brand-gold-dark)] transition-colors z-10"
+              className="absolute top-4 right-4 md:top-6 md:right-6 text-[var(--brand-gold)] hover:text-[var(--brand-gold-dark)] transition-colors z-10"
             >
-              <X className="w-8 h-8" />
+              <X className="w-7 h-7 md:w-8 md:h-8" />
             </button>
 
             <button
               onClick={() => navigateLightbox('prev')}
-              className="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-[var(--brand-gold)]/20 flex items-center justify-center hover:bg-[var(--brand-gold)]/30 transition-colors z-10"
+              className="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-[var(--brand-gold)]/20 flex items-center justify-center hover:bg-[var(--brand-gold)]/30 transition-colors z-10"
             >
-              <ChevronLeft className="w-6 h-6 text-[var(--brand-gold)]" />
+              <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-[var(--brand-gold)]" />
             </button>
 
             <button
               onClick={() => navigateLightbox('next')}
-              className="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-[var(--brand-gold)]/20 flex items-center justify-center hover:bg-[var(--brand-gold)]/30 transition-colors z-10"
+              className="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-[var(--brand-gold)]/20 flex items-center justify-center hover:bg-[var(--brand-gold)]/30 transition-colors z-10"
             >
-              <ChevronRight className="w-6 h-6 text-[var(--brand-gold)]" />
+              <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-[var(--brand-gold)]" />
             </button>
 
-<div className="relative max-w-5xl max-h-[80vh] w-full">
-                {mediaItems[lightboxIndex].type === 'image' ? (
-                  <Image
-                    src={mediaItems[lightboxIndex].src}
-                    alt={`${productName} - image ${lightboxIndex + 1}`}
-                    fill
-                    className="object-contain rounded-xl"
-                  />
-                ) : (
+<div className="relative max-w-4xl md:max-w-5xl max-h-[80vh] w-full">
+              {mediaItems[lightboxIndex].type === 'image' ? (
+                <Image
+                  src={mediaItems[lightboxIndex].src}
+                  alt={`${productName} - image ${lightboxIndex + 1}`}
+                  fill
+                  className="object-contain rounded-xl"
+                />
+              ) : (
                 <VideoPlayer
                   src={mediaItems[lightboxIndex].src}
                   className="w-full"

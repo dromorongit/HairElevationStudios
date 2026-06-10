@@ -50,20 +50,20 @@ const staggerContainer = {
 };
 
 export default function HomePage() {
-  const [featuredProducts, setFeaturedProducts] = useState<IProduct[]>([]);
-  const [loading, setLoading] = useState(true);
+   const [featuredProducts, setFeaturedProducts] = useState<IProduct[]>([]);
+   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    getFeaturedProducts()
-      .then(setFeaturedProducts)
-      .finally(() => setLoading(false));
-  }, []);
+   useEffect(() => {
+     getFeaturedProducts()
+       .then(setFeaturedProducts)
+       .finally(() => setLoading(false));
+   }, []);
 
-  return (
+   return (
     <>
       {/* Section 1: Hero */}
-      <section className="min-h-screen bg-[var(--bg-primary)] flex items-center relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
+      <section className="min-h-auto lg:min-h-screen bg-[var(--bg-primary)] flex items-center relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10 overflow-hidden">
           <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <pattern id="diagonalLines" width="30" height="30" patternTransform="rotate(30)">
@@ -74,23 +74,23 @@ export default function HomePage() {
           </svg>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 py-16 lg:py-0">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 py-16 lg:py-0 overflow-x-hidden">
           <div className="flex flex-col lg:flex-row items-center lg:items-stretch gap-8">
             {/* Left Content */}
             <motion.div
-              className="lg:w-[55%] flex flex-col justify-center"
+              className="w-full lg:w-[55%] flex flex-col justify-center"
               initial="initial"
               animate="animate"
               variants={staggerContainer}
             >
               <motion.p
-                className="text-[11px] font-body uppercase tracking-[0.3em] text-[var(--brand-gold)] mb-4"
+                className="text-[11px] font-body uppercase tracking-[0.3em] text-[var(--brand-gold)] mb-4 break-words"
                 variants={fadeInUp}
               >
                 PREMIUM WIGS — ACCRA, GHANA
               </motion.p>
               <motion.h1
-                className="text-5xl sm:text-6xl lg:text-8xl font-heading font-black text-[var(--text-primary)] mb-6 leading-[0.92]"
+                className="text-4xl sm:text-5xl lg:text-7xl font-heading font-black text-[var(--text-primary)] mb-6 leading-[0.92] break-words"
                 variants={fadeInUp}
               >
                 Crown.{' '}
@@ -99,15 +99,15 @@ export default function HomePage() {
                 </span>
               </motion.h1>
               <motion.p
-                className="text-base lg:text-lg font-body text-[var(--text-muted)] max-w-md mb-8"
+                className="text-base lg:text-lg font-body text-[var(--text-muted)] max-w-full mb-8"
                 variants={fadeInUp}
               >
                 Handcrafted luxury wigs tailored for queens. From bridal perfection to everyday elegance — discover your signature look.
               </motion.p>
-<motion.div className="flex flex-wrap gap-4 mb-8" variants={fadeInUp}>
-                 <OutlineButton href="/collections" size="lg">Shop Collections</OutlineButton>
-                 <OutlineButton href="/book">Book Appointment</OutlineButton>
-               </motion.div>
+<motion.div className="flex flex-col sm:flex-row gap-4 mb-8 w-full" variants={fadeInUp}>
+              <OutlineButton href="/collections" size="lg" className="w-full sm:w-auto">Shop Collections</OutlineButton>
+              <OutlineButton href="/book" className="w-full sm:w-auto">Book Appointment</OutlineButton>
+            </motion.div>
               <motion.div className="hidden sm:flex items-center gap-4 text-sm font-body text-[var(--text-primary)]" variants={fadeInUp}>
                 <span className="text-[var(--text-primary)]">200+ Queens Served</span>
                 <span className="w-1.5 h-1.5 bg-[var(--brand-gold)] rounded-full" />
@@ -122,43 +122,43 @@ export default function HomePage() {
               </motion.div>
             </motion.div>
 
-            {/* Right Content */}
+{/* Right Content */}
             <motion.div
-              className="lg:w-[45%] flex items-center justify-center"
+              className="w-full lg:w-[45%] flex items-center justify-center"
               initial="initial"
               animate="animate"
               variants={fadeInRight}
             >
-              <div className="relative">
-                <div className="absolute -inset-4 rounded-xl border border-[var(--border-gold-strong)]" />
-                <div className="relative bg-[rgba(59,42,35,0.85)] backdrop-blur-md rounded-xl border border-[var(--border-gold)] p-4">
+              <div className="relative w-full max-w-sm lg:max-w-none mx-auto lg:mx-0">
+                <div className="absolute -inset-2 sm:-inset-4 rounded-xl border border-[var(--border-gold-strong)]" />
+                <div className="relative bg-[rgba(59,42,35,0.85)] backdrop-blur-md rounded-xl border border-[var(--border-gold)] p-3 sm:p-4">
                   <div className="relative aspect-[4/5] rounded-xl overflow-hidden">
 <img
-                       src="/assets/images/threeladies.jpg"
-                       alt="Hair Elevation Studio"
-                      className="w-full h-full object-cover object-top rounded-2xl"
-                    />
-                    {!loading && featuredProducts.length > 0 && (
-                      <div className="absolute bottom-3 left-3 bg-[rgba(59,42,35,0.85)] backdrop-blur-md border border-[var(--border-gold)] rounded-xl px-4 py-2">
-                        <p className="font-heading font-bold text-sm text-[var(--text-primary)] mb-1">
-                          {featuredProducts[0].name}
-                        </p>
-                        <p className="font-body text-xs text-[var(--brand-gold)]">
-                          {new Intl.NumberFormat('en-GH', { style: 'currency', currency: 'GHS' }).format(featuredProducts[0].price)}
-                        </p>
-                      </div>
-                    )}
+                        src="/assets/images/threeladies.jpg"
+                        alt="Hair Elevation Studio"
+                        className="w-full h-full object-cover object-top rounded-2xl"
+                      />
+                      {!loading && featuredProducts.length > 0 && (
+                        <div className="absolute bottom-2 left-2 sm:bottom-3 sm:left-3 bg-[rgba(59,42,35,0.85)] backdrop-blur-md border border-[var(--border-gold)] rounded-xl px-3 py-2 sm:px-4 sm:py-2 max-w-[calc(100%-16px)]">
+                          <p className="font-heading font-bold text-xs sm:text-sm text-[var(--text-primary)] mb-1 truncate">
+                            {featuredProducts[0].name}
+                          </p>
+                          <p className="font-body text-[10px] sm:text-xs text-[var(--brand-gold)]">
+                            {new Intl.NumberFormat('en-GH', { style: 'currency', currency: 'GHS' }).format(featuredProducts[0].price)}
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
           </div>
         </div>
       </section>
 
       {/* Section 2: Featured Products */}
-      <section className="py-24 bg-[var(--bg-primary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 md:py-20 bg-[var(--bg-primary)] overflow-x-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x-hidden">
           <SectionHeading
             label="Featured"
             title="Pieces"
@@ -166,7 +166,7 @@ export default function HomePage() {
             align="center"
           />
 
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6">
             {loading
               ? Array.from({ length: 4 }).map((_, i) => (
                   <div
@@ -198,15 +198,15 @@ export default function HomePage() {
             <p className="text-center text-[var(--text-muted)] mt-8 font-body">No featured products available at the moment.</p>
           )}
 
-          <div className="mt-12 text-center">
+          <div className="mt-10 md:mt-12 text-center">
             <GoldButton href="/collections">View All Products</GoldButton>
           </div>
         </div>
       </section>
 
       {/* Section 3: Collections Showcase */}
-      <section className="py-24 bg-[var(--bg-secondary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 md:py-20 bg-[var(--bg-secondary)] overflow-x-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x-hidden">
           <SectionHeading
             label="Collections"
             title="Our Worlds"
@@ -225,7 +225,7 @@ export default function HomePage() {
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   backgroundRepeat: 'no-repeat',
-                  minHeight: '320px',
+                  minHeight: '280px',
                   position: 'relative',
                   overflow: 'hidden',
                 }}
@@ -235,15 +235,15 @@ export default function HomePage() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <div className="absolute inset-0 bg-gradient-to-t from-[#3B2A23] via-[rgba(59,42,35,0.6)] to-[rgba(59,42,35,0.3)]" />
-                <div className="relative z-10 p-6 md:p-8">
-                  <div className="text-4xl md:text-5xl mb-4">{collection.emoji}</div>
-                  <h3 className="text-xl md:text-2xl font-heading font-bold text-[var(--text-primary)] mb-3">
+                <div className="relative z-10 p-5 md:p-8">
+                  <div className="text-3xl md:text-4xl mb-3">{collection.emoji}</div>
+                  <h3 className="text-lg md:text-xl font-heading font-bold text-[var(--text-primary)] mb-2 md:mb-3 break-words">
                     {collection.name}
                   </h3>
-                  <p className="text-sm font-body text-[var(--text-muted)] mb-4">
+                  <p className="text-xs md:text-sm font-body text-[var(--text-muted)] mb-3 md:mb-4 break-words">
                     {collection.description}
                   </p>
-                  <span className="text-sm font-body text-[var(--brand-gold)]">
+                  <span className="text-xs md:text-sm font-body text-[var(--brand-gold)]">
                     Explore →
                   </span>
                 </div>
@@ -254,8 +254,8 @@ export default function HomePage() {
       </section>
 
       {/* Section 4: Services */}
-      <section className="py-24 bg-[var(--bg-primary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 md:py-20 bg-[var(--bg-primary)] overflow-x-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x-hidden">
           <SectionHeading
             label="Services"
             title="Expert Craft"
@@ -267,7 +267,7 @@ export default function HomePage() {
             {services.map((service, index) => (
               <motion.div
                 key={service.title}
-                className="bg-[var(--bg-secondary)] rounded-xl border-l-4 border-[var(--gradient-gold)] p-6 md:p-8 shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-300 hover:shadow-[0_12px_32px_rgba(0,0,0,0.5)]"
+                className="bg-[var(--bg-secondary)] rounded-xl border-l-4 border-[var(--gradient-gold)] p-5 md:p-8 shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-300 hover:shadow-[0_12px_32px_rgba(0,0,0,0.5)]"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -278,8 +278,8 @@ export default function HomePage() {
                   {service.icon === 'sparkles' && <span className="text-[var(--bg-primary)] text-xl">✨</span>}
                   {service.icon === 'star' && <span className="text-[var(--bg-primary)] text-xl">⭐</span>}
                 </div>
-                <h3 className="text-lg md:text-xl font-heading font-bold text-[var(--text-primary)] mb-3">{service.title}</h3>
-                <p className="text-sm font-body text-[var(--text-muted)] mb-6">{service.description}</p>
+                <h3 className="text-lg md:text-xl font-heading font-bold text-[var(--text-primary)] mb-2 md:mb-3 break-words">{service.title}</h3>
+                <p className="text-sm font-body text-[var(--text-muted)] mb-5 md:mb-6 break-words">{service.description}</p>
                 <GoldButton href="/book" size="sm">
                   Book Now
                 </GoldButton>
@@ -289,26 +289,26 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Section 5: Brand Story */}
-      <section className="py-24 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-secondary)]">
+{/* Section 5: Brand Story */}
+      <section className="py-16 md:py-24 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-secondary)] overflow-x-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-12">
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
             {/* Left */}
             <motion.div
-              className="lg:w-1/2 flex flex-col items-center justify-center"
+              className="w-full lg:w-1/2 flex flex-col items-center justify-center"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <p className="text-6xl md:text-8xl font-heading italic text-[var(--brand-gold)]/15 mb-4">— EST. 2020 —</p>
-              <div className="w-0.5 h-16 bg-[var(--gradient-gold)] mb-4" />
+              <p className="hidden lg:block text-6xl md:text-8xl font-heading italic text-[var(--brand-gold)]/15 mb-4">— EST. 2020 —</p>
+              <div className="w-0.5 h-12 md:h-16 bg-[var(--gradient-gold)] mb-4" />
               <span className="text-2xl md:text-3xl font-heading text-[var(--brand-gold)]">Est. 2020</span>
             </motion.div>
 
             {/* Right */}
             <motion.div
-              className="lg:w-1/2"
+              className="w-full lg:w-1/2"
               initial={{ opacity: 0, x: 40 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -348,7 +348,7 @@ export default function HomePage() {
       </section>
 
       {/* Section 6: CTA Banner */}
-      <section className="py-20 bg-[var(--gradient-gold)]">
+      <section className="py-16 md:py-20 bg-[var(--gradient-gold)] overflow-x-hidden">
         <motion.div
           className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10"
           initial={{ opacity: 0 }}
@@ -356,18 +356,18 @@ export default function HomePage() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl lg:text-5xl font-heading font-bold text-[var(--bg-primary)] mb-4">
+          <h2 className="text-3xl lg:text-4xl xl:text-5xl font-heading font-bold text-[var(--bg-primary)] mb-4">
             Ready to Elevate Your Look?
           </h2>
           <p className="text-base font-body text-[var(--bg-primary)]/80 mb-8 max-w-2xl mx-auto">
             Book your appointment today or explore our premium collections.
           </p>
-<div className="flex flex-wrap justify-center gap-4">
-             <GoldButton href="/collections" className="bg-[var(--bg-primary)] text-[var(--text-primary)] hover:bg-[var(--bg-secondary)]">
-               Shop Now
-             </GoldButton>
-<OutlineButton href="/book" className="text-[var(--bg-primary)]">Book Appointment</OutlineButton>
-           </div>
+<div className="flex flex-col sm:flex-row justify-center gap-4 w-full">
+            <GoldButton href="/collections" className="bg-[var(--bg-primary)] text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] w-full sm:w-auto">
+              Shop Now
+            </GoldButton>
+<OutlineButton href="/book" className="text-[var(--bg-primary)] w-full sm:w-auto">Book Appointment</OutlineButton>
+          </div>
         </motion.div>
       </section>
     </>

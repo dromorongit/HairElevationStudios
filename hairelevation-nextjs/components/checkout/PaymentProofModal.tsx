@@ -74,28 +74,28 @@ export function PaymentProofModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50 overflow-x-hidden">
       <motion.div
-        className="bg-[#2A1E18] border border-[rgba(200,169,126,0.3)] rounded-2xl max-w-lg w-full mx-4"
+        className="bg-[#2A1E18] border border-[rgba(200,169,126,0.3)] rounded-2xl max-w-full w-full mx-4 max-h-[85vh] overflow-y-auto"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3 }}
       >
-        <div className="bg-gradient-to-br from-[#C8A97E] to-[#A67C52] px-6 py-5 rounded-t-2xl relative">
-          <h2 className="text-xl font-bold text-[#3B2A23] font-body">
+        <div className="bg-gradient-to-br from-[#C8A97E] to-[#A67C52] px-4 py-4 sm:px-6 sm:py-5 rounded-t-2xl relative">
+          <h2 className="text-lg sm:text-xl font-bold text-[#3B2A23] font-body">
             Upload Payment Proof
           </h2>
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 text-[#3B2A23] hover:text-[#2A1E18] transition-colors"
+            className="absolute top-3 right-3 sm:top-4 sm:right-4 text-[#3B2A23] hover:text-[#2A1E18] transition-colors"
           >
-            <span className="text-2xl">&times;</span>
+            <span className="text-xl sm:text-2xl">&times;</span>
           </button>
         </div>
 
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           <div
-            className={`border-2 border-dashed rounded-xl p-10 text-center transition-colors cursor-pointer ${
+            className={`border-2 border-dashed rounded-xl p-6 sm:p-10 text-center transition-colors cursor-pointer ${
               isDragging
                 ? 'border-[#C8A97E] bg-[rgba(200,169,126,0.1)]'
                 : 'border-[rgba(200,169,126,0.3)] bg-[rgba(200,169,126,0.05)]'
@@ -130,11 +130,11 @@ export function PaymentProofModal({
 
           {previewUrl && (
             <div className="mt-4">
-              <div className="relative inline-block">
+              <div className="relative inline-block max-w-full">
                 <img
                   src={previewUrl}
                   alt="Payment proof preview"
-                  className="max-h-48 rounded-xl border border-[#C8A97E] object-contain"
+                  className="max-w-full max-h-48 rounded-xl border border-[#C8A97E] object-contain"
                 />
                 <button
                   onClick={handleRemoveFile}
@@ -143,14 +143,14 @@ export function PaymentProofModal({
                   <BsX className="w-4 h-4" />
                 </button>
               </div>
-              <p className="text-xs text-[var(--text-muted)] mt-2 font-body">
+              <p className="text-xs text-[var(--text-muted)] mt-2 font-body truncate max-w-full">
                 {selectedFile?.name}
               </p>
             </div>
           )}
         </div>
 
-        <div className="px-6 py-4 border-t border-[rgba(200,169,126,0.15)]">
+        <div className="px-4 py-3 sm:px-6 sm:py-4 border-t border-[rgba(200,169,126,0.15)]">
           <OutlineButton
             onClick={handleSubmit}
             size="lg"

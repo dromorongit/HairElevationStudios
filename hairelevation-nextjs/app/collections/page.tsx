@@ -86,34 +86,34 @@ function CollectionsContent() {
   return (
     <>
       {/* Page Header */}
-      <section className="py-16 md:py-20 bg-[var(--bg-primary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-[11px] font-body uppercase tracking-wider text-[var(--brand-gold)] mb-4">
+      <section className="py-16 md:py-20 bg-[var(--bg-primary)] overflow-x-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center overflow-x-hidden">
+          <p className="text-[11px] font-body uppercase tracking-wider text-[var(--brand-gold)] mb-4 truncate">
             Home / Collections
           </p>
-          <h1 className="text-4xl lg:text-6xl font-heading font-bold text-[var(--text-primary)] mb-4">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold text-[var(--text-primary)] mb-4 break-words">
             Our Collections
           </h1>
           <div className="w-16 h-0.5 bg-[var(--gradient-gold)] mx-auto mb-4" />
-          <p className="text-lg font-body text-[var(--text-muted)] max-w-2xl mx-auto">
+          <p className="text-base lg:text-lg font-body text-[var(--text-muted)] max-w-2xl mx-auto">
             Discover our premium wig collections crafted for every queen.
           </p>
         </div>
       </section>
 
       {/* Filter Bar */}
-      <section className="sticky top-16 z-40 bg-[var(--bg-primary)] py-4 border-b border-[var(--border-gold)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="sticky top-16 z-40 bg-[var(--bg-primary)] py-4 border-b border-[var(--border-gold)] overflow-x-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x-hidden">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             {/* Collection Tabs */}
-            <div className="flex-1 overflow-x-auto">
-              <div className="flex items-center gap-2">
+            <div className="flex-1 overflow-x-auto scrollbar-hide">
+              <div className="flex items-center gap-2 pb-1">
                 {collectionOptions.map(option => (
                   <button
                     key={option}
                     onClick={() => setSelectedCollection(option)}
                     className={cn(
-                      'px-4 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-all font-body uppercase tracking-wider',
+                      'px-4 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-all font-body uppercase tracking-wider flex-shrink-0',
                       selectedCollection === option
                         ? 'bg-[var(--gradient-gold)] text-[var(--bg-primary)]'
                         : 'bg-transparent text-[var(--brand-gold)] border border-[var(--brand-gold)] hover:border-[rgba(200,169,126,0.5)]'
@@ -126,7 +126,7 @@ function CollectionsContent() {
             </div>
 
             {/* Toggle Filters and Sort */}
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
               <span className="text-xs font-body text-[var(--text-muted)]">
                 {filteredProducts.length} products
               </span>
@@ -134,7 +134,7 @@ function CollectionsContent() {
               <button
                 onClick={() => setOnSale(!onSale)}
                 className={cn(
-                  'px-3 py-1.5 rounded-full text-xs font-medium transition-all font-body uppercase tracking-wider',
+                  'px-3 py-1.5 rounded-full text-xs font-medium transition-all font-body uppercase tracking-wider flex-shrink-0',
                   onSale
                     ? 'bg-[var(--brand-gold)] text-[var(--bg-primary)]'
                     : 'bg-transparent border border-[var(--brand-gold)] text-[var(--brand-gold)]'
@@ -146,7 +146,7 @@ function CollectionsContent() {
               <button
                 onClick={() => setInStock(!inStock)}
                 className={cn(
-                  'px-3 py-1.5 rounded-full text-xs font-medium transition-all font-body uppercase tracking-wider',
+                  'px-3 py-1.5 rounded-full text-xs font-medium transition-all font-body uppercase tracking-wider flex-shrink-0',
                   inStock
                     ? 'bg-[var(--brand-gold)] text-[var(--bg-primary)]'
                     : 'bg-transparent border border-[var(--brand-gold)] text-[var(--brand-gold)]'
@@ -172,11 +172,11 @@ function CollectionsContent() {
       </section>
 
       {/* Products Grid */}
-      <section className="py-12 bg-[var(--bg-primary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-12 bg-[var(--bg-primary)] overflow-x-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x-hidden">
           <AnimatePresence mode="wait">
             {loading ? (
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+              <div className="grid grid-cols-2 gap-3">
                 {Array.from({ length: 8 }).map((_, i) => (
                   <div
                     key={i}
@@ -207,7 +207,7 @@ function CollectionsContent() {
               </motion.div>
             ) : (
               <motion.div
-                className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6"
+                className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6"
                 initial="initial"
                 animate="animate"
                 exit="exit"

@@ -81,14 +81,14 @@ export function Navbar() {
 
   return (
     <>
-      <nav className="sticky top-0 z-50 bg-[var(--bg-primary)]/95 backdrop-blur-xl border-b border-[var(--border-gold)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav className="sticky top-0 z-50 bg-[var(--bg-primary)]/95 backdrop-blur-xl border-b border-[var(--border-gold)] overflow-x-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x-hidden">
           <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center">
+            <Link href="/" className="flex items-center flex-shrink-0">
               <img
                 src="/assets/images/HESLOGO.PNG"
                 alt="Hair Elevation Studio"
-                className="h-12 w-auto object-contain filter brightness-0 invert"
+                className="h-12 w-auto max-w-[160px] object-contain filter brightness-0 invert"
               />
             </Link>
 
@@ -158,15 +158,15 @@ export function Navbar() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="absolute top-full left-0 right-0 bg-[var(--bg-primary)]/95 backdrop-blur-xl border-b border-[var(--border-gold)] p-4"
+                className="absolute top-full left-0 right-0 bg-[var(--bg-primary)]/95 backdrop-blur-xl border-b border-[var(--border-gold)] p-4 overflow-x-hidden"
               >
-                <div className="max-w-7xl mx-auto relative">
+                <div className="max-w-7xl mx-auto relative overflow-x-hidden">
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search wigs..."
-                    className="w-full px-4 py-2 pl-10 rounded-full border border-[var(--brand-gold)] bg-[var(--bg-secondary)] text-[var(--text-primary)] font-body text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-gold)]"
+                    className="w-full max-w-full px-4 py-2 pl-10 rounded-full border border-[var(--brand-gold)] bg-[var(--bg-secondary)] text-[var(--text-primary)] font-body text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-gold)]"
                     autoFocus
                   />
                   <BsSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--brand-gold)]/50" />
@@ -178,34 +178,36 @@ export function Navbar() {
                   </button>
 
                   {searchQuery && (
-                    <div className="absolute top-full left-0 right-0 mt-2 max-h-80 overflow-y-auto bg-[var(--bg-secondary)]/98 backdrop-blur-md border border-[var(--brand-gold)] rounded-2xl shadow-xl z-50">
+                    <div className="absolute top-full left-0 right-0 mt-2 max-w-full max-h-80 overflow-y-auto bg-[var(--bg-secondary)]/98 backdrop-blur-md border border-[var(--brand-gold)] rounded-2xl shadow-xl z-50">
                       {searchResults.length > 0 ? (
                         searchResults.map((product) => (
                           <Link
                             key={product._id}
                             href={`/products/${product._id}`}
                             onClick={closeSearch}
-                            className="flex items-center gap-3 p-3 hover:bg-[var(--brand-gold)]/10 transition-colors first:rounded-t-2xl last:rounded-b-2xl"
+                            className="flex items-center gap-3 p-3 hover:bg-[var(--brand-gold)]/10 transition-colors first:rounded-t-2xl last:rounded-b-2xl min-w-0"
                           >
                             <div
                               style={{ backgroundImage: `url(${product.coverImage})` }}
-                              className="w-10 h-10 rounded-lg bg-cover bg-center"
+                              className="w-10 h-10 rounded-lg bg-cover bg-center flex-shrink-0"
                             />
-                            <div>
-                              <p className="text-sm font-body text-[var(--text-primary)]">{product.name}</p>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-body text-[var(--text-primary)] truncate">
+                                {product.name}
+                              </p>
                               {product.collections && (
-                                <p className="text-xs text-[var(--brand-gold)]">
+                                <p className="text-xs text-[var(--brand-gold)] truncate">
                                   {typeof product.collections === 'string' ? product.collections : product.collections[0]}
                                 </p>
                               )}
                             </div>
-                            <span className="ml-auto text-sm font-body text-[var(--brand-gold)]">
+                            <span className="ml-auto text-sm font-body text-[var(--brand-gold)] flex-shrink-0">
                               GHS {product.price.toFixed(2)}
                             </span>
                           </Link>
                         ))
                       ) : (
-                        <p className="text-center py-4 text-sm font-body text-[var(--text-muted)]">
+                        <p className="text-center py-4 text-sm font-body text-[var(--text-muted)] px-2">
                           No products found for &ldquo;{searchQuery}&rdquo;
                         </p>
                       )}

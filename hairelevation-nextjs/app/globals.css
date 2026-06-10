@@ -1,6 +1,46 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
+img, video, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.container, section {
+  max-width: 100vw;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+section {
+  overflow-x: hidden;
+}
+
 :root {
   --brand-gold: #C8A97E;
   --brand-gold-dark: #B8956A;
@@ -23,16 +63,6 @@
 
   --gradient-gold: linear-gradient(135deg, #C8A97E 0%, #B8956A 50%, #A67C52 100%);
   --gradient-brown: linear-gradient(135deg, #3B2A23 0%, #2A1E18 100%);
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg-primary);
-  color: var(--text-primary);
 }
 
 body::before {

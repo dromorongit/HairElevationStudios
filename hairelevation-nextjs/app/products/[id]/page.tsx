@@ -290,72 +290,72 @@ function ProductInfo({ product }: ProductInfoProps) {
 }
 
 export default function ProductPage() {
-  const params = useParams();
-  const id = params.id as string;
-  const [product, setProduct] = useState<IProduct | null>(null);
-  const [allProducts, setAllProducts] = useState<IProduct[]>([]);
-  const [loading, setLoading] = useState(true);
+   const params = useParams();
+   const id = params.id as string;
+   const [product, setProduct] = useState<IProduct | null>(null);
+   const [allProducts, setAllProducts] = useState<IProduct[]>([]);
+   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [productData, productsData] = await Promise.all([
-          getProductById(id),
-          getAllProducts(),
-        ]);
-        setProduct(productData);
-        setAllProducts(productsData);
-      } catch (error) {
-        console.error('Error fetching product:', error);
-        setProduct(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [id]);
+   useEffect(() => {
+     const fetchData = async () => {
+       try {
+         const [productData, productsData] = await Promise.all([
+           getProductById(id),
+           getAllProducts(),
+         ]);
+         setProduct(productData);
+         setAllProducts(productsData);
+       } catch (error) {
+         console.error('Error fetching product:', error);
+         setProduct(null);
+       } finally {
+         setLoading(false);
+       }
+     };
+     fetchData();
+   }, [id]);
 
-  if (loading) {
-    return (
-      <ToastProvider>
-        <LoadingSpinner fullPage />
-      </ToastProvider>
-    );
-  }
+   if (loading) {
+     return (
+       <ToastProvider>
+         <LoadingSpinner fullPage />
+       </ToastProvider>
+     );
+   }
 
-  if (!product) {
-    return (
-      <ToastProvider>
-        <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center">
-          <div className="text-center">
-            <svg className="w-16 h-16 text-[var(--brand-gold)] mx-auto mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m8-1V7a2 2 0 00-2-2H6a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v10z" />
-            </svg>
-            <h1 className="text-3xl font-heading font-bold text-[var(--text-primary)] mb-2">
-              Product Not Found
-            </h1>
-            <p className="text-[var(--text-muted)] font-body mb-6">
-              This product may have been removed or is no longer available.
-            </p>
-            <GoldButton href="/collections">Back to Collections</GoldButton>
-          </div>
-        </div>
-      </ToastProvider>
-    );
-  }
+   if (!product) {
+     return (
+       <ToastProvider>
+         <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center">
+           <div className="text-center px-4">
+             <svg className="w-16 h-16 text-[var(--brand-gold)] mx-auto mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+               <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m8-1V7a2 2 0 00-2-2H6a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v10z" />
+             </svg>
+             <h1 className="text-3xl font-heading font-bold text-[var(--text-primary)] mb-2">
+               Product Not Found
+             </h1>
+             <p className="text-[var(--text-muted)] font-body mb-6">
+               This product may have been removed or is no longer available.
+             </p>
+             <GoldButton href="/collections">Back to Collections</GoldButton>
+           </div>
+         </div>
+       </ToastProvider>
+     );
+   }
 
-  return (
-    <ToastProvider>
-      <div className="min-h-screen bg-[var(--bg-primary)]">
-        <nav className="pt-6 pb-4 px-4 sm:px-6 max-w-7xl mx-auto">
-          <p className="text-xs font-body text-[var(--text-muted)]">
+   return (
+     <ToastProvider>
+      <div className="min-h-screen bg-[var(--bg-primary)] overflow-x-hidden">
+        <nav className="pt-4 pb-3 px-4 sm:px-6 max-w-7xl mx-auto overflow-x-hidden">
+          <p className="text-xs font-body text-[var(--text-muted)] truncate">
             Home <span className="text-[var(--brand-gold)]">/</span> Collections{' '}
-            <span className="text-[var(--brand-gold)]">/</span> <span className="text-[var(--text-primary)]">{product.name}</span>
+            <span className="text-[var(--brand-gold)]">/</span> <span className="text-[var(--text-primary)] truncate">{product.name}</span>
           </p>
         </nav>
 
-        <main className="py-6 px-4 sm:px-6 max-w-7xl mx-auto">
-          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 md:gap-12">
+        <main className="py-6 px-4 sm:px-6 max-w-7xl mx-auto overflow-x-hidden">
+          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 md:gap-8">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -374,6 +374,6 @@ export default function ProductPage() {
 
         <RelatedProducts currentProduct={product} allProducts={allProducts} />
       </div>
-    </ToastProvider>
-  );
+     </ToastProvider>
+   );
 }

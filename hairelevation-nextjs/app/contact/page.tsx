@@ -66,33 +66,33 @@ ${formData.message}`;
   return (
     <>
       {/* Page Header */}
-      <section className="py-16 md:py-20 bg-[var(--bg-primary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-xs font-body uppercase tracking-wider text-[var(--brand-gold)] mb-4">
+      <section className="py-12 md:py-16 bg-[var(--bg-primary)] overflow-x-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center overflow-x-hidden">
+          <p className="text-xs font-body uppercase tracking-wider text-[var(--brand-gold)] mb-3 truncate">
             Home / Contact
           </p>
-          <h1 className="text-4xl lg:text-5xl font-heading font-bold text-[var(--text-primary)] mb-4">
+          <h1 className="text-3xl lg:text-4xl font-heading font-bold text-[var(--text-primary)] mb-3 break-words">
             Contact Us
           </h1>
-          <div className="w-16 h-0.5 bg-[var(--gradient-gold)] mx-auto mb-4" />
-          <p className="text-lg font-body text-[var(--text-muted)] max-w-2xl mx-auto">
+          <div className="w-16 h-0.5 bg-[var(--gradient-gold)] mx-auto mb-3" />
+          <p className="text-base font-body text-[var(--text-muted)] max-w-2xl mx-auto break-words">
             We would love to hear from you
           </p>
         </div>
       </section>
 
       {/* Contact Grid */}
-      <section className="py-12 md:py-16 bg-[var(--bg-secondary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:grid lg:grid-cols-5 gap-8 lg:gap-12">
-            {/* Form - left 60% */}
-            <div className="lg:col-span-3">
-              <div className="bg-[var(--bg-secondary)] rounded-xl border border-[var(--border-gold)] p-6 md:p-8">
-                <h2 className="text-2xl font-heading font-bold text-[var(--text-primary)] mb-6">
+      <section className="py-8 md:py-10 bg-[var(--bg-secondary)] overflow-x-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x-hidden">
+          <div className="flex flex-col lg:grid lg:grid-cols-5 gap-6 md:gap-8">
+            {/* Form - full width on mobile */}
+            <div className="w-full lg:col-span-3">
+              <div className="bg-[var(--bg-secondary)] rounded-xl border border-[var(--border-gold)] p-4 md:p-6 lg:p-8">
+                <h2 className="text-xl md:text-2xl font-heading font-bold text-[var(--text-primary)] mb-4 md:mb-6 break-words">
                   Send Us a Message
                 </h2>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-[var(--text-primary)] mb-1 font-body">
                       Full Name <span className="text-[var(--brand-gold)]">*</span>
@@ -180,7 +180,7 @@ ${formData.message}`;
 
                   {isSubmitted && (
                     <div className="bg-[var(--brand-gold)] text-[var(--bg-primary)] px-4 py-3 rounded-xl">
-                      <p className="text-sm font-body font-medium">
+                      <p className="text-sm font-body font-medium break-words">
                         ✅ Your message has been sent! We will respond shortly via WhatsApp or email.
                       </p>
                     </div>
@@ -194,11 +194,11 @@ ${formData.message}`;
               </div>
             </div>
 
-            {/* Info Cards - right 40% */}
-            <div className="lg:col-span-2 space-y-6">
-              <div className="bg-[var(--bg-primary)] rounded-xl p-6 border border-[var(--border-gold)]">
+            {/* Info Cards - full width on mobile */}
+            <div className="w-full lg:col-span-2 space-y-4 md:space-y-6">
+              <div className="bg-[var(--bg-primary)] rounded-xl p-4 md:p-6 border border-[var(--border-gold)]">
                 <p className="text-sm font-body text-[var(--text-muted)] mb-1">📍 Visit Us</p>
-                <p className="text-lg font-body text-[var(--text-primary)] mb-2">Kanda, Accra, Ghana</p>
+                <p className="text-base font-body text-[var(--text-primary)] mb-2 break-words">Kanda, Accra, Ghana</p>
                 <a
                   href="https://maps.google.com/?q=Kanda,Accra,Ghana"
                   target="_blank"
@@ -209,26 +209,24 @@ ${formData.message}`;
                 </a>
               </div>
 
-              <div className="bg-[var(--bg-primary)] rounded-xl p-6 border border-[var(--border-gold)]">
+              <div className="bg-[var(--bg-primary)] rounded-xl p-4 md:p-6 border border-[var(--border-gold)]">
                 <p className="text-sm font-body text-[var(--text-muted)] mb-1">📞 Call/WhatsApp</p>
-                <a href="tel:0534057109" className="text-lg font-body text-[var(--brand-gold)]">
-                  0534057109
-                </a>
+                <a href="tel:0534057109" className="text-base font-body text-[var(--brand-gold)] break-words">0534057109</a>
               </div>
 
-              <div className="bg-[var(--bg-primary)] rounded-xl p-6 border border-[var(--border-gold)]">
+              <div className="bg-[var(--bg-primary)] rounded-xl p-4 md:p-6 border border-[var(--border-gold)]">
                 <p className="text-sm font-body text-[var(--text-muted)] mb-1">📧 Email</p>
-                <a href="mailto:hairelevationstudio@gmail.com" className="text-lg font-body text-[var(--brand-gold)]">
+                <a href="mailto:hairelevationstudio@gmail.com" className="text-base font-body text-[var(--brand-gold)] break-words truncate">
                   hairelevationstudio@gmail.com
                 </a>
               </div>
 
-              <div className="bg-[var(--bg-primary)] rounded-xl p-6 border border-[var(--border-gold)]">
+              <div className="bg-[var(--bg-primary)] rounded-xl p-4 md:p-6 border border-[var(--border-gold)]">
                 <p className="text-sm font-body text-[var(--text-muted)] mb-1">🕐 Hours</p>
-                <p className="text-lg font-body text-[var(--text-primary)]">Tues-Sat 9am-6pm</p>
+                <p className="text-base font-body text-[var(--text-primary)] break-words">Tues-Sat 9am-6pm</p>
               </div>
 
-              <div className="flex gap-4 justify-center pt-4">
+<div className="flex flex-wrap gap-3 justify-center pt-2 md:pt-4">
                 <a
                   href="https://instagram.com/hair_elevation_studio"
                   target="_blank"

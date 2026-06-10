@@ -165,30 +165,30 @@ ${orderLines}
         whatsappUrl={whatsappUrl}
       />
 
-      <div className="min-h-screen bg-[var(--bg-primary)]">
-        <section className="py-16 bg-[var(--bg-primary)]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p className="text-xs font-body uppercase tracking-wider text-[var(--brand-gold)] mb-4">
+      <div className="min-h-screen bg-[var(--bg-primary)] overflow-x-hidden">
+        <section className="py-12 md:py-16 bg-[var(--bg-primary)] overflow-x-hidden">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center overflow-x-hidden">
+            <p className="text-xs font-body uppercase tracking-wider text-[var(--brand-gold)] mb-3 truncate">
               Home / Cart
             </p>
-            <h1 className="text-4xl lg:text-5xl font-heading font-bold text-[var(--text-primary)] mb-4">
+            <h1 className="text-3xl lg:text-4xl font-heading font-bold text-[var(--text-primary)] mb-3 break-words">
               Your Cart
             </h1>
-            <p className="text-lg text-[var(--brand-gold)]/80 font-body">
+            <p className="text-base font-body text-[var(--brand-gold)]/80">
               {items.length} items
             </p>
           </div>
         </section>
 
-        <main className="py-8 px-4 sm:px-6 max-w-7xl mx-auto">
-          <div className="flex flex-col lg:grid lg:grid-cols-5 gap-8">
-            <div className="lg:col-span-3">
-              <h2 className="text-2xl font-heading font-bold text-[var(--text-primary)] mb-6 relative">
+        <main className="py-6 px-4 sm:px-6 max-w-7xl mx-auto overflow-x-hidden">
+          <div className="flex flex-col lg:grid lg:grid-cols-5 gap-6 md:gap-8">
+            <div className="w-full lg:col-span-3">
+              <h2 className="text-xl md:text-2xl font-heading font-bold text-[var(--text-primary)] mb-4 md:mb-6 relative">
                 Order Items
                 <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-[var(--gradient-gold)]" />
               </h2>
 
-              <div className="space-y-4">
+              <div className="space-y-3 md:space-y-4">
                 {items.map((item) => (
                   <CartItem key={item.product._id} item={item} />
                 ))}
@@ -196,14 +196,14 @@ ${orderLines}
 
               <button
                 onClick={handleClearCart}
-                className="mt-6 text-sm text-rose-400 font-body hover:underline"
+                className="mt-4 md:mt-6 text-sm text-rose-400 font-body hover:underline"
               >
                 Clear Cart
               </button>
             </div>
 
-            <div className="lg:col-span-2">
-              <div className="lg:sticky lg:top-24">
+            <div className="w-full lg:col-span-2">
+              <div className="w-full">
                 <OrderSummary />
                 <CheckoutForm
                   formData={formData}

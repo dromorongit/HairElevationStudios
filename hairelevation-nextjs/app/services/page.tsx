@@ -36,28 +36,28 @@ function ServiceCard({ icon, title, description, features }: ServiceCardProps) {
 }
 
 export default function ServicesPage() {
-  return (
+   return (
     <>
       {/* Page Header */}
-      <section className="py-16 md:py-20 bg-[var(--bg-primary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-xs font-body uppercase tracking-wider text-[var(--brand-gold)] mb-4">
+      <section className="py-12 md:py-16 bg-[var(--bg-primary)] overflow-x-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center overflow-x-hidden">
+          <p className="text-xs font-body uppercase tracking-wider text-[var(--brand-gold)] mb-3 truncate">
             Home / Services
           </p>
-          <h1 className="text-4xl lg:text-5xl font-heading font-bold text-[var(--text-primary)] mb-4">
+          <h1 className="text-3xl lg:text-4xl font-heading font-bold text-[var(--text-primary)] mb-3 break-words">
             Our Services
           </h1>
-          <div className="w-16 h-0.5 bg-[var(--gradient-gold)] mx-auto mb-4" />
-          <p className="text-lg font-body text-[var(--text-muted)] max-w-2xl mx-auto">
+          <div className="w-16 h-0.5 bg-[var(--gradient-gold)] mx-auto mb-3" />
+          <p className="text-base font-body text-[var(--text-muted)] max-w-2xl mx-auto">
             Expert craftsmanship, delivered with care
           </p>
         </div>
       </section>
 
       {/* Services Grid */}
-      <section className="py-16 md:py-24 bg-[var(--bg-secondary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+      <section className="py-12 md:py-16 bg-[var(--bg-secondary)] overflow-x-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x-hidden">
+          <div className="grid grid-cols-1 gap-4 md:gap-6">
             <ServiceCard
               icon={<BsScissors className="w-6 h-6 text-[var(--bg-primary)]" />}
               title="Custom Wig Making"
@@ -96,24 +96,24 @@ export default function ServicesPage() {
       </section>
 
       {/* Process Section */}
-      <section className="py-16 md:py-24 bg-[var(--bg-primary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-12 md:py-16 bg-[var(--bg-primary)] overflow-x-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x-hidden">
           <motion.div
-            className="text-center mb-12 md:mb-16"
+            className="text-center mb-10 md:mb-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-2xl lg:text-3xl font-heading font-bold text-[var(--text-primary)] mb-4">
+            <h2 className="text-2xl lg:text-3xl font-heading font-bold text-[var(--text-primary)] mb-3 md:mb-4">
               How It Works
             </h2>
-            <p className="text-base lg:text-lg font-body text-[var(--brand-gold)]/80">
+            <p className="text-base font-body text-[var(--brand-gold)]/80 break-words">
               Simple steps to your dream look
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:flex md:flex-row md:items-center md:justify-center gap-6 md:gap-16">
+          <div className="grid grid-cols-2 gap-4 md:flex md:flex-row md:items-center md:justify-center md:gap-6 lg:gap-12">
             {[
               { num: '01', title: 'Book Appointment', desc: 'Schedule your consultation online or via WhatsApp' },
               { num: '02', title: 'Consultation', desc: 'Discuss your vision and requirements in detail' },
@@ -128,11 +128,11 @@ export default function ServicesPage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <div className="text-4xl md:text-5xl font-heading font-bold text-[var(--brand-gold)] mb-2">
+                <div className="text-3xl md:text-4xl font-heading font-bold text-[var(--brand-gold)] mb-1 md:mb-2">
                   {step.num}
                 </div>
-                <h3 className="text-base md:text-lg font-heading text-[var(--text-primary)] mb-1">{step.title}</h3>
-                <p className="text-xs md:text-sm font-body text-[var(--text-muted)]">{step.desc}</p>
+                <h3 className="text-sm md:text-lg font-heading text-[var(--text-primary)] mb-1 break-words">{step.title}</h3>
+                <p className="text-xs md:text-sm font-body text-[var(--text-muted)] break-words">{step.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -140,12 +140,12 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA Banner */}
-      <section className="py-16 bg-[var(--gradient-gold)]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl lg:text-3xl font-heading font-bold text-[var(--bg-primary)] mb-4">
+      <section className="py-12 md:py-16 bg-[var(--gradient-gold)] overflow-x-hidden">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center overflow-x-hidden">
+          <h2 className="text-2xl lg:text-3xl font-heading font-bold text-[var(--bg-primary)] mb-3 md:mb-4">
             Ready to Elevate Your Look?
           </h2>
-          <p className="text-base font-body text-[var(--bg-primary)]/80 mb-6">
+          <p className="text-sm md:text-base font-body text-[var(--bg-primary)]/80 mb-5 md:mb-6">
             Book your appointment today and experience the transformation
           </p>
           <GoldButton href="/book" size="lg" className="bg-[var(--bg-primary)] text-[var(--text-primary)] hover:bg-[var(--bg-secondary)]">
