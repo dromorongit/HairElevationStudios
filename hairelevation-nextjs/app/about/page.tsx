@@ -1,6 +1,5 @@
 "use client";
 
-import { GoldButton } from '@/components/shared/GoldButton';
 import { OutlineButton } from '@/components/shared/OutlineButton';
 import { BsTrophy, BsHeartFill, BsGeoAlt } from 'react-icons/bs';
 

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { BsClipboard } from 'react-icons/bs';
-import { GoldButton } from '@/components/shared/GoldButton';
+import { OutlineButton } from '@/components/shared/OutlineButton';
 import { formatPrice } from '@/lib/utils';
 
 interface PaymentInstructionsModalProps {
@@ -135,9 +135,9 @@ export function PaymentInstructionsModal({
         </div>
 
         <div className="px-6 py-4 border-t border-[rgba(200,169,126,0.15)]">
-          <GoldButton onClick={onConfirm} size="lg" className="w-full">
+          <OutlineButton onClick={onConfirm} size="lg" className="w-full">
             I Have Made the Payment
-          </GoldButton>
+          </OutlineButton>
         </div>
       </motion.div>
     </div>

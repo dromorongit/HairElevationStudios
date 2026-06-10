@@ -1,16 +1,16 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ShoppingBag } from 'lucide-react';
 import { useCartStore } from '@/store/cartStore';
-import { GoldButton } from '@/components/shared/GoldButton';
+import { OutlineButton } from '@/components/shared/OutlineButton';
 import { CartItem } from '@/components/shared/CartItem';
 import { OrderSummary } from '@/components/checkout/OrderSummary';
 import { CheckoutForm, CheckoutFormData } from '@/components/checkout/CheckoutForm';
 import { OrderSuccessModal } from '@/components/checkout/OrderSuccessModal';
 import { PaymentInstructionsModal } from '@/components/checkout/PaymentInstructionsModal';
 import { PaymentProofModal } from '@/components/checkout/PaymentProofModal';
-import { ToastProvider, useToast } from '@/components/shared/Toast';
+import { useToast } from '@/components/shared/Toast';
 import { uploadPaymentProof } from '@/lib/api';
 import { formatPrice } from '@/lib/utils';
 
@@ -34,15 +34,6 @@ function CartContent() {
   const [isUploading, setIsUploading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [whatsappUrl, setWhatsappUrl] = useState('');
-
-  useEffect(() => {
-    if (showSuccess && whatsappUrl) {
-      const timer = setTimeout(() => {
-        window.open(whatsappUrl, '_blank');
-      }, 1500);
-      return () => clearTimeout(timer);
-    }
-  }, [showSuccess, whatsappUrl]);
 
   const handleFormSubmit = () => {
     setShowPaymentInstructions(true);
@@ -102,6 +93,8 @@ ${orderLines}
       setWhatsappUrl(builtWhatsappUrl);
       setShowSuccess(true);
       setShowPaymentProof(false);
+      window.open(builtWhatsappUrl, '_blank');
+      clearCart();
     } catch (error) {
       console.error('Payment proof upload error:', error);
       showToast('Failed to upload payment proof. Please try again.');
@@ -135,7 +128,7 @@ ${orderLines}
           <p className="text-lg text-[var(--text-muted)] font-body mb-8">
             Discover our premium wig collections and find your perfect piece.
           </p>
-          <GoldButton href="/collections">Shop Collections</GoldButton>
+          <OutlineButton href="/collections">Shop Collections</OutlineButton>
         </div>
       </div>
     );
@@ -228,9 +221,5 @@ ${orderLines}
 }
 
 export default function CartPage() {
-  return (
-    <ToastProvider>
-      <CartContent />
-    </ToastProvider>
-  );
+  return <CartContent />;
 }

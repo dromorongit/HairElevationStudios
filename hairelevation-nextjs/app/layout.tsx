@@ -6,6 +6,7 @@ import { Footer } from '@/components/layout/Footer';
 import { ScrollToTop } from '@/components/shared/ScrollToTop';
 import { NavigationProgress } from '@/components/shared/NavigationProgress';
 import { FloatingWhatsApp } from '@/components/shared/FloatingWhatsApp';
+import { ToastProvider } from '@/components/shared/Toast';
 
 const playfairDisplay = Playfair_Display({
   variable: '--font-playfair',
@@ -38,9 +39,11 @@ export default function RootLayout({
       <body className={`${playfairDisplay.variable} ${dmSans.variable} antialiased flex flex-col min-h-screen`}>
         <NavigationProgress />
         <Navbar />
-        <main className="flex-1">
-          {children}
-        </main>
+        <ToastProvider>
+          <main className="flex-1">
+            {children}
+          </main>
+        </ToastProvider>
         <Footer />
         <ScrollToTop />
         <FloatingWhatsApp />

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { BsUpload, BsX, BsWhatsapp } from 'react-icons/bs';
-import { GoldButton } from '@/components/shared/GoldButton';
+import { OutlineButton } from '@/components/shared/OutlineButton';
 
 interface PaymentProofModalProps {
   isOpen: boolean;
@@ -151,7 +151,7 @@ export function PaymentProofModal({
         </div>
 
         <div className="px-6 py-4 border-t border-[rgba(200,169,126,0.15)]">
-          <GoldButton
+          <OutlineButton
             onClick={handleSubmit}
             size="lg"
             disabled={!selectedFile || isUploading}
@@ -168,7 +168,7 @@ export function PaymentProofModal({
                 Submit Order & Open WhatsApp
               </>
             )}
-          </GoldButton>
+          </OutlineButton>
         </div>
       </motion.div>
     </div>

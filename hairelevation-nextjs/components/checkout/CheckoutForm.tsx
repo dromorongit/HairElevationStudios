@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Lock } from 'lucide-react';
-import { GoldButton } from '@/components/shared/GoldButton';
+import { OutlineButton } from '@/components/shared/OutlineButton';
 
 export interface CheckoutFormData {
   name: string;
@@ -208,7 +208,7 @@ export function CheckoutForm({ formData, onChange, onSubmit, isLoading }: Checko
           )}
         </div>
 
-        <GoldButton
+        <OutlineButton
           type="submit"
           size="lg"
           disabled={isLoading}
@@ -220,7 +220,7 @@ export function CheckoutForm({ formData, onChange, onSubmit, isLoading }: Checko
             <Lock className="w-4 h-4 mr-2" />
           )}
           Place Order
-        </GoldButton>
+        </OutlineButton>
       </form>
     </div>
   );

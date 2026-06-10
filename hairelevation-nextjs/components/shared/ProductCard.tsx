@@ -3,10 +3,11 @@
 import Link from 'next/link';
 import { BsHeart, BsHeartFill } from 'react-icons/bs';
 import { IProduct } from '@/lib/types';
-import { cn, formatPrice, truncateText, toArray } from '@/lib/utils';
+import { formatPrice, truncateText, toArray } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { useCart } from '@/hooks/useCart';
 import { useWishlist } from '@/hooks/useWishlist';
+import { useToast } from '@/components/shared/Toast';
 
 interface ProductCardProps {
   product: IProduct;
@@ -15,7 +16,15 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCart();
   const { isInWishlist, toggleWishlist } = useWishlist();
+  const { showToast } = useToast();
   const inWishlist = isInWishlist(product._id);
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addItem(product);
+    showToast(`${product.name} added to cart`);
+  };
 
   return (
     <Link href={`/products/${product._id}`} className="block">
@@ -86,17 +95,13 @@ export function ProductCard({ product }: ProductCardProps) {
               )}
             </div>
 
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                addItem(product);
-              }}
-              disabled={!product.inStock}
-              className="w-full h-9 rounded-full border border-[var(--brand-gold)] text-[var(--text-primary)] font-body text-[12px] uppercase tracking-widest bg-transparent hover:bg-[var(--brand-gold)] hover:text-[var(--bg-primary)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Add to Cart
-            </button>
+<button
+               onClick={handleAddToCart}
+               disabled={!product.inStock}
+               className="w-full h-9 rounded-full border border-[var(--brand-gold)] text-[var(--text-primary)] font-body text-[12px] uppercase tracking-widest bg-transparent hover:bg-[var(--brand-gold)] hover:text-[var(--bg-primary)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+             >
+               Add to Cart
+             </button>
           </div>
         </div>
       </motion.div>
