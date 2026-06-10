@@ -8,7 +8,7 @@ import { getAllProducts } from '@/lib/api';
 import { IProduct } from '@/lib/types';
 import { ProductCard } from '@/components/shared/ProductCard';
 import { GoldButton } from '@/components/shared/GoldButton';
-import { cn, toArray } from '@/lib/utils';
+import { cn, toArray, COLLECTION_FILTER_MAPPING } from '@/lib/utils';
 
 const collectionOptions = ['All', 'Straight', 'Wavy/Layers/Bouncy', 'Curly', 'Pixie Cut'];
 const sortOptions = ['Default', 'Price: Low to High', 'Price: High to Low', 'Newest First'];
@@ -44,7 +44,9 @@ function CollectionsContent() {
 
     if (selectedCollection !== 'All') {
       result = result.filter(product =>
-        toArray(product.collections).includes(selectedCollection)
+        toArray(product.collections).some(c => 
+          COLLECTION_FILTER_MAPPING[c] === selectedCollection || c === selectedCollection
+        )
       );
     }
 

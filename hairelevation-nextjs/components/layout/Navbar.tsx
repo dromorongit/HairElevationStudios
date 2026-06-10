@@ -10,6 +10,7 @@ import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import { getAllProducts } from '@/lib/api';
 import { IProduct } from '@/lib/types';
+import { getDisplayCollectionName } from '@/lib/utils';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -197,7 +198,7 @@ export function Navbar() {
                               </p>
                               {product.collections && (
                                 <p className="text-xs text-[var(--brand-gold)] truncate">
-                                  {typeof product.collections === 'string' ? product.collections : product.collections[0]}
+                                  {typeof product.collections === 'string' ? getDisplayCollectionName(product.collections) : getDisplayCollectionName(product.collections[0])}
                                 </p>
                               )}
                             </div>

@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { IProduct } from '@/lib/types';
-import { toArray } from '@/lib/utils';
+import { toArray, COLLECTION_FILTER_MAPPING } from '@/lib/utils';
 import { ProductCard } from './ProductCard';
 import { SectionHeading } from './SectionHeading';
 
@@ -16,7 +16,12 @@ export function RelatedProducts({ currentProduct, allProducts }: RelatedProducts
     .filter((product) =>
       product._id !== currentProduct._id &&
       toArray(product.collections).some((collection) =>
-        toArray(currentProduct.collections).includes(collection)
+        toArray(currentProduct.collections).some((currentCol) =>
+          COLLECTION_FILTER_MAPPING[collection] === COLLECTION_FILTER_MAPPING[currentCol] ||
+          collection === currentCol ||
+          COLLECTION_FILTER_MAPPING[collection] === currentCol ||
+          COLLECTION_FILTER_MAPPING[currentCol] === collection
+        )
       )
     )
     .slice(0, 4);
@@ -35,7 +40,7 @@ export function RelatedProducts({ currentProduct, allProducts }: RelatedProducts
       />
 
       <motion.div
-        className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mt-12"
+        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mt-12"
         initial="initial"
         whileInView="animate"
         viewport={{ once: true }}

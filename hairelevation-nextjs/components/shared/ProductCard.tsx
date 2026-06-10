@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { BsHeart, BsHeartFill } from 'react-icons/bs';
 import { IProduct } from '@/lib/types';
-import { formatPrice, truncateText, toArray } from '@/lib/utils';
+import { formatPrice, truncateText, toArray, getDisplayCollectionName } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { useCart } from '@/hooks/useCart';
 import { useWishlist } from '@/hooks/useWishlist';
@@ -79,7 +79,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
           {toArray(product.collections).length > 0 && (
             <p className="text-[11px] text-[var(--text-gold)] uppercase tracking-wider truncate mb-2 font-body w-full">
-              {toArray(product.collections)[0]}
+              {getDisplayCollectionName(toArray(product.collections)[0])}
             </p>
           )}
 

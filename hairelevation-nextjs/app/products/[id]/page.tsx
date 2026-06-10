@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { useParams } from 'next/navigation';
 import { getProductById, getAllProducts } from '@/lib/api';
 import { IProduct } from '@/lib/types';
-import { cn, formatPrice, toArray } from '@/lib/utils';
+import { cn, formatPrice, toArray, getDisplayCollectionName } from '@/lib/utils';
 import { LoadingSpinner } from '@/components/shared/LoadingSpinner';
 import { Badge } from '@/components/shared/Badge';
 import { GoldButton } from '@/components/shared/GoldButton';
@@ -87,7 +87,7 @@ function ProductInfo({ product }: ProductInfoProps) {
                 key={index}
                 className="text-[10px] px-3 py-1 border border-[var(--brand-gold)] rounded-full text-[var(--text-primary)] font-body uppercase tracking-wider"
               >
-                {collection}
+                {getDisplayCollectionName(collection)}
               </span>
             ))}
           </>
