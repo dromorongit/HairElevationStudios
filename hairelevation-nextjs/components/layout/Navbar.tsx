@@ -177,8 +177,8 @@ export function Navbar() {
                     <HiX className="w-4 h-4" />
                   </button>
 
-                  {searchQuery && (
-                    <div className="absolute top-full left-0 right-0 mt-2 max-w-full max-h-80 overflow-y-auto bg-[var(--bg-secondary)]/98 backdrop-blur-md border border-[var(--brand-gold)] rounded-2xl shadow-xl z-50">
+{searchQuery && (
+                     <div className="absolute top-full left-0 right-0 mt-2 max-w-full max-h-80 overflow-y-auto bg-[var(--bg-secondary)]/98 backdrop-blur-md border border-[var(--brand-gold)] rounded-2xl shadow-xl z-[90]">
                       {searchResults.length > 0 ? (
                         searchResults.map((product) => (
                           <Link
@@ -222,8 +222,8 @@ export function Navbar() {
 
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
-            className="fixed inset-0 z-50 bg-[var(--bg-primary)] flex flex-col"
+<motion.div
+             className="fixed inset-0 z-[90] bg-[var(--bg-primary)] flex flex-col"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
