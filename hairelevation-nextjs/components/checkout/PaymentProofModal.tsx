@@ -74,7 +74,7 @@ export function PaymentProofModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50 overflow-x-hidden">
+    <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-[100] overflow-x-hidden">
       <motion.div
         className="bg-[#2A1E18] border border-[rgba(200,169,126,0.3)] rounded-2xl max-w-full w-full mx-4 max-h-[85vh] overflow-y-auto"
         initial={{ opacity: 0, scale: 0.9 }}

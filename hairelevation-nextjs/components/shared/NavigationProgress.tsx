@@ -17,7 +17,7 @@ export function NavigationProgress() {
       initial={{ width: '0%' }}
       animate={{ width: `${progress}%` }}
       transition={{ duration: 0.5, ease: 'easeInOut' }}
-      className="fixed top-0 left-0 h-0.5 bg-[var(--gradient-gold)] z-50"
+      className="fixed top-0 left-0 h-0.5 bg-[var(--gradient-gold)] z-[100]"
     />
   );
 }

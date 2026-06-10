@@ -2378,11 +2378,55 @@ textarea {
     padding-left: 15px;
   }
   
-  .payment-steps li {
-    margin-bottom: 6px;
-  }
+}
+   .payment-steps li {
+     margin-bottom: 6px;
+   }
 
-  /* Ensure promo prices are always visible on all mobile sizes */
+   .order-success-content {
+     max-width: 500px;
+   }
+
+   .order-success-message {
+     text-align: center;
+   }
+
+   .success-icon {
+     font-size: 4rem;
+     margin-bottom: 20px;
+   }
+
+   .success-note {
+     color: #666;
+     margin: 15px 0;
+     font-style: italic;
+   }
+
+   .order-summary-details {
+     background: rgba(200, 169, 126, 0.05);
+     padding: 20px;
+     border-radius: 10px;
+     margin: 20px 0;
+     text-align: left;
+     color: #000000 !important;
+   }
+
+   .order-summary-details p {
+     margin: 8px 0;
+     color: #000000 !important;
+   }
+
+   .whatsapp-btn {
+     background: linear-gradient(135deg, #25D366 0%, #20B954 100%) !important;
+     color: white !important;
+     border: none !important;
+   }
+
+   .cart-clear-message {
+     color: #000000 !important;
+   }
+
+   /* Ensure promo prices are always visible on all mobile sizes */
   .product-card {
     overflow: visible !important;
   }

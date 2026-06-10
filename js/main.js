@@ -550,6 +550,7 @@ async function initializePage() {
         const mobileMoneyModal = document.getElementById('mobile-money-modal');
         const bankPaymentModal = document.getElementById('bank-payment-modal');
         const paymentProofModal = document.getElementById('payment-proof-modal');
+        const orderSuccessModal = document.getElementById('order-success-modal');
         const closeModals = document.querySelectorAll('.close-modal');
 
         // Close modal functionality
@@ -558,6 +559,7 @@ async function initializePage() {
                 mobileMoneyModal.style.display = 'none';
                 bankPaymentModal.style.display = 'none';
                 paymentProofModal.style.display = 'none';
+                orderSuccessModal.style.display = 'none';
             });
         });
 
@@ -571,6 +573,9 @@ async function initializePage() {
             }
             if (event.target === paymentProofModal) {
                 paymentProofModal.style.display = 'none';
+            }
+            if (event.target === orderSuccessModal) {
+                orderSuccessModal.style.display = 'none';
             }
         });
 
@@ -710,6 +715,43 @@ async function initializePage() {
             }
         }
 
+        // Show Order Success Modal
+        function showOrderSuccessModal(whatsappMessage, orderData) {
+            if (orderSuccessModal) {
+                // Store the WhatsApp URL for the button
+                const whatsappUrl = `https://wa.me/233534057109?text=${encodeURIComponent(whatsappMessage)}`;
+                const whatsappBtn = document.getElementById('whatsapp-order-btn');
+                if (whatsappBtn) {
+                    whatsappBtn.href = whatsappUrl;
+                }
+
+                // Display order summary in the modal
+                const orderSummary = document.getElementById('order-success-summary');
+                if (orderSummary) {
+                    orderSummary.innerHTML = `
+                        <p><strong>Total:</strong> ₵${orderData.total}</p>
+                        <p><strong>Payment Method:</strong> ${orderData.payment === 'mobile' ? 'Mobile Money' : 'Bank Transfer'}</p>
+                        <p><strong>Items:</strong> ${orderData.items.length} product(s)</p>
+                    `;
+                }
+
+                // Hide payment proof modal
+                paymentProofModal.style.display = 'none';
+
+                // Show order success modal
+                orderSuccessModal.style.display = 'block';
+
+                // Auto-open WhatsApp after a short delay
+                setTimeout(() => {
+                    openWhatsApp(whatsappMessage);
+                }, 1500);
+
+                // Clear cart after modal is shown
+                localStorage.removeItem('cart');
+                updateCartCount();
+            }
+        }
+
         // Enhanced WhatsApp opening function with multiple fallbacks
         function openWhatsApp(message) {
             const phoneNumber = '233534057109';
@@ -768,36 +810,8 @@ async function initializePage() {
                 // Create WhatsApp message
                 const whatsappMessage = createWhatsAppMessage(orderData, paymentProofUrl);
                 
-                // Open WhatsApp with multiple fallback methods
-                openWhatsApp(whatsappMessage);
-
-                // Clear cart and show success message
-                localStorage.removeItem('cart');
-                paymentProofModal.style.display = 'none';
-
-                if (checkoutMessage) {
-                    checkoutMessage.innerHTML = `
-                        <div style="background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; border: 1px solid #c3e6cb;">
-                            <strong>✅ Order submitted successfully!</strong><br>
-                            WhatsApp should open automatically with your order details.
-                            If it doesn't open, please click the WhatsApp button below to complete the payment confirmation.
-                            <div style="margin-top: 10px;">
-                                <a href="https://wa.me/233534057109?text=${encodeURIComponent(whatsappMessage)}"
-                                   target="_blank"
-                                   style="display: inline-block; background: #25D366; color: white; padding: 8px 16px; text-decoration: none; border-radius: 5px; margin-top: 10px;">
-                                    📱 Open WhatsApp
-                                </a>
-                            </div>
-                        </div>
-                    `;
-                    checkoutMessage.style.color = 'green';
-                }
-
-                checkoutForm.reset();
-                // Don't auto-redirect so user can complete WhatsApp if needed
-                // setTimeout(() => {
-                //     window.location.href = 'index.html';
-                // }, 5000);
+                // Show order success modal first
+                showOrderSuccessModal(whatsappMessage, orderData);
             })
             .catch(error => {
                 console.error('Error uploading payment proof:', error);

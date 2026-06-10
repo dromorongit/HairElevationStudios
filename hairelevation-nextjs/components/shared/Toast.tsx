@@ -34,8 +34,8 @@ export function ToastProvider({ children }: ToastProviderProps) {
       {children}
       <AnimatePresence>
         {message && (
-          <motion.div
-            className="fixed bottom-6 right-6 z-50 flex items-center gap-3"
+<motion.div
+             className="fixed bottom-6 right-6 z-[90] flex items-center gap-3"
             initial={{ x: 100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: 100, opacity: 0 }}

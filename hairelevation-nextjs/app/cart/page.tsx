@@ -91,10 +91,11 @@ ${orderLines}
 
       const builtWhatsappUrl = `https://wa.me/233534057109?text=${encodeURIComponent(message)}`;
       setWhatsappUrl(builtWhatsappUrl);
-      setShowSuccess(true);
       setShowPaymentProof(false);
-      window.open(builtWhatsappUrl, '_blank');
-      clearCart();
+      setShowSuccess(true);
+      setTimeout(() => {
+        window.open(builtWhatsappUrl, '_blank');
+      }, 500);
     } catch (error) {
       console.error('Payment proof upload error:', error);
       showToast('Failed to upload payment proof. Please try again.');

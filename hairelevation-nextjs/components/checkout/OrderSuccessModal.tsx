@@ -9,14 +9,16 @@ interface OrderSuccessModalProps {
   onClose: () => void;
   customerName: string;
   whatsappUrl: string;
+  onCartClear?: () => void;
 }
 
-export function OrderSuccessModal({ isOpen, onClose, customerName, whatsappUrl }: OrderSuccessModalProps) {
+export function OrderSuccessModal({ isOpen, onClose, customerName, whatsappUrl, onCartClear }: OrderSuccessModalProps) {
   const { clearCart } = useCartStore();
 
-  const handleContinueShopping = () => {
+  const handleDone = () => {
     clearCart();
     onClose();
+    onCartClear?.();
   };
 
   const handleResendWhatsApp = () => {
@@ -26,7 +28,7 @@ export function OrderSuccessModal({ isOpen, onClose, customerName, whatsappUrl }
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 overflow-x-hidden">
+    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[100] overflow-x-hidden">
       <motion.div
         className="bg-[var(--bg-secondary)] rounded-xl p-6 sm:p-8 max-w-full w-full mx-4 max-h-[85vh] overflow-y-auto"
         initial={{ opacity: 0, scale: 0.9 }}
@@ -59,8 +61,8 @@ export function OrderSuccessModal({ isOpen, onClose, customerName, whatsappUrl }
         </div>
 
         <div className="flex flex-col gap-3">
-          <GoldButton href="/collections" onClick={handleContinueShopping} size="lg" className="w-full">
-            Continue Shopping
+          <GoldButton href="/collections" onClick={handleDone} size="lg" className="w-full">
+            Done (Clear Cart)
           </GoldButton>
           <button
             onClick={handleResendWhatsApp}
