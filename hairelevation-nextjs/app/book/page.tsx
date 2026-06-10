@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GoldButton } from '@/components/shared/GoldButton';
 import { BsInstagram, BsTiktok, BsCursor } from 'react-icons/bs';
 
@@ -35,6 +35,10 @@ export default function BookPage() {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  useEffect(() => {
+    document.title = 'Book Appointment | Hair Elevation Studio';
+  }, []);
 
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};

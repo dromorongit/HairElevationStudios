@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { GoldButton } from '@/components/shared/GoldButton';
 import { BsScissors, BsStar } from 'react-icons/bs';
@@ -36,6 +37,10 @@ function ServiceCard({ icon, title, description, features }: ServiceCardProps) {
 }
 
 export default function ServicesPage() {
+   useEffect(() => {
+     document.title = 'Our Services | Hair Elevation Studio';
+   }, []);
+
    return (
     <>
       {/* Page Header */}

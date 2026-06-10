@@ -17,11 +17,14 @@ function CollectionsContent() {
   const [allProducts, setAllProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const searchParams = useSearchParams();
-
   const [selectedCollection, setSelectedCollection] = useState('All');
   const [onSale, setOnSale] = useState(false);
   const [inStock, setInStock] = useState(false);
   const [sortBy, setSortBy] = useState('Default');
+
+  useEffect(() => {
+    document.title = 'Shop All Collections | Hair Elevation Studio';
+  }, []);
 
   useEffect(() => {
     const collectionParam = searchParams.get('collection');

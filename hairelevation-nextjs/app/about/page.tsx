@@ -1,9 +1,14 @@
 "use client";
 
+import { useEffect } from 'react';
 import { OutlineButton } from '@/components/shared/OutlineButton';
 import { BsTrophy, BsHeartFill, BsGeoAlt } from 'react-icons/bs';
 
 export default function AboutPage() {
+   useEffect(() => {
+     document.title = 'Our Story | Hair Elevation Studio';
+   }, []);
+
    return (
     <>
       {/* Page Header */}

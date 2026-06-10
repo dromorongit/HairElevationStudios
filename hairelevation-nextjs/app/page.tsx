@@ -134,10 +134,12 @@ export default function HomePage() {
                 <div className="relative bg-[rgba(59,42,35,0.85)] backdrop-blur-md rounded-xl border border-[var(--border-gold)] p-3 sm:p-4">
                   <div className="relative aspect-[4/5] rounded-xl overflow-hidden">
 <img
-                        src="/assets/images/threeladies.jpg"
-                        alt="Hair Elevation Studio"
-                        className="w-full h-full object-cover object-top rounded-2xl"
-                      />
+                         src="/assets/images/threeladies.jpg"
+                         alt="Hair Elevation Studio"
+                         className="w-full h-full object-cover object-top rounded-2xl"
+                         loading="eager"
+                         fetchPriority="high"
+                       />
                       {!loading && featuredProducts.length > 0 && (
                         <div className="absolute bottom-2 left-2 sm:bottom-3 sm:left-3 bg-[rgba(59,42,35,0.85)] backdrop-blur-md border border-[var(--border-gold)] rounded-xl px-3 py-2 sm:px-4 sm:py-2 max-w-[calc(100%-16px)]">
                           <p className="font-heading font-bold text-xs sm:text-sm text-[var(--text-primary)] mb-1 truncate">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ShoppingBag } from 'lucide-react';
 import { useCartStore } from '@/store/cartStore';
 import { OutlineButton } from '@/components/shared/OutlineButton';
@@ -222,5 +222,9 @@ ${orderLines}
 }
 
 export default function CartPage() {
+  useEffect(() => {
+    document.title = 'Your Cart | Hair Elevation Studio';
+  }, []);
+
   return <CartContent />;
 }

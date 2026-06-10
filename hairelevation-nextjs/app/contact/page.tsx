@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GoldButton } from '@/components/shared/GoldButton';
 import { BsInstagram, BsTiktok, BsWhatsapp, BsCursor } from 'react-icons/bs';
 
@@ -13,6 +13,10 @@ interface ContactFormData {
 }
 
 export default function ContactPage() {
+  useEffect(() => {
+    document.title = 'Contact Us | Hair Elevation Studio';
+  }, []);
+
   const [formData, setFormData] = useState<ContactFormData>({
     name: '',
     email: '',

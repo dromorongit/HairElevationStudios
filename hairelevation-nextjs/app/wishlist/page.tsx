@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart } from 'lucide-react';
 import { useWishlistStore } from '@/store/wishlistStore';
@@ -7,6 +8,10 @@ import { GoldButton } from '@/components/shared/GoldButton';
 import { ProductCard } from '@/components/shared/ProductCard';
 
 export default function WishlistPage() {
+   useEffect(() => {
+     document.title = 'Your Wishlist | Hair Elevation Studio';
+   }, []);
+
    const items = useWishlistStore(state => state.items);
    const clearWishlist = useWishlistStore(state => state.clearWishlist);
 

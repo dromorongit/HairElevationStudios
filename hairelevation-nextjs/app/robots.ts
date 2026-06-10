@@ -1,0 +1,16 @@
+import { MetadataRoute } from 'next';
+
+export default function robots(): Promise<MetadataRoute.Robots> {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://hairelevationstudio.com';
+
+  return Promise.resolve({
+    rules: [
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: ['/admin', '/api'],
+      },
+    ],
+    sitemap: `${baseUrl}/sitemap.xml`,
+  });
+}
