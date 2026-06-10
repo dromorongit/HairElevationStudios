@@ -6,7 +6,7 @@ This document outlines the comprehensive performance optimizations implemented t
 ## Performance Improvements Implemented
 
 ### 1. Image Optimization
-- **Hero Background Image**: Preloaded critical `threeladies.PNG` image (16MB)
+- **Hero Background Image**: Preloaded critical `threeladies.jpg` image (16MB)
 - **Lazy Loading**: Implemented Intersection Observer API for non-critical images
 - **Image Compression**: Added CSS optimizations for faster image rendering
 - **Loading States**: Added fade-in animations for smooth image loading

@@ -80,10 +80,10 @@
         Header add Link "</css/styles.css>; rel=preload; as=style"
     </FilesMatch>
     
-    # Push critical images
-    <FilesMatch "threeladies\.PNG$">
-        Header add Link "</threeladies.PNG>; rel=preload; as=image"
-    </FilesMatch>
+# Push critical images
+     <FilesMatch "threeladies\.jpg$">
+         Header add Link "</threeladies.jpg>; rel=preload; as=image"
+     </FilesMatch>
 </IfModule>
 
 # Remove ETags (use expires headers instead)

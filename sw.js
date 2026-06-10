@@ -7,7 +7,7 @@ const urlsToCache = [
   '/js/main.js',
   '/js/api.js',
   '/js/performance.js',
-  '/threeladies.PNG',
+  '/threeladies.jpg',
   '/HESLOGO.PNG',
   'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap'
 ];

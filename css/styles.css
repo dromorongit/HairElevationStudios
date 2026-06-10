@@ -508,7 +508,7 @@ a {
 
 /* Hero */
 .hero {
-  background: linear-gradient(rgba(200, 169, 126, 0.4), rgba(200, 169, 126, 0.4)), url('../threeladies.PNG') center top / contain repeat-y;
+  background: linear-gradient(rgba(200, 169, 126, 0.4), rgba(200, 169, 126, 0.4)), url('../threeladies.jpg') center top / contain repeat-y;
   color: #F5EFE6;
   padding: 140px 0;
   text-align: center;

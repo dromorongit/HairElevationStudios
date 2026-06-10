@@ -123,14 +123,14 @@ export default function AboutPage() {
           <h2 className="text-2xl lg:text-3xl font-heading font-bold text-[var(--bg-primary)] mb-6">
             Experience the Elevation
           </h2>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <GoldButton href="/collections" size="lg" className="bg-[var(--bg-primary)] text-[var(--text-primary)] hover:bg-[var(--bg-secondary)]">
-              Shop Collections
-            </GoldButton>
-            <OutlineButton href="/book" size="lg">
-              Book Appointment
-            </OutlineButton>
-          </div>
+<div className="flex flex-col sm:flex-row gap-4 justify-center">
+             <GoldButton href="/collections" size="lg" className="bg-[var(--bg-primary)] text-[var(--text-primary)] hover:bg-[var(--bg-secondary)]">
+               Shop Collections
+             </GoldButton>
+             <OutlineButton href="/book" size="lg" className="text-[var(--bg-primary)]">
+               Book Appointment
+             </OutlineButton>
+           </div>
         </div>
       </section>
     </>

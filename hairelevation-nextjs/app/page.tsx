@@ -104,10 +104,10 @@ export default function HomePage() {
               >
                 Handcrafted luxury wigs tailored for queens. From bridal perfection to everyday elegance — discover your signature look.
               </motion.p>
-              <motion.div className="flex flex-wrap gap-4 mb-8" variants={fadeInUp}>
-                <GoldButton href="/collections" size="lg">Shop Collections</GoldButton>
-                <OutlineButton href="/book">Book Appointment</OutlineButton>
-              </motion.div>
+<motion.div className="flex flex-wrap gap-4 mb-8" variants={fadeInUp}>
+                 <GoldButton href="/collections" size="lg">Shop Collections</GoldButton>
+                 <OutlineButton href="/book">Book Appointment</OutlineButton>
+               </motion.div>
               <motion.div className="hidden sm:flex items-center gap-4 text-sm font-body text-[var(--text-primary)]" variants={fadeInUp}>
                 <span className="text-[var(--text-primary)]">200+ Queens Served</span>
                 <span className="w-1.5 h-1.5 bg-[var(--brand-gold)] rounded-full" />
@@ -133,9 +133,9 @@ export default function HomePage() {
                 <div className="absolute -inset-4 rounded-xl border border-[var(--border-gold-strong)]" />
                 <div className="relative bg-[rgba(59,42,35,0.85)] backdrop-blur-md rounded-xl border border-[var(--border-gold)] p-4">
                   <div className="relative aspect-[4/5] rounded-xl overflow-hidden">
-                    <img
-                      src="/assets/images/threeladies.PNG"
-                      alt="Hair Elevation Studio"
+<img
+                       src="/assets/images/threeladies.jpg"
+                       alt="Hair Elevation Studio"
                       className="w-full h-full object-cover object-top rounded-2xl"
                     />
                     {!loading && featuredProducts.length > 0 && (
@@ -362,12 +362,12 @@ export default function HomePage() {
           <p className="text-base font-body text-[var(--bg-primary)]/80 mb-8 max-w-2xl mx-auto">
             Book your appointment today or explore our premium collections.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <GoldButton href="/collections" className="bg-[var(--bg-primary)] text-[var(--text-primary)] hover:bg-[var(--bg-secondary)]">
-              Shop Now
-            </GoldButton>
-            <OutlineButton href="/book">Book Appointment</OutlineButton>
-          </div>
+<div className="flex flex-wrap justify-center gap-4">
+             <GoldButton href="/collections" className="bg-[var(--bg-primary)] text-[var(--text-primary)] hover:bg-[var(--bg-secondary)]">
+               Shop Now
+             </GoldButton>
+<OutlineButton href="/book" className="text-[var(--bg-primary)]">Book Appointment</OutlineButton>
+           </div>
         </motion.div>
       </section>
     </>

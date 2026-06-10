@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
         heroImg.onload = function() {
             heroSection.classList.add('hero-loaded');
         };
-        heroImg.src = 'threeladies.PNG';
+        heroImg.src = 'threeladies.jpg';
     }
 
     // Optimize non-critical images with lazy loading
