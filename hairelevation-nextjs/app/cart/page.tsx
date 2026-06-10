@@ -8,13 +8,11 @@ import { CartItem } from '@/components/shared/CartItem';
 import { OrderSummary } from '@/components/checkout/OrderSummary';
 import { CheckoutForm, CheckoutFormData } from '@/components/checkout/CheckoutForm';
 import { OrderSuccessModal } from '@/components/checkout/OrderSuccessModal';
+import { PaymentInstructionsModal } from '@/components/checkout/PaymentInstructionsModal';
+import { PaymentProofModal } from '@/components/checkout/PaymentProofModal';
 import { ToastProvider, useToast } from '@/components/shared/Toast';
-
-declare global {
-  interface Window {
-    PaystackPop: any;
-  }
-}
+import { uploadPaymentProof } from '@/lib/api';
+import { formatPrice } from '@/lib/utils';
 
 function CartContent() {
   const items = useCartStore(state => state.items);
@@ -26,21 +24,16 @@ function CartContent() {
     email: '',
     phone: '',
     location: '',
+    city: '',
     notes: '',
+    paymentMethod: 'mobile',
   });
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [paymentRef, setPaymentRef] = useState('');
-  const [whatsappUrl, setWhatsappUrl] = useState('');
 
-  useEffect(() => {
-    if (!document.querySelector('script[src*="paystack.co"]')) {
-      const script = document.createElement('script');
-      script.src = 'https://js.paystack.co/v1/inline.js';
-      script.async = true;
-      document.head.appendChild(script);
-    }
-  }, []);
+  const [showPaymentInstructions, setShowPaymentInstructions] = useState(false);
+  const [showPaymentProof, setShowPaymentProof] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [whatsappUrl, setWhatsappUrl] = useState('');
 
   useEffect(() => {
     if (showSuccess && whatsappUrl) {
@@ -51,113 +44,78 @@ function CartContent() {
     }
   }, [showSuccess, whatsappUrl]);
 
-  const openPaystack = (data: CheckoutFormData) => {
-    if (!window.PaystackPop) {
-      showToast('Payment gateway not available. Please try again.');
-      setIsProcessing(false);
-      return;
-    }
-
-    const amount = items.reduce((sum, item) => {
-      const price = item.product.onSale && item.product.promoPrice
-        ? item.product.promoPrice
-        : item.product.price;
-      return sum + (price * item.quantity);
-    }, 0);
-
-    if (amount <= 0) {
-      setIsProcessing(false);
-      return;
-    }
-
-    const handler = window.PaystackPop.setup({
-      key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || '',
-      email: data.email,
-      amount: Math.round(amount * 100),
-      currency: 'GHS',
-      ref: 'HES-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
-      metadata: {
-        custom_fields: [
-          {
-            display_name: 'Customer Name',
-            variable_name: 'customer_name',
-            value: data.name,
-          },
-          {
-            display_name: 'Phone',
-            variable_name: 'phone',
-            value: data.phone,
-          },
-        ],
-      },
-      onClose: () => {
-        setIsProcessing(false);
-      },
-      callback: (response: { reference: string }) => {
-        handlePaymentSuccess(response.reference);
-      },
-    });
-    handler.openIframe();
-  };
-
   const handleFormSubmit = () => {
-    let attempts = 0;
-    const maxAttempts = 10;
-
-    const pollPaystack = () => {
-      if (window.PaystackPop) {
-        setIsProcessing(true);
-        openPaystack(formData);
-      } else if (attempts < maxAttempts) {
-        attempts++;
-        setTimeout(pollPaystack, 300);
-      } else {
-        showToast('Payment gateway not available. Please try again.');
-      }
-    };
-
-    pollPaystack();
+    setShowPaymentInstructions(true);
   };
 
-  const handlePaymentSuccess = (ref: string) => {
-    const currentItems = useCartStore.getState().items;
+  const handlePaymentConfirmed = () => {
+    setShowPaymentInstructions(false);
+    setShowPaymentProof(true);
+  };
 
-    const orderLines = currentItems.map(item => {
-      const price = item.product.onSale && item.product.promoPrice
-        ? item.product.promoPrice
-        : item.product.price;
-      const sizeText = item.selectedSize ? ` (${item.selectedSize})` : '';
-      return `- ${item.quantity}x ${item.product.name}${sizeText} — GHS ${(price * item.quantity).toFixed(2)}`;
-    }).join('\n');
+  const handleProofSubmit = async (file: File) => {
+    setIsUploading(true);
+    try {
+      const response = await uploadPaymentProof(file);
+      const proofUrl = response.url;
+      const currentItems = useCartStore.getState().items;
 
-    const total = currentItems.reduce((sum, item) => {
-      const price = item.product.onSale && item.product.promoPrice
-        ? item.product.promoPrice
-        : item.product.price;
-      return sum + price * item.quantity;
-    }, 0);
+      const orderLines = currentItems.map(item => {
+        const price = item.product.onSale && item.product.promoPrice
+          ? item.product.promoPrice
+          : item.product.price;
+        const sizeText = item.selectedSize ? ` (${item.selectedSize})` : '';
+        return `- ${item.quantity}x ${item.product.name}${sizeText} — ${formatPrice(price * item.quantity)}`;
+      }).join('\n');
 
-    const message = `🛍️ NEW ORDER — Hair Elevation Studio
+      const total = currentItems.reduce((sum, item) => {
+        const price = item.product.onSale && item.product.promoPrice
+          ? item.product.promoPrice
+          : item.product.price;
+        return sum + price * item.quantity;
+      }, 0);
+
+      const paymentMethodText = formData.paymentMethod === 'mobile'
+        ? 'Mobile Money'
+        : 'Bank Transfer';
+
+      const message = `🛍️ NEW ORDER — Hair Elevation Studio
 
 👤 Customer Details:
 Name: ${formData.name}
 Phone: ${formData.phone}
-Location: ${formData.location}
+Email: ${formData.email}
+Address: ${formData.location}, ${formData.city}
 
 🛒 Order Items:
 ${orderLines}
 
-💰 Total: GHS ${total.toFixed(2)}
+💰 Total: ${formatPrice(total)}
 
-📋 Payment Reference: ${ref}
+💳 Payment Method: ${paymentMethodText}
 
-✅ Payment confirmed via Paystack`;
+📎 Payment Proof: ${proofUrl}
 
-    const builtWhatsappUrl = `https://wa.me/233534057109?text=${encodeURIComponent(message)}`;
-    setWhatsappUrl(builtWhatsappUrl);
-    setPaymentRef(ref);
-    setShowSuccess(true);
-    setIsProcessing(false);
+⏳ Awaiting order confirmation`;
+
+      const builtWhatsappUrl = `https://wa.me/233534057109?text=${encodeURIComponent(message)}`;
+      setWhatsappUrl(builtWhatsappUrl);
+      setShowSuccess(true);
+      setShowPaymentProof(false);
+    } catch (error) {
+      console.error('Payment proof upload error:', error);
+      showToast('Failed to upload payment proof. Please try again.');
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const handleClosePaymentProof = () => {
+    setShowPaymentProof(false);
+  };
+
+  const handleClosePaymentInstructions = () => {
+    setShowPaymentInstructions(false);
   };
 
   const handleClearCart = () => {
@@ -183,12 +141,33 @@ ${orderLines}
     );
   }
 
+  const orderTotal = items.reduce((sum, item) => {
+    const price = item.product.onSale && item.product.promoPrice
+      ? item.product.promoPrice
+      : item.product.price;
+    return sum + (price * item.quantity);
+  }, 0);
+
   return (
     <>
+      <PaymentInstructionsModal
+        isOpen={showPaymentInstructions}
+        paymentMethod={formData.paymentMethod}
+        orderTotal={orderTotal}
+        onConfirm={handlePaymentConfirmed}
+        onClose={handleClosePaymentInstructions}
+      />
+
+      <PaymentProofModal
+        isOpen={showPaymentProof}
+        onSubmit={handleProofSubmit}
+        onClose={handleClosePaymentProof}
+        isUploading={isUploading}
+      />
+
       <OrderSuccessModal
         isOpen={showSuccess}
         onClose={() => setShowSuccess(false)}
-        paymentRef={paymentRef}
         customerName={formData.name}
         whatsappUrl={whatsappUrl}
       />
@@ -237,7 +216,7 @@ ${orderLines}
                   formData={formData}
                   onChange={setFormData}
                   onSubmit={handleFormSubmit}
-                  isLoading={isProcessing}
+                  isLoading={isUploading}
                 />
               </div>
             </div>

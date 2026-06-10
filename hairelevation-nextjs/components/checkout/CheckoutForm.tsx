@@ -9,7 +9,9 @@ export interface CheckoutFormData {
   email: string;
   phone: string;
   location: string;
+  city: string;
   notes?: string;
+  paymentMethod: 'mobile' | 'bank';
 }
 
 interface CheckoutFormProps {
@@ -37,6 +39,12 @@ export function CheckoutForm({ formData, onChange, onSubmit, isLoading }: Checko
     if (!formData.location.trim()) {
       newErrors.location = 'Delivery location is required';
     }
+    if (!formData.city.trim()) {
+      newErrors.city = 'City is required';
+    }
+    if (!formData.paymentMethod) {
+      newErrors.paymentMethod = 'Payment method is required';
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -50,7 +58,7 @@ export function CheckoutForm({ formData, onChange, onSubmit, isLoading }: Checko
   };
 
   const handleChange = (field: keyof CheckoutFormData) => (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     onChange({ ...formData, [field]: e.target.value });
     if (errors[field]) {
@@ -139,6 +147,24 @@ export function CheckoutForm({ formData, onChange, onSubmit, isLoading }: Checko
 
         <div>
           <label className="block text-sm font-medium text-[var(--text-primary)] mb-1 font-body">
+            City <span className="text-[var(--brand-gold)]">*</span>
+          </label>
+          <input
+            type="text"
+            value={formData.city}
+            onChange={handleChange('city')}
+            className={`w-full px-4 py-3 rounded-xl border bg-[var(--bg-primary)] text-[var(--text-primary)] font-body text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-gold)] transition-colors ${
+              errors.city ? 'border-red-500' : 'border-[var(--border-gold)]'
+            }`}
+            placeholder="Enter your city"
+          />
+          {errors.city && (
+            <p className="text-xs text-red-400 mt-1 font-body">{errors.city}</p>
+          )}
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-[var(--text-primary)] mb-1 font-body">
             Order Notes
           </label>
           <textarea
@@ -148,6 +174,38 @@ export function CheckoutForm({ formData, onChange, onSubmit, isLoading }: Checko
             className="w-full px-4 py-3 rounded-xl border border-[var(--border-gold)] bg-[var(--bg-primary)] text-[var(--text-primary)] font-body text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-gold)] transition-colors resize-none"
             placeholder="Any special instructions?"
           />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-[var(--text-primary)] mb-1 font-body">
+            Payment Method <span className="text-[var(--brand-gold)]">*</span>
+          </label>
+          <select
+            value={formData.paymentMethod || ''}
+            onChange={handleChange('paymentMethod')}
+            className={`w-full px-4 py-3 rounded-xl border bg-[var(--bg-primary)] text-[var(--text-primary)] font-body text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-gold)] transition-colors appearance-none cursor-pointer ${
+              errors.paymentMethod ? 'border-red-500' : 'border-[var(--border-gold)]'
+            }`}
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23C8A97E'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3F%3E%3C/svg%3E")`,
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'right 12px center',
+              backgroundSize: '20px',
+            }}
+          >
+            <option value="" disabled className="bg-[var(--bg-primary)] text-[var(--text-muted)]">
+              Select Payment Method
+            </option>
+            <option value="mobile" className="bg-[var(--bg-primary)] text-[var(--text-primary)]">
+              Mobile Money
+            </option>
+            <option value="bank" className="bg-[var(--bg-primary)] text-[var(--text-primary)]">
+              Payment to Bank
+            </option>
+          </select>
+          {errors.paymentMethod && (
+            <p className="text-xs text-red-400 mt-1 font-body">{errors.paymentMethod}</p>
+          )}
         </div>
 
         <GoldButton
@@ -161,7 +219,7 @@ export function CheckoutForm({ formData, onChange, onSubmit, isLoading }: Checko
           ) : (
             <Lock className="w-4 h-4 mr-2" />
           )}
-          Proceed to Payment
+          Place Order
         </GoldButton>
       </form>
     </div>

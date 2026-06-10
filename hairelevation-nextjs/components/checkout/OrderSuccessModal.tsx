@@ -7,12 +7,11 @@ import { useCartStore } from '@/store/cartStore';
 interface OrderSuccessModalProps {
   isOpen: boolean;
   onClose: () => void;
-  paymentRef: string;
   customerName: string;
   whatsappUrl: string;
 }
 
-export function OrderSuccessModal({ isOpen, onClose, paymentRef, customerName, whatsappUrl }: OrderSuccessModalProps) {
+export function OrderSuccessModal({ isOpen, onClose, customerName, whatsappUrl }: OrderSuccessModalProps) {
   const { clearCart } = useCartStore();
 
   const handleContinueShopping = () => {
@@ -34,18 +33,23 @@ export function OrderSuccessModal({ isOpen, onClose, paymentRef, customerName, w
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3 }}
       >
-        <div className="w-20 h-20 rounded-full bg-[var(--gradient-gold)] flex items-center justify-center mx-auto mb-6">
+        <motion.div
+          className="w-20 h-20 rounded-full bg-[var(--gradient-gold)] flex items-center justify-center mx-auto mb-6"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+        >
           <svg className="w-10 h-10 text-[var(--bg-primary)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
             <path d="M20 6L9 17l-5-5" />
           </svg>
-        </div>
-        
+        </motion.div>
+
         <h2 className="text-2xl font-heading font-bold text-[var(--text-primary)] text-center mb-4">
           Order Confirmed! 🎉
         </h2>
-        
+
         <p className="text-base text-[var(--text-muted)] font-body text-center mb-6 leading-relaxed">
-          Thank you {customerName}! Your payment was successful. Your order details have been sent to our WhatsApp — we will confirm your order and delivery shortly.
+          Thank you {customerName}! Your order has been placed successfully. Your payment proof has been submitted and your order details have been sent to our WhatsApp — we will confirm your order and delivery shortly.
         </p>
 
         <div className="bg-[rgba(200,169,126,0.1)] border border-[var(--border-gold)] rounded-xl px-4 py-3 mb-6">
@@ -53,13 +57,7 @@ export function OrderSuccessModal({ isOpen, onClose, paymentRef, customerName, w
             📲 WhatsApp is opening automatically to submit your order. If it did not open, tap Resend WhatsApp below.
           </p>
         </div>
-        
-        <div className="bg-[var(--bg-primary)] rounded-xl px-4 py-2 mb-6">
-          <p className="text-sm font-mono text-[var(--brand-gold)] text-center">
-            Ref: {paymentRef}
-          </p>
-        </div>
-        
+
         <div className="flex flex-col gap-3">
           <GoldButton href="/collections" onClick={handleContinueShopping} size="lg">
             Continue Shopping

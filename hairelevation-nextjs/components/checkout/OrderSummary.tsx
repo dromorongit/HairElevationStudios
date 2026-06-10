@@ -58,7 +58,7 @@ export function OrderSummary() {
         </div>
 
         <p className="text-xs text-[var(--text-muted)] font-body mt-4 pt-3 border-t border-[var(--border-gold)]">
-          Payment secured by Paystack
+          Manual payment via Mobile Money or Bank Transfer
         </p>
       </div>
     </div>
