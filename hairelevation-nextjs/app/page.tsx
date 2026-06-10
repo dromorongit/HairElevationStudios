@@ -17,8 +17,8 @@ const collectionImages: Record<string, string> = {
 };
 
 const collections = [
-  { name: 'Straight', description: 'Timeless elegance for your most important day', emoji: '👑' },
-  { name: 'Wavy/Layers/Bouncy', description: 'Effortless beauty crafted for daily wear', emoji: '✨' },
+  { name: 'Straight', description: 'Sleek, smooth and effortlessly polished for every occasion', emoji: '✨' },
+  { name: 'Wavy/Layers/Bouncy', description: 'Effortless waves and bouncy layers for a natural, voluminous look', emoji: '🌊' },
   { name: 'Curly', description: 'Bold, voluminous curls for the fearless queen', emoji: '🌀' },
   { name: 'Pixie Cut', description: 'Sharp, chic pixie cuts for the bold statement', emoji: '💫' },
 ];

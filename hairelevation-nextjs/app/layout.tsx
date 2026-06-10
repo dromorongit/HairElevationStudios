@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     default: 'Hair Elevation Studio — Premium Wigs Accra, Ghana',
     template: '%s | Hair Elevation Studio',
   },
-  description: 'Handcrafted luxury wigs in Accra, Ghana. Shop The Bridal Crowns, Everyday Crown, Queen\'s Curls and Signature Pixies collections. Custom wig making, installation and maintenance services.',
+  description: 'Handcrafted luxury wigs in Accra, Ghana. Shop Straight, Wavy/Layers/Bouncy, Curly and Pixie Cut collections. Custom wig making, installation and maintenance services.',
   keywords: ['premium wigs accra', 'luxury wigs ghana', 'bridal wigs accra', 'custom wig making ghana', 'hair elevation studio', 'wigs kanda accra', 'human hair wigs ghana', 'wig installation accra'],
   authors: [{ name: 'Hair Elevation Studio' }],
   creator: 'Dromor Narh',
