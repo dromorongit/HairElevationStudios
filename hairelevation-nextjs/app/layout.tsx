@@ -20,6 +20,11 @@ const dmSans = DM_Sans({
   weight: ['300', '400', '500', '600', '700'],
 });
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
   title: 'Hair Elevation Studio — Premium Wigs Accra',
   description: "Handcrafted luxury wigs in Accra, Ghana. Shop Straight, Wavy/Layers/Bouncy, Curly and Pixie Cut collections.",
