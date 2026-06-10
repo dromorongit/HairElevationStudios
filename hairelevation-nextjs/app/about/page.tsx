@@ -124,9 +124,7 @@ export default function AboutPage() {
             Experience the Elevation
           </h2>
 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-             <GoldButton href="/collections" size="lg" className="bg-[var(--bg-primary)] text-[var(--text-primary)] hover:bg-[var(--bg-secondary)]">
-               Shop Collections
-             </GoldButton>
+             <OutlineButton href="/collections" size="lg" className="text-[var(--bg-primary)]">Shop Collections</OutlineButton>
              <OutlineButton href="/book" size="lg" className="text-[var(--bg-primary)]">
                Book Appointment
              </OutlineButton>

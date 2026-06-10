@@ -105,7 +105,7 @@ export default function HomePage() {
                 Handcrafted luxury wigs tailored for queens. From bridal perfection to everyday elegance — discover your signature look.
               </motion.p>
 <motion.div className="flex flex-wrap gap-4 mb-8" variants={fadeInUp}>
-                 <GoldButton href="/collections" size="lg">Shop Collections</GoldButton>
+                 <OutlineButton href="/collections" size="lg">Shop Collections</OutlineButton>
                  <OutlineButton href="/book">Book Appointment</OutlineButton>
                </motion.div>
               <motion.div className="hidden sm:flex items-center gap-4 text-sm font-body text-[var(--text-primary)]" variants={fadeInUp}>
