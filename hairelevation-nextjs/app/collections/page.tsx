@@ -176,7 +176,7 @@ function CollectionsContent() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x-hidden">
           <AnimatePresence mode="wait">
             {loading ? (
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
                 {Array.from({ length: 8 }).map((_, i) => (
                   <div
                     key={i}
@@ -207,7 +207,7 @@ function CollectionsContent() {
               </motion.div>
             ) : (
               <motion.div
-                className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6"
+                className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6"
                 initial="initial"
                 animate="animate"
                 exit="exit"
