@@ -11,10 +11,18 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { getAllProducts } from '@/lib/api';
 import { IProduct } from '@/lib/types';
 import { getDisplayCollectionName } from '@/lib/utils';
+import { Badge } from '@/components/shared/Badge';
 
-const navLinks = [
+interface NavLink {
+  href: string;
+  label: string;
+  badge?: boolean;
+}
+
+const navLinks: NavLink[] = [
   { href: '/', label: 'Home' },
   { href: '/collections', label: 'Collections' },
+  { href: '/virtual-class-2026', label: 'Virtual Class', badge: true },
   { href: '/services', label: 'Services' },
   { href: '/book', label: 'Book' },
   { href: '/about', label: 'About' },
@@ -93,24 +101,25 @@ export function Navbar() {
               />
             </Link>
 
-            {!searchOpen && (
-              <div className="hidden md:flex items-center space-x-8">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={`relative text-[13px] font-body uppercase tracking-widest transition-colors ${
-                      pathname === link.href ? 'text-[var(--brand-gold)]' : 'text-[var(--text-primary)]/80'
-                    }`}
-                  >
-                    {link.label}
-                    {pathname === link.href && (
-                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[var(--gradient-gold)]" />
-                    )}
-                  </Link>
-                ))}
-              </div>
-            )}
+{!searchOpen && (
+               <div className="hidden md:flex items-center space-x-8">
+                 {navLinks.map((link) => (
+                   <Link
+                     key={link.href}
+                     href={link.href}
+                     className={`relative text-[13px] font-body uppercase tracking-widest transition-colors flex items-center gap-1 ${
+                       pathname === link.href ? 'text-[var(--brand-gold)]' : 'text-[var(--text-primary)]/80'
+                     }`}
+                   >
+                     {link.label}
+                     {link.badge && <Badge variant="new" />}
+                     {pathname === link.href && (
+                       <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[var(--gradient-gold)]" />
+                     )}
+                   </Link>
+                 ))}
+               </div>
+             )}
 
             <div className="flex items-center space-x-4">
               <button
@@ -238,26 +247,28 @@ export function Navbar() {
                 <HiX className="w-6 h-6" />
               </button>
             </div>
-            <div className="flex flex-col items-center justify-center space-y-8 text-3xl flex-1">
-              {navLinks.map((link, index) => (
-                <motion.div
-                  key={link.href}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                >
-                  <Link
-                    href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`hover:text-[var(--brand-gold)] transition-colors font-heading ${
-                      pathname === link.href ? 'text-[var(--brand-gold)]' : 'text-[var(--text-primary)]'
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
+<div className="flex flex-col items-center justify-center space-y-8 text-3xl flex-1">
+               {navLinks.map((link, index) => (
+                 <motion.div
+                   key={link.href}
+                   initial={{ opacity: 0, y: 20 }}
+                   animate={{ opacity: 1, y: 0 }}
+                   transition={{ delay: index * 0.05 }}
+                   className="flex items-center gap-2"
+                 >
+                   <Link
+                     href={link.href}
+                     onClick={() => setMobileMenuOpen(false)}
+                     className={`hover:text-[var(--brand-gold)] transition-colors font-heading ${
+                       pathname === link.href ? 'text-[var(--brand-gold)]' : 'text-[var(--text-primary)]'
+                     }`}
+                   >
+                     {link.label}
+                   </Link>
+                   {link.badge && <Badge variant="new" />}
+                 </motion.div>
+               ))}
+             </div>
           </motion.div>
         )}
       </AnimatePresence>
