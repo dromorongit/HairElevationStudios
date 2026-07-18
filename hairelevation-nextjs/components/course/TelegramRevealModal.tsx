@@ -7,13 +7,12 @@ import { GoldButton } from '@/components/shared/GoldButton';
 
 interface TelegramRevealModalProps {
   isOpen: boolean;
-  onClose: () => void;
   studentName: string;
 }
 
 const TELEGRAM_LINK = 'https://t.me/+fVUU6CuUE4EwNzI0';
 
-export function TelegramRevealModal({ isOpen, onClose, studentName }: TelegramRevealModalProps) {
+export function TelegramRevealModal({ isOpen, studentName }: TelegramRevealModalProps) {
   useEffect(() => {
     if (isOpen) {
       const timer = setTimeout(() => {
@@ -49,7 +48,7 @@ export function TelegramRevealModal({ isOpen, onClose, studentName }: TelegramRe
         </motion.div>
 
         <h2 className="text-2xl sm:text-3xl font-heading font-bold text-[var(--text-primary)] text-center mb-3 sm:mb-4">
-          You're In! 🎉
+          You&apos;re In! 🎉
         </h2>
 
         <p className="text-sm sm:text-base text-[var(--text-muted)] font-body text-center mb-4 sm:mb-6 leading-relaxed break-words">

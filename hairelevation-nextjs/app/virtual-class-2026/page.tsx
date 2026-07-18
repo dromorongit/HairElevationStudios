@@ -142,7 +142,7 @@ export default function VirtualClassPage() {
               Master the art of pixie cuts from the comfort of your home. A comprehensive virtual class designed to boost your confidence and elevate your craft.
             </p>
             <blockquote className="text-xl lg:text-2xl font-heading italic text-[#C8A97E] mt-8">
-              "Boost your confidence in pixie cut and charge your worth"
+              &ldquo;Boost your confidence in pixie cut and charge your worth&rdquo;
             </blockquote>
             <div className="mt-8">
               <p className="text-xs uppercase tracking-widest text-[rgba(245,239,230,0.6)] font-body mb-1">
@@ -459,7 +459,6 @@ export default function VirtualClassPage() {
 
       <TelegramRevealModal
         isOpen={showTelegram}
-        onClose={() => setShowTelegram(false)}
         studentName={studentName}
       />
     </>
