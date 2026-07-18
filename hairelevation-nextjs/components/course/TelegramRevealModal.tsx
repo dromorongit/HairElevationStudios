@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { BsTelegram } from 'react-icons/bs';
 import { GoldButton } from '@/components/shared/GoldButton';
@@ -13,15 +12,6 @@ interface TelegramRevealModalProps {
 const TELEGRAM_LINK = 'https://t.me/+fVUU6CuUE4EwNzI0';
 
 export function TelegramRevealModal({ isOpen, studentName }: TelegramRevealModalProps) {
-  useEffect(() => {
-    if (isOpen) {
-      const timer = setTimeout(() => {
-        window.open(TELEGRAM_LINK, '_blank');
-      }, 1500);
-      return () => clearTimeout(timer);
-    }
-  }, [isOpen]);
-
   if (!isOpen) return null;
 
   const handleJoinTelegram = () => {
@@ -52,7 +42,7 @@ export function TelegramRevealModal({ isOpen, studentName }: TelegramRevealModal
         </h2>
 
         <p className="text-sm sm:text-base text-[var(--text-muted)] font-body text-center mb-4 sm:mb-6 leading-relaxed break-words">
-          Welcome {studentName}! Your payment has been verified. Click the button below to join the Pixie Cut Virtual Class Telegram group.
+          Welcome {studentName}! Your payment confirmation has been sent to us. Click below to join the Pixie Cut Virtual Class Telegram group.
         </p>
 
         <div className="bg-[rgba(200,169,126,0.1)] border border-[var(--border-gold)] rounded-xl px-3 py-2 sm:px-4 sm:py-3 mb-4 sm:mb-6">

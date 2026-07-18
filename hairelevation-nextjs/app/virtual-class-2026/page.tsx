@@ -84,7 +84,6 @@ export default function VirtualClassPage() {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showProofModal, setShowProofModal] = useState(false);
   const [showTelegram, setShowTelegram] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
   const [studentName, setStudentName] = useState('');
   const [expandedModule, setExpandedModule] = useState<string | null>(null);
 
@@ -93,25 +92,10 @@ export default function VirtualClassPage() {
     setShowProofModal(true);
   };
 
-  const handleProofSubmit = async (file: File, name: string, phone: string) => {
-    setIsUploading(true);
-    try {
-      const response = await uploadPaymentProof(file);
-      const proofUrl = response.url;
-
-      const whatsappMessage = encodeURIComponent(
-        `🎓 NEW COURSE ENROLLMENT\n\nName: ${name}\nPhone: ${phone}\n\nCourse: Pixie Cut Virtual Class 2026\nAmount: GHS 1,200\n\n📎 Payment Proof: ${proofUrl}\n\n✅ Student has received Telegram link`
-      );
-      window.open(`https://wa.me/233534057109?text=${whatsappMessage}`, '_blank');
-
-      setStudentName(name);
-      setShowProofModal(false);
-      setShowTelegram(true);
-    } catch (error) {
-      console.error('Upload failed:', error);
-    } finally {
-      setIsUploading(false);
-    }
+  const handleProofSubmit = async (file: File, name: string, phone: string, proofUrl: string) => {
+    setStudentName(name);
+    setShowProofModal(false);
+    setShowTelegram(true);
   };
 
   const handleModuleToggle = (moduleNumber: string) => {
@@ -273,7 +257,52 @@ export default function VirtualClassPage() {
         </div>
       </section>
 
-      {/* Section 3: Modules */}
+      {/* Section 3: Gallery */}
+      <section className="py-20 bg-[#3B2A23]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="text-[11px] font-body uppercase tracking-[0.15em] text-[#C8A97E] mb-3">
+              THE CRAFT
+            </p>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold text-[#F5EFE6] mb-4">
+              Pixie Cuts by Hair Elevation Studio
+            </h2>
+            <p className="text-lg text-[var(--text-muted)] font-body max-w-xl mx-auto">
+              The styles you will learn to create
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+            {[
+              '/assets/images/pixie1.jpg',
+              '/assets/images/pixie2.jpg',
+              '/assets/images/pixie3.jpg',
+              '/assets/images/pixie4.jpg',
+            ].map((src, index) => (
+              <motion.div
+                key={src}
+                className="group relative overflow-hidden rounded-xl border border-[rgba(200,169,126,0.2)] hover:border-[rgba(200,169,126,0.5)] transition-all duration-300"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+              >
+                <div className="aspect-[3/4]">
+                  <img
+                    src={src}
+                    alt={`Pixie cut style ${index + 1}`}
+                    loading="lazy"
+                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[rgba(59,42,35,0.5)] to-transparent pointer-events-none" />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Section 4: Modules */}
       <section className="py-20 bg-[#3B2A23]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
@@ -377,7 +406,7 @@ export default function VirtualClassPage() {
         </div>
       </section>
 
-      {/* Section 4: Instructor */}
+      {/* Section 5: Instructor */}
       <section className="py-20 bg-[#2A1E18]">
         <div className="max-w-2xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
@@ -420,7 +449,7 @@ export default function VirtualClassPage() {
         </div>
       </section>
 
-      {/* Section 5: CTA */}
+      {/* Section 6: CTA */}
       <section className="py-20 bg-gradient-to-br from-[#C8A97E] to-[#A67C52] relative overflow-hidden">
         <div className="absolute top-0 right-0 w-32 h-32 sm:w-48 sm:h-48 rounded-full border-2 border-[rgba(59,42,35,0.1)] opacity-20" />
         <div className="absolute bottom-0 left-0 w-24 h-24 sm:w-36 sm:h-36 rounded-full border-2 border-[rgba(59,42,35,0.1)] opacity-20" />
@@ -454,7 +483,7 @@ export default function VirtualClassPage() {
         isOpen={showProofModal}
         onClose={() => setShowProofModal(false)}
         onSubmit={handleProofSubmit}
-        isUploading={isUploading}
+        onUpload={uploadPaymentProof}
       />
 
       <TelegramRevealModal
