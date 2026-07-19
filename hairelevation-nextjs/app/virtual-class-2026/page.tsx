@@ -92,7 +92,7 @@ export default function VirtualClassPage() {
     setShowProofModal(true);
   };
 
-  const handleProofSubmit = async (file: File, name: string, phone: string, proofUrl: string) => {
+  const handleProofSubmit = async (file: File, name: string, phone: string) => {
     setStudentName(name);
     setShowProofModal(false);
     setShowTelegram(true);
@@ -421,9 +421,9 @@ export default function VirtualClassPage() {
 
           <div className="bg-[#3B2A23] border border-[var(--border-gold)] rounded-2xl p-10 text-center">
             <img
-              src="/assets/images/HESLOGO.PNG"
-              alt="Hair Elevation Studio"
-              className="w-20 h-20 rounded-full border-2 border-[#C8A97E] mx-auto mb-4 object-contain"
+              src="/assets/images/madampadi.jpg"
+              alt="Instructor"
+              className="w-32 h-32 rounded-full border-2 border-[#C8A97E] mx-auto mb-4 object-cover"
             />
             <h3 className="text-xl font-heading font-bold text-[#F5EFE6] mb-2">
               Hair Elevation Studio

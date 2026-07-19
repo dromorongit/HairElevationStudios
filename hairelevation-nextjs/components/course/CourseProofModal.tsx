@@ -2,13 +2,13 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { BsUpload, BsX, BsWhatsapp } from 'react-icons/bs';
+import { BsUpload, BsX } from 'react-icons/bs';
 import { GoldButton } from '@/components/shared/GoldButton';
 
 interface CourseProofModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (file: File, name: string, phone: string, proofUrl: string) => void;
+  onSubmit: (file: File, name: string, phone: string) => void;
   onUpload: (file: File) => Promise<{ url: string }>;
 }
 
@@ -24,9 +24,7 @@ export function CourseProofModal({
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [proofUrl, setProofUrl] = useState<string | null>(null);
-  const [messageSent, setMessageSent] = useState(false);
-  const [isUploadingProof, setIsUploadingProof] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   if (!isOpen) return null;
 
@@ -86,33 +84,20 @@ export function CourseProofModal({
       URL.revokeObjectURL(previewUrl);
     }
     setPreviewUrl('');
-    setProofUrl(null);
-    setMessageSent(false);
   };
 
-  const handleUploadClick = async () => {
+  const handleSubmit = async () => {
     if (!validateForm() || !selectedFile) return;
     
-    setIsUploadingProof(true);
+    setIsUploading(true);
     try {
-      const response = await onUpload(selectedFile);
-      setProofUrl(response.url);
+      await onUpload(selectedFile);
+      onSubmit(selectedFile, name, phone);
     } catch (error) {
       console.error('Upload failed:', error);
     } finally {
-      setIsUploadingProof(false);
+      setIsUploading(false);
     }
-  };
-
-  const handleWhatsAppClick = () => {
-    if (!proofUrl) return;
-    
-    const whatsappMessage = encodeURIComponent(
-      `🎓 COURSE PAYMENT — Pixie Cut Virtual Class 2026\n\n👤 Student Details:\nName: ${name}\nPhone: ${phone}\n\n💳 Payment Proof:\n${proofUrl}\n\nAmount: GHS 1,200\n\n✅ Please confirm enrollment and grant Telegram access.`
-    );
-    window.open(`https://wa.me/233534057109?text=${whatsappMessage}`, '_blank');
-    setMessageSent(true);
-    onSubmit(selectedFile!, name, phone, proofUrl);
   };
 
   return (
@@ -229,63 +214,25 @@ export function CourseProofModal({
               )}
             </div>
           )}
-
-          {proofUrl && (
-            <div className="mt-4 space-y-4">
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                  <path d="M20 6L9 17l-5-5" />
-                </svg>
-                <span className="text-[#F5EFE6] font-body text-sm">Payment proof uploaded successfully!</span>
-              </div>
-
-              {!messageSent && (
-                <div className="bg-[#3B2A23] border border-[#C8A97E] rounded-xl p-4">
-                  <h3 className="text-xs font-body uppercase tracking-wider text-[#C8A97E] mb-2">Notify the Studio</h3>
-                  <p className="text-xs font-body text-[rgba(245,239,230,0.6)] truncate">
-                    🎓 COURSE PAYMENT — Pixie Cut Virtual Class 2026...
-                  </p>
-                </div>
-              )}
-
-              {!messageSent && (
-                <button
-                  onClick={handleWhatsAppClick}
-                  className="w-full bg-[#25D366] text-[#F5EFE6] rounded-full py-3 font-body font-semibold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
-                >
-                  <BsWhatsapp className="w-5 h-5" />
-                  Send Payment Confirmation on WhatsApp
-                </button>
-              )}
-
-              {messageSent && (
-                <p className="text-xs font-body text-[#C8A97E] text-center">
-                  Message sent! You can now join the Telegram group.
-                </p>
-              )}
-            </div>
-          )}
         </div>
 
-        {!proofUrl && (
-          <div className="px-4 py-3 sm:px-6 sm:py-4 border-t border-[rgba(200,169,126,0.15)]">
-            <GoldButton
-              onClick={handleUploadClick}
-              size="lg"
-              disabled={!selectedFile || !name.trim() || !phone.trim() || isUploadingProof}
-              className="w-full"
-            >
-              {isUploadingProof ? (
-                <>
-                  <div className="w-5 h-5 border-2 border-[var(--bg-primary)] border-t-transparent rounded-full animate-spin mr-2" />
-                  Uploading...
-                </>
-              ) : (
-                <>Upload Proof</>
-              )}
-            </GoldButton>
-          </div>
-        )}
+        <div className="px-4 py-3 sm:px-6 sm:py-4 border-t border-[rgba(200,169,126,0.15)]">
+          <GoldButton
+            onClick={handleSubmit}
+            size="lg"
+            disabled={!selectedFile || !name.trim() || !phone.trim() || isUploading}
+            className="w-full"
+          >
+            {isUploading ? (
+              <>
+                <div className="w-5 h-5 border-2 border-[var(--bg-primary)] border-t-transparent rounded-full animate-spin mr-2" />
+                Uploading...
+              </>
+            ) : (
+              <>Submit & Get Telegram Link</>
+            )}
+          </GoldButton>
+        </div>
       </motion.div>
     </div>
   );
