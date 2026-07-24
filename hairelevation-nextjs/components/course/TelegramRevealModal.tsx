@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { BsTelegram } from 'react-icons/bs';
-import { GoldButton } from '@/components/shared/GoldButton';
 
 interface TelegramRevealModalProps {
   isOpen: boolean;
@@ -51,14 +50,13 @@ export function TelegramRevealModal({ isOpen, studentName }: TelegramRevealModal
           </p>
         </div>
 
-        <GoldButton
+        <button
           onClick={handleJoinTelegram}
-          size="lg"
-          className="w-full bg-[#229ED9] text-white hover:opacity-90 mb-4"
+          className="w-full py-4 px-8 rounded-full font-semibold text-base tracking-wide transition-all duration-300 flex items-center justify-center gap-3 bg-[#229ED9] text-white hover:bg-[#1a8ec4] hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
         >
-          <BsTelegram className="w-5 h-5 mr-2" />
+          <BsTelegram className="w-5 h-5 text-white" />
           Join Telegram Group
-        </GoldButton>
+        </button>
 
         <p className="text-xs sm:text-sm text-[var(--text-muted)] font-body text-center">
           Having trouble? Contact us on WhatsApp: 0534057109

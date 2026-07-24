@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { BsClipboard } from 'react-icons/bs';
-import { GoldButton } from '@/components/shared/GoldButton';
 import { OutlineButton } from '@/components/shared/OutlineButton';
 
 interface CopyTooltip {
@@ -160,9 +159,12 @@ export function CoursePaymentModal({ isOpen, onClose, onPaymentConfirmed }: Cour
           <OutlineButton onClick={onClose} size="lg" className="flex-1">
             Cancel
           </OutlineButton>
-          <GoldButton onClick={onPaymentConfirmed} size="lg" className="flex-1">
+          <button
+            onClick={onPaymentConfirmed}
+            className="w-full py-4 px-6 rounded-full font-semibold text-base tracking-wide transition-all duration-300 bg-gradient-to-r from-[#C8A97E] via-[#B8956A] to-[#A67C52] text-[#3B2A23] hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
+          >
             I Have Made the Payment — Upload Proof
-          </GoldButton>
+          </button>
         </div>
       </motion.div>
     </div>
