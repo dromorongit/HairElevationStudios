@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BsPlayCircle, BsCameraVideo, BsCalendar, BsLightbulb, BsChatDots, BsClock, BsCalendarCheck, BsPeople, BsChevronDown, BsChevronUp } from 'react-icons/bs';
-import { GoldButton } from '@/components/shared/GoldButton';
 import { CoursePaymentModal } from '@/components/course/CoursePaymentModal';
 import { CourseProofModal } from '@/components/course/CourseProofModal';
 import { TelegramRevealModal } from '@/components/course/TelegramRevealModal';
@@ -136,9 +135,12 @@ export default function VirtualClassPage() {
                 GHS 1,200
               </p>
             </div>
-            <GoldButton size="lg" className="mt-6" onClick={() => setShowPaymentModal(true)}>
+            <button
+              onClick={() => setShowPaymentModal(true)}
+              className="inline-flex items-center justify-center px-10 py-4 rounded-full font-semibold text-base tracking-widest uppercase transition-all duration-300 bg-gradient-to-r from-[#C8A97E] via-[#B8956A] to-[#A67C52] text-[#3B2A23] hover:shadow-[0_8px_25px_rgba(200,169,126,0.5)] hover:scale-[1.02] active:scale-[0.98]"
+            >
               Enroll Now — GHS 1,200
-            </GoldButton>
+            </button>
             <p className="text-[13px] text-[rgba(245,239,230,0.6)] font-body mt-4">
               One-time payment • 1 Month Access • Telegram Group
             </p>
@@ -464,9 +466,12 @@ export default function VirtualClassPage() {
           <p className="text-2xl font-heading font-bold text-[#3B2A23] mb-6">
             GHS 1,200 — One-time Payment
           </p>
-          <GoldButton size="lg" className="bg-[#3B2A23] text-[#F5EFE6]" onClick={() => setShowPaymentModal(true)}>
+          <button
+            onClick={() => setShowPaymentModal(true)}
+            className="inline-flex items-center justify-center px-10 py-4 rounded-full font-semibold text-base tracking-widest uppercase transition-all duration-300 bg-gradient-to-r from-[#C8A97E] via-[#B8956A] to-[#A67C52] text-[#3B2A23] hover:shadow-[0_8px_25px_rgba(200,169,126,0.5)] hover:scale-[1.02] active:scale-[0.98]"
+          >
             Enroll Now
-          </GoldButton>
+          </button>
           <p className="text-[13px] text-[#3B2A23] opacity-70 mt-4">
             ✓ Instant access after payment  ✓ 1 month coaching  ✓ Private Telegram group
           </p>

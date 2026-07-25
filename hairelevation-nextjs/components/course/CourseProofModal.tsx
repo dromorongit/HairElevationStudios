@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { BsUpload, BsX } from 'react-icons/bs';
-import { GoldButton } from '@/components/shared/GoldButton';
 
 interface CourseProofModalProps {
   isOpen: boolean;
@@ -217,21 +216,20 @@ export function CourseProofModal({
         </div>
 
         <div className="px-4 py-3 sm:px-6 sm:py-4 border-t border-[rgba(200,169,126,0.15)]">
-          <GoldButton
+          <button
             onClick={handleSubmit}
-            size="lg"
             disabled={!selectedFile || !name.trim() || !phone.trim() || isUploading}
-            className="w-full"
+            className="w-full py-4 px-6 rounded-full font-semibold text-base tracking-wide transition-all duration-300 bg-gradient-to-r from-[#C8A97E] via-[#B8956A] to-[#A67C52] text-[#3B2A23] hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
           >
             {isUploading ? (
               <>
-                <div className="w-5 h-5 border-2 border-[var(--bg-primary)] border-t-transparent rounded-full animate-spin mr-2" />
+                <div className="w-5 h-5 border-2 border-[#3B2A23] border-t-transparent rounded-full animate-spin" />
                 Uploading...
               </>
             ) : (
-              <>Submit & Get Telegram Link</>
+              'Submit & Get Telegram Link'
             )}
-          </GoldButton>
+          </button>
         </div>
       </motion.div>
     </div>

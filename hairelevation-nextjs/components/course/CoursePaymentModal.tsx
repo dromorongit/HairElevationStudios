@@ -88,24 +88,16 @@ export function CoursePaymentModal({ isOpen, onClose, onPaymentConfirmed }: Cour
             </p>
           </div>
 
-          <div className="flex gap-3 mb-6">
+          <div className="flex gap-2 p-1 bg-[#3B2A23] rounded-full mb-6">
             <button
               onClick={() => setPaymentMethod('mobile')}
-              className={`flex-1 py-3 px-4 rounded-full font-body uppercase tracking-wider text-sm transition-all ${
-                paymentMethod === 'mobile'
-                  ? 'bg-[var(--gradient-gold)] text-[#3B2A23]'
-                  : 'bg-[#3B2A23] border border-[#C8A97E] text-[#F5EFE6]'
-              }`}
+              className="flex-1 py-3 px-4 rounded-full text-sm font-semibold DM Sans tracking-wide transition-all duration-200 bg-gradient-to-r from-[#C8A97E] via-[#B8956A] to-[#A67C52] text-[#3B2A23] shadow-md"
             >
               Mobile Money
             </button>
             <button
               onClick={() => setPaymentMethod('bank')}
-              className={`flex-1 py-3 px-4 rounded-full font-body uppercase tracking-wider text-sm transition-all ${
-                paymentMethod === 'bank'
-                  ? 'bg-[var(--gradient-gold)] text-[#3B2A23]'
-                  : 'bg-[#3B2A23] border border-[#C8A97E] text-[#F5EFE6]'
-              }`}
+              className="flex-1 py-3 px-4 rounded-full text-sm font-semibold tracking-wide transition-all duration-200 bg-transparent border border-[#C8A97E] text-[#C8A97E] hover:bg-[rgba(200,169,126,0.1)]"
             >
               Bank Transfer
             </button>
