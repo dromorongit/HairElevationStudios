@@ -14,9 +14,11 @@ interface CoursePaymentModalProps {
   isOpen: boolean;
   onClose: () => void;
   onPaymentConfirmed: () => void;
+  price: string;
+  courseName: string;
 }
 
-export function CoursePaymentModal({ isOpen, onClose, onPaymentConfirmed }: CoursePaymentModalProps) {
+export function CoursePaymentModal({ isOpen, onClose, onPaymentConfirmed, price, courseName }: CoursePaymentModalProps) {
   const [paymentMethod, setPaymentMethod] = useState<'mobile' | 'bank'>('mobile');
   const [copyTooltip, setCopyTooltip] = useState<CopyTooltip>({ field: '', show: false });
 
@@ -44,14 +46,14 @@ export function CoursePaymentModal({ isOpen, onClose, onPaymentConfirmed }: Cour
     'Dial *170# on your mobile phone',
     'Select "Transfer Money"',
     'Enter Merchant Number: 0541152970',
-    'Enter amount: GHS 1,200',
+    `Enter amount: ${price}`,
     'Enter your PIN to confirm',
     'Screenshot the confirmation',
   ] : [
     'Open your bank app or website',
     'Select Transfer or Make Payment',
     'Enter the account details above',
-    'Enter amount: GHS 1,200',
+    `Enter amount: ${price}`,
     'Complete transfer and save receipt',
     'Screenshot the confirmation',
   ];
@@ -81,10 +83,10 @@ export function CoursePaymentModal({ isOpen, onClose, onPaymentConfirmed }: Cour
         <div className="p-4 sm:p-6">
           <div className="bg-[#3B2A23] border border-[rgba(200,169,126,0.2)] rounded-xl p-4 mb-6">
             <p className="text-xs uppercase tracking-wider text-[#C8A97E] mb-1 font-body">
-              Pixie Cut Virtual Class 2026
+              {courseName}
             </p>
             <p className="text-2xl font-bold text-[#C8A97E] font-heading">
-              GHS 1,200
+              {price}
             </p>
           </div>
 

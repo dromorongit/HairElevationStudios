@@ -104,13 +104,16 @@ export default function HomePage() {
               >
                 Handcrafted luxury wigs tailored for queens. From bridal perfection to everyday elegance — discover your signature look.
               </motion.p>
-<motion.div className="flex flex-col sm:flex-row gap-4 mb-8 w-full" variants={fadeInUp}>
-               <OutlineButton href="/collections" size="lg" className="w-full sm:w-auto">Shop Collections</OutlineButton>
-               <OutlineButton href="/book" className="w-full sm:w-auto">Book Appointment</OutlineButton>
-               <OutlineButton href="/virtual-class-2026" className="w-full sm:w-auto flex items-center justify-center gap-2">
-                 NEW: Pixie Cut Virtual Class — GHS 1,200
-               </OutlineButton>
-             </motion.div>
+ <motion.div className="flex flex-col sm:flex-row gap-4 mb-8 w-full" variants={fadeInUp}>
+                <OutlineButton href="/collections" size="lg" className="w-full sm:w:auto">Shop Collections</OutlineButton>
+                <OutlineButton href="/book" className="w-full sm:w:auto">Book Appointment</OutlineButton>
+                <OutlineButton href="/virtual-class-2026" className="w-full sm:w-auto flex items-center justify-center gap-2">
+                  🎓 Pixie Cut Virtual Class — GHS 1,200 → Enroll
+                </OutlineButton>
+                <OutlineButton href="/layering-masterclass" className="w-full sm:w-auto flex items-center justify-center gap-2">
+                  🎓 Layering MasterClass — GHS 1,500 → Enroll
+                </OutlineButton>
+              </motion.div>
               <motion.div className="hidden sm:flex items-center gap-4 text-sm font-body text-[var(--text-primary)]" variants={fadeInUp}>
                 <span className="text-[var(--text-primary)]">200+ Queens Served</span>
                 <span className="w-1.5 h-1.5 bg-[var(--brand-gold)] rounded-full" />

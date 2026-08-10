@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
-import { BsHandbag, BsHeart, BsHeartFill, BsSearch } from 'react-icons/bs';
+import { BsHandbag, BsHeart, BsHeartFill, BsSearch, BsChevronDown } from 'react-icons/bs';
 import { HiOutlineMenuAlt3, HiX } from 'react-icons/hi';
 import { useCart } from '@/hooks/useCart';
 import { useWishlist } from '@/hooks/useWishlist';
@@ -17,12 +17,20 @@ interface NavLink {
   href: string;
   label: string;
   badge?: boolean;
+  subLinks?: { href: string; label: string }[];
 }
 
 const navLinks: NavLink[] = [
   { href: '/', label: 'Home' },
   { href: '/collections', label: 'Collections' },
-  { href: '/virtual-class-2026', label: 'Virtual Class', badge: true },
+  {
+    href: '/courses',
+    label: 'Courses',
+    subLinks: [
+      { href: '/virtual-class-2026', label: 'Pixie Cut Virtual Class' },
+      { href: '/layering-masterclass', label: 'Layering MasterClass' },
+    ],
+  },
   { href: '/services', label: 'Services' },
   { href: '/book', label: 'Book' },
   { href: '/about', label: 'About' },
@@ -32,6 +40,7 @@ const navLinks: NavLink[] = [
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [coursesOpen, setCoursesOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<IProduct[]>([]);
   const [allProducts, setAllProducts] = useState<IProduct[]>([]);
@@ -103,21 +112,68 @@ export function Navbar() {
 
 {!searchOpen && (
                <div className="hidden md:flex items-center space-x-8">
-                 {navLinks.map((link) => (
-                   <Link
-                     key={link.href}
-                     href={link.href}
-                     className={`relative text-[13px] font-body uppercase tracking-widest transition-colors flex items-center gap-1 ${
-                       pathname === link.href ? 'text-[var(--brand-gold)]' : 'text-[var(--text-primary)]/80'
-                     }`}
-                   >
-                     {link.label}
-                     {link.badge && <Badge variant="new" />}
-                     {pathname === link.href && (
-                       <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[var(--gradient-gold)]" />
-                     )}
-                   </Link>
-                 ))}
+                 {navLinks.map((link) => {
+                   const isActive = pathname === link.href || (link.subLinks?.some((sl) => pathname === sl.href) ?? false);
+                   if (link.subLinks) {
+                     return (
+                       <div
+                         key={link.label}
+                         className="relative flex items-center"
+                         onMouseEnter={() => setCoursesOpen(true)}
+                         onMouseLeave={() => setCoursesOpen(false)}
+                       >
+                         <span
+                           className={`relative text-[13px] font-body uppercase tracking-widest transition-colors flex items-center gap-1 cursor-pointer ${
+                             isActive ? 'text-[var(--brand-gold)]' : 'text-[var(--text-primary)]/80'
+                           }`}
+                         >
+                           {link.label}
+                           <BsChevronDown className="w-3 h-3 text-[var(--text-primary)]/60" />
+                           {isActive && (
+                             <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[var(--gradient-gold)]" />
+                           )}
+                         </span>
+                         <AnimatePresence>
+                           {coursesOpen && (
+                             <motion.div
+                               className="absolute top-full left-0 mt-2 min-w-[220px] bg-[#2A1E18] border border-[var(--border-gold)] rounded-xl shadow-xl z-50"
+                               initial={{ opacity: 0, y: -10 }}
+                               animate={{ opacity: 1, y: 0 }}
+                               exit={{ opacity: 0, y: -10 }}
+                               transition={{ duration: 0.2 }}
+                             >
+                               {link.subLinks.map((subLink) => (
+                                 <Link
+                                   key={subLink.href}
+                                   href={subLink.href}
+                                   className="block w-full px-4 py-3 text-sm font-body text-[var(--text-primary)]/80 hover:text-[#C8A97E] hover:bg-[rgba(200,169,126,0.05)] first:rounded-t-xl last:rounded-b-xl transition-colors"
+                                   onClick={() => setCoursesOpen(false)}
+                                 >
+                                   {subLink.label}
+                                 </Link>
+                               ))}
+                             </motion.div>
+                           )}
+                         </AnimatePresence>
+                       </div>
+                     );
+                   }
+                   return (
+                     <Link
+                       key={link.href}
+                       href={link.href}
+                       className={`relative text-[13px] font-body uppercase tracking-widest transition-colors flex items-center gap-1 ${
+                         pathname === link.href ? 'text-[var(--brand-gold)]' : 'text-[var(--text-primary)]/80'
+                       }`}
+                     >
+                       {link.label}
+                       {link.badge && <Badge variant="new" />}
+                       {pathname === link.href && (
+                         <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[var(--gradient-gold)]" />
+                       )}
+                     </Link>
+                   );
+                 })}
                </div>
              )}
 
@@ -247,28 +303,63 @@ export function Navbar() {
                 <HiX className="w-6 h-6" />
               </button>
             </div>
-<div className="flex flex-col items-center justify-center space-y-8 text-3xl flex-1">
-               {navLinks.map((link, index) => (
-                 <motion.div
-                   key={link.href}
-                   initial={{ opacity: 0, y: 20 }}
-                   animate={{ opacity: 1, y: 0 }}
-                   transition={{ delay: index * 0.05 }}
-                   className="flex items-center gap-2"
-                 >
-                   <Link
-                     href={link.href}
-                     onClick={() => setMobileMenuOpen(false)}
-                     className={`hover:text-[var(--brand-gold)] transition-colors font-heading ${
-                       pathname === link.href ? 'text-[var(--brand-gold)]' : 'text-[var(--text-primary)]'
-                     }`}
+<div className="flex flex-col items-center justify-center space-y-6 text-3xl flex-1">
+           {navLinks.map((link, index) => {
+             const isActive = pathname === link.href || (link.subLinks?.some((sl) => pathname === sl.href) ?? false);
+             if (link.subLinks) {
+               return (
+                 <div key={link.label} className="flex flex-col items-center gap-6">
+                   <motion.div
+                     initial={{ opacity: 0, y: 20 }}
+                     animate={{ opacity: 1, y: 0 }}
+                     transition={{ delay: index * 0.05 }}
+                     className="text-3xl font-heading font-bold text-[#C8A97E]"
                    >
                      {link.label}
-                   </Link>
-                   {link.badge && <Badge variant="new" />}
-                 </motion.div>
-               ))}
-             </div>
+                   </motion.div>
+                   {link.subLinks.map((subLink, subIndex) => (
+                     <motion.div
+                       key={subLink.href}
+                       initial={{ opacity: 0, y: 20 }}
+                       animate={{ opacity: 1, y: 0 }}
+                       transition={{ delay: (index + subIndex + 1) * 0.05 }}
+                     >
+                       <Link
+                         href={subLink.href}
+                         onClick={() => setMobileMenuOpen(false)}
+                         className={`hover:text-[var(--brand-gold)] transition-colors font-heading ${
+                           pathname === subLink.href ? 'text-[var(--brand-gold)]' : 'text-[var(--text-primary)]'
+                         }`}
+                       >
+                         {subLink.label}
+                       </Link>
+                     </motion.div>
+                   ))}
+                 </div>
+               );
+             }
+             return (
+               <motion.div
+                 key={link.href}
+                 initial={{ opacity: 0, y: 20 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 transition={{ delay: index * 0.05 }}
+                 className="flex items-center gap-2"
+               >
+                 <Link
+                   href={link.href}
+                   onClick={() => setMobileMenuOpen(false)}
+                   className={`hover:text-[var(--brand-gold)] transition-colors font-heading ${
+                     isActive ? 'text-[var(--brand-gold)]' : 'text-[var(--text-primary)]'
+                   }`}
+                 >
+                   {link.label}
+                 </Link>
+                 {link.badge && <Badge variant="new" />}
+               </motion.div>
+             );
+           })}
+         </div>
           </motion.div>
         )}
       </AnimatePresence>

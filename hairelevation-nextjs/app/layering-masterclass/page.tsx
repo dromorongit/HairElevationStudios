@@ -2,11 +2,18 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BsPlayCircle, BsCameraVideo, BsCalendar, BsLightbulb, BsChatDots, BsClock, BsCalendarCheck, BsPeople, BsChevronDown, BsChevronUp } from 'react-icons/bs';
+import { BsPlayCircle, BsCameraVideo, BsLightbulb, BsChatDots, BsClock, BsCalendarCheck, BsPeople, BsChevronDown, BsChevronUp } from 'react-icons/bs';
 import { CoursePaymentModal } from '@/components/course/CoursePaymentModal';
 import { CourseProofModal } from '@/components/course/CourseProofModal';
 import { TelegramRevealModal } from '@/components/course/TelegramRevealModal';
 import { uploadPaymentProof } from '@/lib/api';
+import { SectionHeading } from '@/components/shared/SectionHeading';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Hair Elevation Layering MasterClass',
+  description: 'Master professional hair layering techniques with Hair Elevation Studio. Learn elevation, overdirection, face framing, full head layers, bob layers and curling. GHS 1,500. Virtual masterclass via Telegram.',
+};
 
 interface Module {
   number: string;
@@ -19,67 +26,62 @@ const modules: Module[] = [
     number: '01',
     title: 'Introduction',
     items: [
-      'Tools, equipment and products',
-      'Hair types suitable for pixie cuts',
-      'Understanding head shape and face shape',
-      'Understanding different pixie styles',
+      'What is layering',
+      'Products and tools',
+      'Hair selection',
     ],
   },
   {
     number: '02',
-    title: 'Preparing the Wig',
+    title: 'Foundation of Layering',
     items: [
-      'Wig construction guidelines',
-      'Hair placement according to the desired pixie style',
-      'Identifying the ear position on the canvas & taking accurate measurements',
-      'Proper sectioning',
+      'Elevation',
+      'Over direction',
+      'Finger position',
     ],
   },
   {
     number: '03',
-    title: 'Pixie Cutting Techniques',
+    title: 'Cutting Layers',
     items: [
-      'Understanding guide lengths',
-      'Basic pixie cut',
-      'Graduation',
-      'Tapering',
-      'Balancing both sides',
+      'Stationary guide vs traveling guide',
+      'Face framing',
+      'Full head layers',
+      'Intense layers',
+      'Bob layers (side & center part)',
     ],
   },
   {
     number: '04',
-    title: 'Razor & Texturizing',
+    title: 'Curling',
     items: [
-      'When to use scissors',
-      'When to use a razor comb',
-      'Razor techniques',
-      'Removing bulk — layers',
-      'Making the cut look natural',
-    ],
-  },
-  {
-    number: '05',
-    title: 'Styling',
-    items: [
-      'Molding',
-      'Curling techniques',
-      'Product selection',
-      'Finishing touches',
-      'Packaging and client presentation',
-    ],
-  },
-  {
-    number: '06',
-    title: 'Common Mistakes & Corrections',
-    items: [
-      'Over-cutting',
-      'Flat crown',
-      'Bulky nape',
+      'Bombshell',
+      'Reverse bombshell',
     ],
   },
 ];
 
-export default function VirtualClassPage() {
+const galleryImages = [
+  '/assets/images/layering1.jpg',
+  '/assets/images/layering2.jpg',
+  '/assets/images/layering3.jpg',
+  '/assets/images/layering4.jpg',
+  '/assets/images/layering5.jpg',
+  '/assets/images/layering6.jpg',
+  '/assets/images/layering7.jpg',
+  '/assets/images/layering8.jpg',
+];
+
+const whatYouGet = [
+  { icon: BsPlayCircle, title: 'Step-by-Step Video Lessons', description: 'Detailed video tutorials walking you through every layering technique from foundation to advanced' },
+  { icon: BsLightbulb, title: 'Expert Tips & Tricks', description: 'Professional insights to help you master elevation, overdirection and guide techniques' },
+  { icon: BsChatDots, title: 'Q&A & Feedback', description: 'Get your questions answered and receive personal feedback on your cutting techniques' },
+  { icon: BsClock, title: 'Learn at Your Own Pace', description: 'Access all materials on your own schedule with no fixed class times' },
+  { icon: BsCalendarCheck, title: 'Ongoing Coaching Support', description: 'Continued guidance and support throughout your learning journey' },
+  { icon: BsPeople, title: 'Private Telegram Group', description: 'Join an exclusive community of stylists for support, sharing and collaboration' },
+];
+
+export default function LayeringMasterclassPage() {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showProofModal, setShowProofModal] = useState(false);
   const [showTelegram, setShowTelegram] = useState(false);
@@ -101,6 +103,15 @@ export default function VirtualClassPage() {
     setExpandedModule(expandedModule === moduleNumber ? null : moduleNumber);
   };
 
+  const EnrollButton = ({ children }: { children: React.ReactNode }) => (
+    <button
+      onClick={() => setShowPaymentModal(true)}
+      className="inline-flex items-center justify-center px-10 py-4 rounded-full font-semibold text-base tracking-widest uppercase transition-all duration-300 bg-gradient-to-r from-[#C8A97E] via-[#B8956A] to-[#A67C52] text-[#3B2A23] hover:shadow-[0_8px_25px_rgba(200,169,126,0.5)] hover:scale-[1.02] active:scale-[0.98]"
+    >
+      {children}
+    </button>
+  );
+
   return (
     <>
       {/* Section 1: Hero */}
@@ -115,39 +126,34 @@ export default function VirtualClassPage() {
               HAIR ELEVATION STUDIO PRESENTS
             </p>
             <h1 className="text-5xl lg:text-7xl font-heading font-black text-[#F5EFE6] mb-6 leading-[0.95] break-words">
-              Pixie Cut
-              <span className="block italic text-[#C8A97E]">Virtual Class</span>
+              Layering
+              <span className="block italic text-[#C8A97E]">MasterClass</span>
             </h1>
             <span className="inline-block px-4 py-1 rounded-full border border-[#C8A97E] text-[#C8A97E] uppercase tracking-widest text-sm font-body">
-              2026
+              MasterClass
             </span>
             <p className="text-base font-body text-[rgba(245,239,230,0.6)] max-w-lg mx-auto mt-6 leading-relaxed break-words">
-              Master the art of pixie cuts from the comfort of your home. A comprehensive virtual class designed to boost your confidence and elevate your craft.
+              A comprehensive masterclass covering everything from foundation techniques to advanced layering, face framing and curling. Transform your skills and charge your worth.
             </p>
             <blockquote className="text-xl lg:text-2xl font-heading italic text-[#C8A97E] mt-8">
-              &ldquo;Boost your confidence in pixie cut and charge your worth&rdquo;
+              &ldquo;Elevate your craft, elevate your income&rdquo;
             </blockquote>
             <div className="mt-8">
               <p className="text-xs uppercase tracking-widest text-[rgba(245,239,230,0.6)] font-body mb-1">
                 Course Fee
               </p>
               <p className="text-4xl font-heading font-bold text-[#C8A97E]">
-                GHS 1,200
+                GHS 1,500
               </p>
             </div>
-            <button
-              onClick={() => setShowPaymentModal(true)}
-              className="inline-flex items-center justify-center px-10 py-4 rounded-full font-semibold text-base tracking-widest uppercase transition-all duration-300 bg-gradient-to-r from-[#C8A97E] via-[#B8956A] to-[#A67C52] text-[#3B2A23] hover:shadow-[0_8px_25px_rgba(200,169,126,0.5)] hover:scale-[1.02] active:scale-[0.98]"
-            >
-              Enroll Now — GHS 1,200
-            </button>
+            <EnrollButton>Enroll Now — GHS 1,500</EnrollButton>
             <p className="text-[13px] text-[rgba(245,239,230,0.6)] font-body mt-4">
-              One-time payment • 1 Month Access • Telegram Group
+              One-time payment • Lifetime Access • Telegram Group
             </p>
             <div className="flex items-center justify-center gap-4 mt-8 text-sm font-body text-[#F5EFE6]">
               <div className="flex items-center gap-2">
                 <BsPlayCircle className="w-4 h-4 text-[#C8A97E]" />
-                <span>6 Modules</span>
+                <span>5 Modules</span>
               </div>
               <span className="w-1.5 h-1.5 bg-[#C8A97E] rounded-full" />
               <div className="flex items-center gap-2">
@@ -156,8 +162,8 @@ export default function VirtualClassPage() {
               </div>
               <span className="w-1.5 h-1.5 bg-[#C8A97E] rounded-full" />
               <div className="flex items-center gap-2">
-                <BsCalendar className="w-4 h-4 text-[#C8A97E]" />
-                <span>1 Month Access</span>
+                <BsChatDots className="w-4 h-4 text-[#C8A97E]" />
+                <span>Private Telegram Group</span>
               </div>
             </div>
           </div>
@@ -165,7 +171,7 @@ export default function VirtualClassPage() {
 
         <div className="absolute bottom-0 right-0 w-32 h-32 sm:w-48 sm:h-48 opacity-5 pointer-events-none">
           <span className="text-[100px] sm:text-[160px] font-heading text-[#F5EFE6]">
-            2026
+            MasterClass
           </span>
         </div>
       </section>
@@ -184,103 +190,38 @@ export default function VirtualClassPage() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-            <div className="bg-[#3B2A23] border border-[rgba(200,169,126,0.2)] rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(200,169,126,0.4)] hover:shadow-[0_0_20px_rgba(200,169,126,0.2)]">
-              <div className="w-11 h-11 bg-[#C8A97E] rounded-full flex items-center justify-center mb-4">
-                <BsPlayCircle className="w-5 h-5 text-[#3B2A23]" />
-              </div>
-              <h3 className="text-lg font-heading font-semibold text-[#F5EFE6] mb-2 break-words">
-                Step-by-Step Video Lessons
-              </h3>
-              <p className="text-sm font-body text-[rgba(245,239,230,0.6)] break-words">
-                Detailed video tutorials walking you through every technique from start to finish
-              </p>
-            </div>
-
-            <div className="bg-[#3B2A23] border border-[rgba(200,169,126,0.2)] rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(200,169,126,0.4)] hover:shadow-[0_0_20px_rgba(200,169,126,0.2)]">
-              <div className="w-11 h-11 bg-[#C8A97E] rounded-full flex items-center justify-center mb-4">
-                <BsLightbulb className="w-5 h-5 text-[#3B2A23]" />
-              </div>
-              <h3 className="text-lg font-heading font-semibold text-[#F5EFE6] mb-2 break-words">
-                Expert Tips & Tricks
-              </h3>
-              <p className="text-sm font-body text-[rgba(245,239,230,0.6)] break-words">
-                Insider knowledge from a professional stylist to help you avoid common mistakes
-              </p>
-            </div>
-
-            <div className="bg-[#3B2A23] border border-[rgba(200,169,126,0.2)] rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(200,169,126,0.4)] hover:shadow-[0_0_20px_rgba(200,169,126,0.2)]">
-              <div className="w-11 h-11 bg-[#C8A97E] rounded-full flex items-center justify-center mb-4">
-                <BsChatDots className="w-5 h-5 text-[#3B2A23]" />
-              </div>
-              <h3 className="text-lg font-heading font-semibold text-[#F5EFE6] mb-2 break-words">
-                Q&A & Feedback
-              </h3>
-              <p className="text-sm font-body text-[rgba(245,239,230,0.6)] break-words">
-                Get your questions answered and receive personal feedback on your work
-              </p>
-            </div>
-
-            <div className="bg-[#3B2A23] border border-[rgba(200,169,126,0.2)] rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(200,169,126,0.4)] hover:shadow-[0_0_20px_rgba(200,169,126,0.2)]">
-              <div className="w-11 h-11 bg-[#C8A97E] rounded-full flex items-center justify-center mb-4">
-                <BsClock className="w-5 h-5 text-[#3B2A23]" />
-              </div>
-              <h3 className="text-lg font-heading font-semibold text-[#F5EFE6] mb-2 break-words">
-                Learn at Your Own Pace
-              </h3>
-              <p className="text-sm font-body text-[rgba(245,239,230,0.6)] break-words">
-                Access all materials on your schedule — no fixed class times
-              </p>
-            </div>
-
-            <div className="bg-[#3B2A23] border border-[rgba(200,169,126,0.2)] rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(200,169,126,0.4)] hover:shadow-[0_0_20px_rgba(200,169,126,0.2)]">
-              <div className="w-11 h-11 bg-[#C8A97E] rounded-full flex items-center justify-center mb-4">
-                <BsCalendarCheck className="w-5 h-5 text-[#3B2A23]" />
-              </div>
-              <h3 className="text-lg font-heading font-semibold text-[#F5EFE6] mb-2 break-words">
-                1 Month Access & Coaching
-              </h3>
-              <p className="text-sm font-body text-[rgba(245,239,230,0.6)] break-words">
-                Full month of access to all course materials plus ongoing coaching support
-              </p>
-            </div>
-
-            <div className="bg-[#3B2A23] border border-[rgba(200,169,126,0.2)] rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(200,169,126,0.4)] hover:shadow-[0_0_20px_rgba(200,169,126,0.2)]">
-              <div className="w-11 h-11 bg-[#C8A97E] rounded-full flex items-center justify-center mb-4">
-                <BsPeople className="w-5 h-5 text-[#3B2A23]" />
-              </div>
-              <h3 className="text-lg font-heading font-semibold text-[#F5EFE6] mb-2 break-words">
-                Private Telegram Group
-              </h3>
-              <p className="text-sm font-body text-[rgba(245,239,230,0.6)] break-words">
-                Join an exclusive community of students for support, sharing and networking
-              </p>
-            </div>
+            {whatYouGet.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <div key={index} className="bg-[#3B2A23] border border-[rgba(200,169,126,0.2)] rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(200,169,126,0.4)] hover:shadow-[0_0_20px_rgba(200,169,126,0.2)]">
+                  <div className="w-11 h-11 bg-[#C8A97E] rounded-full flex items-center justify-center mb-4">
+                    <Icon className="w-5 h-5 text-[#3B2A23]" />
+                  </div>
+                  <h3 className="text-lg font-heading font-semibold text-[#F5EFE6] mb-2 break-words">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm font-body text-[rgba(245,239,230,0.6)] break-words">
+                    {item.description}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* Section 3: Gallery */}
-      <section className="py-20 bg-[#3B2A23]">
+      <section className="py-20 bg-[#2A1E18]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <p className="text-[11px] font-body uppercase tracking-[0.15em] text-[#C8A97E] mb-3">
-              THE CRAFT
-            </p>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold text-[#F5EFE6] mb-4">
-              Pixie Cuts by Hair Elevation Studio
-            </h2>
-            <p className="text-lg text-[var(--text-muted)] font-body max-w-xl mx-auto">
-              The styles you will learn to create
-            </p>
-          </div>
+          <SectionHeading
+            label="THE CRAFT"
+            title="Layering by Hair Elevation Studio"
+            subtitle="The styles you will learn to create"
+            align="center"
+          />
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-            {[
-              '/assets/images/pixie1.jpg',
-              '/assets/images/pixie2.jpg',
-              '/assets/images/pixie3.jpg',
-              '/assets/images/pixie4.jpg',
-            ].map((src, index) => (
+            {galleryImages.map((src, index) => (
               <motion.div
                 key={src}
                 className="group relative overflow-hidden rounded-xl border border-[rgba(200,169,126,0.2)] hover:border-[rgba(200,169,126,0.5)] transition-all duration-300"
@@ -292,7 +233,7 @@ export default function VirtualClassPage() {
                 <div className="aspect-[3/4]">
                   <img
                     src={src}
-                    alt={`Pixie cut style ${index + 1}`}
+                    alt={`Layering style ${index + 1}`}
                     loading="lazy"
                     className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                   />
@@ -316,13 +257,13 @@ export default function VirtualClassPage() {
             </h2>
             <div className="h-0.5 bg-[var(--gradient-gold)] w-10 mb-4" />
             <p className="text-lg text-[var(--text-muted)] font-body max-w-xl">
-              Everything you need to master the pixie cut
+              Everything you need to master layering
             </p>
           </div>
 
           <div className="hidden md:grid grid-cols-2 gap-6">
             <div className="space-y-6">
-              {modules.slice(0, 3).map((module) => (
+              {modules.slice(0, 2).map((module) => (
                 <div key={module.number} className="bg-[#2A1E18] border-l-3 border-l-[#C8A97E] rounded-xl p-6">
                   <span className="float-right text-3xl font-heading font-bold text-[#C8A97E] opacity-40">
                     {module.number}
@@ -342,7 +283,7 @@ export default function VirtualClassPage() {
             </div>
 
             <div className="space-y-6">
-              {modules.slice(3, 6).map((module) => (
+              {modules.slice(2, 4).map((module) => (
                 <div key={module.number} className="bg-[#2A1E18] border-l-3 border-l-[#C8A97E] rounded-xl p-6">
                   <span className="float-right text-3xl font-heading font-bold text-[#C8A97E] opacity-40">
                     {module.number}
@@ -434,7 +375,7 @@ export default function VirtualClassPage() {
               Professional Wig Stylist & Educator
             </p>
             <p className="text-base font-body text-[rgba(245,239,230,0.6)] leading-relaxed mb-4">
-              With years of experience crafting premium wigs and teaching aspiring stylists, Hair Elevation Studio brings professional expertise directly to your screen. This course is designed to give you the exact skills and confidence you need to create stunning pixie cuts.
+              With years of experience crafting premium wigs and teaching aspiring stylists, Hair Elevation Studio brings professional expertise directly to your screen. This course is designed to give you the exact skills and confidence you need to create stunning layered styles.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               <span className="px-4 py-1 rounded-full border border-[#C8A97E] text-sm font-body text-[#F5EFE6]">
@@ -458,22 +399,17 @@ export default function VirtualClassPage() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <h2 className="text-4xl lg:text-5xl font-heading font-bold text-[#3B2A23] mb-4">
-            Ready to Master the Pixie Cut?
+            Ready to Master Layering?
           </h2>
           <p className="text-base font-body text-[#3B2A23] opacity-70 mb-6 max-w-xl mx-auto">
-            Join the virtual class and transform your skills. Limited spots available.
+            Join the masterclass and transform your cutting skills. Limited spots available.
           </p>
           <p className="text-2xl font-heading font-bold text-[#3B2A23] mb-6">
-            GHS 1,200 — One-time Payment
+            GHS 1,500 — One-time Payment
           </p>
-          <button
-            onClick={() => setShowPaymentModal(true)}
-            className="inline-flex items-center justify-center px-10 py-4 rounded-full font-semibold text-base tracking-widest uppercase transition-all duration-300 bg-gradient-to-r from-[#C8A97E] via-[#B8956A] to-[#A67C52] text-[#3B2A23] hover:shadow-[0_8px_25px_rgba(200,169,126,0.5)] hover:scale-[1.02] active:scale-[0.98]"
-          >
-            Enroll Now
-          </button>
+          <EnrollButton>Enroll Now</EnrollButton>
           <p className="text-[13px] text-[#3B2A23] opacity-70 mt-4">
-            ✓ Instant access after payment  ✓ 1 month coaching  ✓ Private Telegram group
+            ✓ Instant access after payment  ✓ Private Telegram group  ✓ Expert coaching
           </p>
         </div>
       </section>
@@ -482,8 +418,8 @@ export default function VirtualClassPage() {
         isOpen={showPaymentModal}
         onClose={() => setShowPaymentModal(false)}
         onPaymentConfirmed={handlePaymentConfirmed}
-        price="GHS 1,200"
-        courseName="Pixie Cut Virtual Class"
+        price="GHS 1,500"
+        courseName="Layering MasterClass"
       />
 
       <CourseProofModal
@@ -496,8 +432,8 @@ export default function VirtualClassPage() {
       <TelegramRevealModal
         isOpen={showTelegram}
         studentName={studentName}
-        telegramLink="https://t.me/+fVUU6CuUE4EwNzI0"
-        courseName="Pixie Cut Virtual Class"
+        telegramLink="https://t.me/+20iiqW6RmUNjZDlk"
+        courseName="Layering MasterClass"
       />
     </>
   );
