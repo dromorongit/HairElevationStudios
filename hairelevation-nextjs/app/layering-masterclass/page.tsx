@@ -142,7 +142,7 @@ export default function LayeringMasterclassPage() {
             </div>
             <EnrollButton>Enroll Now — GHS 1,500</EnrollButton>
             <p className="text-[13px] text-[rgba(245,239,230,0.6)] font-body mt-4">
-              One-time payment • Lifetime Access • Telegram Group
+              One-time payment • 1 Month Access • Telegram Group
             </p>
             <div className="flex items-center justify-center gap-4 mt-8 text-sm font-body text-[#F5EFE6]">
               <div className="flex items-center gap-2">
