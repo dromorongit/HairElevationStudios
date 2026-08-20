@@ -3,51 +3,46 @@ import { getProductById, getAllProducts } from '@/lib/api';
 import { IProduct } from '@/lib/types';
 import ProductClient from './product-client';
 
+export const metadata: Metadata = {
+  title: 'Product | Hair Elevation Studio',
+  description: 'Shop premium handcrafted wigs from Hair Elevation Studio.',
+  robots: 'index, follow',
+  alternates: {
+    canonical: 'https://hairelevationstudio.com/collections',
+  },
+};
+
+export async function generateStaticParams() {
+  try {
+    const products = await getAllProducts();
+    const params = products.map((product) => ({ id: product._id }));
+    if (params.length > 0) return params;
+  } catch {
+    // API unreachable at build time — fall through to a safe fallback below
+  }
+  // Ensure the static export build always has at least one param.
+  // This route renders a "Product Not Found" state for unknown ids.
+  return [{ id: 'not-found' }];
+}
+
 interface Props {
   params: Promise<{ id: string }>;
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params;
-  const product = await getProductById(id);
-
-  if (!product) {
-    return {
-      title: 'Product Not Found | Hair Elevation Studio',
-      description: 'The product you are looking for does not exist.',
-    };
-  }
-
-  const collections = product.collections ? product.collections.join(', ') : '';
-  const features = [
-    product.texture,
-    product.length,
-    product.collections ? product.collections.join(', ') : '',
-  ].filter(Boolean).join(' • ');
-
-  return {
-    title: product.name,
-    description: features || `Shop ${product.name} from Hair Elevation Studio`,
-    openGraph: {
-      images: [
-        {
-          url: product.coverImage,
-          alt: product.name,
-        },
-      ],
-    },
-    alternates: {
-      canonical: `https://hairelevationstudio.com/products/${product._id}`,
-    },
-  };
-}
-
 export default async function ProductPage({ params }: Props) {
   const { id } = await params;
-  const [product, allProducts] = await Promise.all([
-    getProductById(id),
-    getAllProducts(),
-  ]);
+
+  let product: IProduct | null = null;
+  let allProducts: IProduct[] = [];
+
+  try {
+    [product, allProducts] = await Promise.all([
+      getProductById(id),
+      getAllProducts(),
+    ]);
+  } catch {
+    product = null;
+  }
 
   if (!product) {
     return (

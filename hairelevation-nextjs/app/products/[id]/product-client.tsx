@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { IProduct } from '@/lib/types';
 import { cn, formatPrice, toArray, getDisplayCollectionName } from '@/lib/utils';
-import { LoadingSpinner } from '@/components/shared/LoadingSpinner';
 import { Badge } from '@/components/shared/Badge';
 import { GoldButton } from '@/components/shared/GoldButton';
 import { OutlineButton } from '@/components/shared/OutlineButton';
