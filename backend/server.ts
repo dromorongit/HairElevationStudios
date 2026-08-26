@@ -374,7 +374,7 @@ app.get('/pricelist.jpg', (req, res) => {
 });
 
 // Health check
-app.get('/health', (req, res) => res.json({ status: 'OK' }));
+app.get('/health', (req, res) => res.status(200).send('OK'));
 
 // Root route - Admin Login/Register Page
 app.get('/', (req, res) => {

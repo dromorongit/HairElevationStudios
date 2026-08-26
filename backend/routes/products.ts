@@ -9,6 +9,7 @@ const router = express.Router();
 router.get('/', async (req: Request, res: Response) => {
   try {
     const products = await Product.find();
+    res.set('Cache-Control', 'public, max-age=300');
     res.json(products);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });

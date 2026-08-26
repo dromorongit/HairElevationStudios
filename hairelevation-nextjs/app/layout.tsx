@@ -48,9 +48,9 @@ export const metadata: Metadata = {
     description: 'Handcrafted luxury wigs in Accra, Ghana. Custom wig making, installation and maintenance.',
     images: [
       {
-        url: '/assets/images/three%20ladies.PNG',
-        width: 1200,
-        height: 630,
+        url: '/assets/images/threeladies.jpg',
+        width: 1280,
+        height: 956,
         alt: 'Hair Elevation Studio Premium Wigs',
       },
     ],
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Hair Elevation Studio — Premium Wigs Accra',
     description: 'Handcrafted luxury wigs in Accra, Ghana.',
-    images: ['/assets/images/three%20ladies.PNG'],
+    images: ['/assets/images/threeladies.jpg'],
   },
   icons: {
     icon: '/assets/images/HESLOGO.PNG',

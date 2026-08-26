@@ -16,7 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: `${baseUrl}/collections`,
       lastModified: now,
-      changeFrequency: 'daily',
+      changeFrequency: 'weekly',
       priority: 0.9,
     },
     {

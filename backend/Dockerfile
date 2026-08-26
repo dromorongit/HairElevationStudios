@@ -18,8 +18,6 @@ RUN mkdir -p css js images && \
     cp -r /app/../css/* ./css/ 2>/dev/null || echo "No css files to copy" && \
     cp -r /app/../js/* ./js/ 2>/dev/null || echo "No js files to copy" && \
     cp /app/../*.html ./. 2>/dev/null || echo "No html files to copy" && \
-    cp /app/../*.png ./. 2>/dev/null || echo "No png files to copy" && \
-    cp /app/../*.jpg ./. 2>/dev/null || echo "No jpg files to copy" && \
     cp /app/../*.json ./. 2>/dev/null || echo "No json files to copy"
 
 # Build the TypeScript backend
@@ -45,7 +43,6 @@ COPY --from=builder /app/*.html ./
 COPY --from=builder /app/css ./css
 COPY --from=builder /app/js ./js
 COPY --from=builder /app/*.png ./
-COPY --from=builder /app/*.jpg ./
 COPY --from=builder /app/*.json ./
 
 # Create uploads directory

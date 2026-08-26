@@ -1,0 +1,2 @@
+Cloudinary not configured, using local storage fallback
+Server running on port 5000
