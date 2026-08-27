@@ -3,6 +3,7 @@ import { Playfair_Display, DM_Sans } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
+import { DeveloperCredits } from '@/components/layout/DeveloperCredits';
 import { ScrollToTop } from '@/components/shared/ScrollToTop';
 import { NavigationProgress } from '@/components/shared/NavigationProgress';
 import { FloatingWhatsApp } from '@/components/shared/FloatingWhatsApp';
@@ -116,6 +117,7 @@ export default function RootLayout({
           </main>
         </ToastProvider>
         <Footer />
+        <DeveloperCredits />
         <ScrollToTop />
         <FloatingWhatsApp />
       </body>
