@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { BsInstagram, BsTiktok, BsWhatsapp } from 'react-icons/bs';
+import { DeveloperCredits } from '@/components/layout/DeveloperCredits';
 
 export function Footer() {
   return (
@@ -126,6 +127,7 @@ export function Footer() {
             <p className="text-xs font-body text-[var(--text-muted)] break-words">
               Hair Elevation Studio © 2026. Developed by Dromor Narh
             </p>
+            <DeveloperCredits />
           </div>
         </div>
       </div>
