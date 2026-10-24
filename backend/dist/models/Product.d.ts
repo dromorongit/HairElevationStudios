@@ -1,4 +1,4 @@
-import mongoose, { Document } from 'mongoose';
+import { Document } from 'mongoose';
 export interface IProduct extends Document {
     name: string;
     description?: string;
@@ -22,9 +22,5 @@ export interface IProduct extends Document {
     createdAt: Date;
     updatedAt: Date;
 }
-declare const _default: mongoose.Model<IProduct, {}, {}, {}, mongoose.Document<unknown, {}, IProduct, {}, {}> & IProduct & Required<{
-    _id: mongoose.Types.ObjectId;
-}> & {
-    __v: number;
-}, any>;
+declare const _default: any;
 export default _default;

@@ -53,7 +53,7 @@ if (isCloudinaryConfigured()) {
           const ext = (file.originalname || '').split('.').pop()?.toLowerCase() || '';
           const isImage = file.mimetype.startsWith('image/') || ['jpg','jpeg','png','webp','heic','heif'].includes(ext);
           return isImage ? 'jpg' : undefined;
-        }
+        },
         transformation: [
           { width: 800, height: 600, crop: 'limit', quality: 'auto:good' },
           { fetch_format: 'auto' }

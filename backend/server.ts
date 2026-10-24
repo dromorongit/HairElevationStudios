@@ -738,7 +738,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/haireleva
   .then(() => {
     console.log('Connected to MongoDB');
   })
-  .catch((error) => {
+  .catch((error: any) => {
     console.error('MongoDB connection error:', error);
   });
 
