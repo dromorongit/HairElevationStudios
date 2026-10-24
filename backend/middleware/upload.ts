@@ -47,8 +47,13 @@ if (isCloudinaryConfigured()) {
       cloudinary: cloudinary.v2,
       params: {
         folder: 'hair-elevation-studios/products',
-        allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'mp4', 'mov', 'avi', 'webm'],
+        allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'heic', 'heif', 'mp4', 'mov', 'avi', 'webm'],
         resource_type: 'auto' as any, // Auto-detect file type
+        format: (req: any, file: any) => {
+          const ext = (file.originalname || '').split('.').pop()?.toLowerCase() || '';
+          const isImage = file.mimetype.startsWith('image/') || ['jpg','jpeg','png','webp','heic','heif'].includes(ext);
+          return isImage ? 'jpg' : undefined;
+        }
         transformation: [
           { width: 800, height: 600, crop: 'limit', quality: 'auto:good' },
           { fetch_format: 'auto' }
@@ -81,12 +86,19 @@ if (isCloudinaryConfigured()) {
   });
 }
 
-// File filter
+const allowedImageExt = ['jpg','jpeg','png','webp','heic','heif'];
+const allowedVideoExt = ['mp4','mov','avi','webm','mkv'];
+
 const fileFilter = (req: any, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
-  if (file.mimetype.startsWith('image/') || file.mimetype.startsWith('video/')) {
+  const ext = (file.originalname || '').split('.').pop()?.toLowerCase() || '';
+  const isImage = file.mimetype.startsWith('image/') || allowedImageExt.includes(ext);
+  const isVideo = file.mimetype.startsWith('video/') || allowedVideoExt.includes(ext);
+  if (isImage || isVideo) {
     cb(null, true);
   } else {
-    cb(new Error('Invalid file type. Only images and videos are allowed.'));
+    const err: any = new Error('Image format not allowed. Use JPG, PNG, WebP or HEIC');
+    err.status = 400;
+    cb(err);
   }
 };
 

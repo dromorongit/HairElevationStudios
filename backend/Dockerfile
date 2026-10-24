@@ -42,7 +42,7 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/*.html ./
 COPY --from=builder /app/css ./css
 COPY --from=builder /app/js ./js
-COPY --from=builder /app/*.png ./
+COPY --from=builder /app/HESLOGO.PNG ./
 COPY --from=builder /app/*.json ./
 
 # Create uploads directory
